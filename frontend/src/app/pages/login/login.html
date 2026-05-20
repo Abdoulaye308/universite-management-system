@@ -10,8 +10,9 @@
           Université UNCHK
         </h2>
 
-        <form>
+        <form (ngSubmit)="onLogin()">
 
+          <!-- Email -->
           <div class="mb-3">
 
             <label>Email</label>
@@ -19,10 +20,14 @@
             <input
               type="email"
               class="form-control"
+              [(ngModel)]="email"
+              name="email"
+              required
             >
 
           </div>
 
+          <!-- Password -->
           <div class="mb-3">
 
             <label>Mot de passe</label>
@@ -30,11 +35,16 @@
             <input
               type="password"
               class="form-control"
+              [(ngModel)]="password"
+              name="password"
+              required
             >
 
           </div>
 
+          <!-- Button -->
           <button
+            type="submit"
             class="btn btn-primary w-100"
           >
             Connexion
