@@ -1,1 +1,263 @@
-<p>dashboard works!</p>
+<div class="d-flex">
+
+  <!-- SIDEBAR -->
+  <div
+    class="bg-dark text-white p-3 vh-100"
+    style="width: 260px;"
+  >
+
+    <h3 class="text-center mb-4">
+      UNCHK
+    </h3>
+
+    <ul class="nav flex-column">
+
+      <li class="nav-item mb-2">
+
+        <a
+          routerLink="/dashboard"
+          class="nav-link text-white"
+        >
+          Dashboard
+        </a>
+
+      </li>
+
+      <li class="nav-item mb-2">
+
+        <a
+          routerLink="/students"
+          class="nav-link text-white"
+        >
+          Étudiants
+        </a>
+
+      </li>
+
+      <li class="nav-item mb-2">
+
+        <a
+          routerLink="/formations"
+          class="nav-link text-white"
+        >
+          Formations
+        </a>
+
+      </li>
+
+      <li class="nav-item mb-2">
+
+        <a
+          routerLink="/emplois"
+          class="nav-link text-white"
+        >
+          Emplois du temps
+        </a>
+
+      </li>
+
+      <li class="nav-item mb-2">
+
+        <a
+          routerLink="/formateurs"
+          class="nav-link text-white"
+        >
+          Formateurs
+        </a>
+
+      </li>
+
+      <li class="nav-item mb-2">
+
+        <a
+          routerLink="/reunions"
+          class="nav-link text-white"
+        >
+          Réunions
+        </a>
+
+      </li>
+
+    </ul>
+
+    <!-- LOGOUT -->
+    <button
+      class="btn btn-danger w-100 mt-5"
+      (click)="logout()"
+    >
+      Déconnexion
+    </button>
+
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="flex-grow-1 p-4 bg-light">
+
+    <!-- NAVBAR -->
+    <div
+      class="bg-white shadow-sm p-3 rounded mb-4"
+    >
+
+      <h2>
+        Dashboard Administrateur
+      </h2>
+
+    </div>
+
+    <!-- STATISTIQUES -->
+    <div class="row">
+
+      <!-- CARD -->
+      <div class="col-md-3 mb-4">
+
+        <div class="card shadow border-0">
+
+          <div class="card-body">
+
+            <h5>
+              Étudiants
+            </h5>
+
+            <h2>
+              120
+            </h2>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- CARD -->
+      <div class="col-md-3 mb-4">
+
+        <div class="card shadow border-0">
+
+          <div class="card-body">
+
+            <h5>
+              Formations
+            </h5>
+
+            <h2>
+              12
+            </h2>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- CARD -->
+      <div class="col-md-3 mb-4">
+
+        <div class="card shadow border-0">
+
+          <div class="card-body">
+
+            <h5>
+              Formateurs
+            </h5>
+
+            <h2>
+              25
+            </h2>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- CARD -->
+      <div class="col-md-3 mb-4">
+
+        <div class="card shadow border-0">
+
+          <div class="card-body">
+
+            <h5>
+              Réunions
+            </h5>
+
+            <h2>
+              8
+            </h2>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- TABLEAU -->
+    <div class="card shadow border-0 mt-4">
+
+      <div class="card-body">
+
+        <h4 class="mb-3">
+          Activités récentes
+        </h4>
+
+        <table class="table">
+
+          <thead>
+
+          <tr>
+
+            <th>Module</th>
+
+            <th>Action</th>
+
+            <th>Date</th>
+
+          </tr>
+
+          </thead>
+
+          <tbody>
+
+          <tr>
+
+            <td>Étudiants</td>
+
+            <td>Ajout étudiant</td>
+
+            <td>20/05/2026</td>
+
+          </tr>
+
+          <tr>
+
+            <td>Réunions</td>
+
+            <td>Nouvelle réunion</td>
+
+            <td>20/05/2026</td>
+
+          </tr>
+
+          <tr>
+
+            <td>Formateurs</td>
+
+            <td>Ajout formateur</td>
+
+            <td>20/05/2026</td>
+
+          </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
