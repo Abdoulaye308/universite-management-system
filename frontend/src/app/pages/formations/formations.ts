@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
 import { FormsModule } from '@angular/forms';
 
-import { Formation } from '../../services/formation';
+import { FormationService } from '../../services/formation.service';
 
 @Component({
   selector: 'app-formations',
@@ -52,11 +52,10 @@ export class Formations implements OnInit {
   };
 
   // Constructor
-  constructor(
-    private formationService: Formation
-  ) {
-
-  }
+ constructor(
+  private formationService: FormationService,
+  private cdr: ChangeDetectorRef
+) { }
 
   // Chargement page
   ngOnInit(): void {
@@ -67,22 +66,19 @@ export class Formations implements OnInit {
   // =========================
   // LISTE FORMATIONS
   // =========================
-  getFormations() {
+ getFormations() {
+  this.formationService.getFormations()
+    .subscribe({
+      next: (data: any) => {
+        this.formations = [...data];   // spread force un nouveau référentiel
+        this.cdr.detectChanges();      // force la mise à jour de la vue
+      },
+      error: (error: any) => {
+        console.log('Erreur API :', error);
+      }
+    });
+}
 
-    this.formationService.getFormations()
-      .subscribe({
-
-        next: (data: any) => {
-
-          this.formations = data;
-        },
-
-        error: (error: any) => {
-
-          console.log(error);
-        }
-      });
-  }
 
   // =========================
   // AJOUTER FORMATION

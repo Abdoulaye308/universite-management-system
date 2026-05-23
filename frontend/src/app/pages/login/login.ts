@@ -7,26 +7,26 @@ import { Router } from '@angular/router';
 import { Auth } from '../../services/auth';
 
 @Component({
-selector: 'app-login',
+  selector: 'app-login',
 
-standalone: true,
+  standalone: true,
 
-imports: [FormsModule],
+  imports: [FormsModule],
 
-templateUrl: './login.html',
+  templateUrl: './login.html',
 
-styleUrl: './login.css'
+  styleUrl: './login.css'
 })
 export class Login {
 
-// Email utilisateur
-email = '';
+  // Email utilisateur
+  email = '';
 
-// Mot de passe utilisateur
-password = '';
+  // Mot de passe utilisateur
+  password = '';
 
-// Constructor
-constructor(
+  // Constructor
+  constructor(
 
     private authService: Auth,
 
@@ -53,23 +53,66 @@ constructor(
 
         next: (response: any) => {
 
-          // Sauvegarde token JWT
-          localStorage.setItem(
-            'token',
-            response.token
-          );
+          // Vérification navigateur
+          if (typeof window !== 'undefined') {
 
-          // Redirection dashboard
-          this.router.navigate(['/dashboard']);
+            // Sauvegarder JWT
+            localStorage.setItem(
+              'token',
+              response.token
+            );
 
-          console.log('Connexion réussie');
+            // Sauvegarder rôle
+            localStorage.setItem(
+              'role',
+              response.role
+            );
+          }
+
+          console.log(response);
+
+          // =========================
+          // REDIRECTION SELON ROLE
+          // =========================
+
+          // ADMIN
+          if (response.role === 'ADMIN') {
+
+            this.router.navigate([
+              '/admin/dashboard'
+            ]);
+          }
+
+          // ETUDIANT
+          else if (response.role === 'ETUDIANT') {
+
+            this.router.navigate([
+              '/etudiant/dashboard'
+            ]);
+          }
+
+          // ENSEIGNANT
+          else if (response.role === 'ENSEIGNANT') {
+
+            this.router.navigate([
+              '/enseignant/dashboard'
+            ]);
+          }
+
+          // ADMINISTRATIF
+          else if (response.role === 'ADMINISTRATIF') {
+
+            this.router.navigate([
+              '/administratif/dashboard'
+            ]);
+          }
         },
-
-        error: (error: any) => {
-
-          console.log(error);
-
-          alert('Email ou mot de passe incorrect');
+        error: (err) => {
+          console.error('Erreur de connexion:', err);
+          // Ajoutez ici la gestion d'erreur (message à l'utilisateur, etc.)
+        },
+        complete: () => {
+          console.log('Requête de connexion terminée');
         }
       });
   }

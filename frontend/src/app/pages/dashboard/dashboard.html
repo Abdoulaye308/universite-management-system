@@ -1,10 +1,7 @@
 <div class="d-flex">
 
   <!-- SIDEBAR -->
-  <div
-    class="bg-dark text-white p-3 vh-100"
-    style="width: 260px;"
-  >
+  <div class="bg-dark text-white p-3 vh-100" style="width: 260px;">
 
     <h3 class="text-center mb-4">
       UNCHK
@@ -14,10 +11,7 @@
 
       <li class="nav-item mb-2">
 
-        <a
-          routerLink="/dashboard"
-          class="nav-link text-white"
-        >
+        <a routerLink="/admin/dashboard" class="nav-link text-white">
           Dashboard
         </a>
 
@@ -25,10 +19,7 @@
 
       <li class="nav-item mb-2">
 
-        <a
-          routerLink="/students"
-          class="nav-link text-white"
-        >
+        <a routerLink="/admin/students" class="nav-link text-white">
           Étudiants
         </a>
 
@@ -36,10 +27,7 @@
 
       <li class="nav-item mb-2">
 
-        <a
-          routerLink="/formations"
-          class="nav-link text-white"
-        >
+        <a routerLink="/admin/formations" class="nav-link text-white">
           Formations
         </a>
 
@@ -47,10 +35,7 @@
 
       <li class="nav-item mb-2">
 
-        <a
-          routerLink="/emplois"
-          class="nav-link text-white"
-        >
+        <a routerLink="/admin/emplois" class="nav-link text-white">
           Emplois du temps
         </a>
 
@@ -58,10 +43,7 @@
 
       <li class="nav-item mb-2">
 
-        <a
-          routerLink="/formateurs"
-          class="nav-link text-white"
-        >
+        <a routerLink="/admin/formateurs" class="nav-link text-white">
           Formateurs
         </a>
 
@@ -69,22 +51,22 @@
 
       <li class="nav-item mb-2">
 
-        <a
-          routerLink="/reunions"
-          class="nav-link text-white"
-        >
+        <a routerLink="/admin/reunions" class="nav-link text-white">
           Réunions
         </a>
 
+      </li>
+      <li class="nav-item mb-2">
+
+        <a routerLink="/admin/users" class="btn btn-dark me-2">
+          Utilisateurs
+        </a>
       </li>
 
     </ul>
 
     <!-- LOGOUT -->
-    <button
-      class="btn btn-danger w-100 mt-5"
-      (click)="logout()"
-    >
+    <button class="btn btn-danger" (click)="logout()">
       Déconnexion
     </button>
 
@@ -94,9 +76,7 @@
   <div class="flex-grow-1 p-4 bg-light">
 
     <!-- NAVBAR -->
-    <div
-      class="bg-white shadow-sm p-3 rounded mb-4"
-    >
+    <div class="bg-white shadow-sm p-3 rounded mb-4">
 
       <h2>
         Dashboard Administrateur
@@ -206,49 +186,49 @@
 
           <thead>
 
-          <tr>
+            <tr>
 
-            <th>Module</th>
+              <th>Module</th>
 
-            <th>Action</th>
+              <th>Action</th>
 
-            <th>Date</th>
+              <th>Date</th>
 
-          </tr>
+            </tr>
 
           </thead>
 
           <tbody>
 
-          <tr>
+            <tr>
 
-            <td>Étudiants</td>
+              <td>Étudiants</td>
 
-            <td>Ajout étudiant</td>
+              <td>Ajout étudiant</td>
 
-            <td>20/05/2026</td>
+              <td>20/05/2026</td>
 
-          </tr>
+            </tr>
 
-          <tr>
+            <tr>
 
-            <td>Réunions</td>
+              <td>Réunions</td>
 
-            <td>Nouvelle réunion</td>
+              <td>Nouvelle réunion</td>
 
-            <td>20/05/2026</td>
+              <td>20/05/2026</td>
 
-          </tr>
+            </tr>
 
-          <tr>
+            <tr>
 
-            <td>Formateurs</td>
+              <td>Formateurs</td>
 
-            <td>Ajout formateur</td>
+              <td>Ajout formateur</td>
 
-            <td>20/05/2026</td>
+              <td>20/05/2026</td>
 
-          </tr>
+            </tr>
 
           </tbody>
 

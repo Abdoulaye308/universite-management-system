@@ -25,12 +25,16 @@ export class Dashboard {
   }
 
   // Déconnexion
-  logout() {
+  // Déconnexion
+logout() {
 
-    // Suppression token
-    localStorage.removeItem('token');
+  // Supprimer token
+  localStorage.removeItem('token');
 
-    // Redirection login
-    this.router.navigate(['']);
-  }
+  // Supprimer rôle
+  localStorage.removeItem('role');
+
+  // Redirection login
+  this.router.navigate(['/login']);
+}
 }

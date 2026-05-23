@@ -82,7 +82,15 @@ public class AuthController {
         // Génération token JWT
         String token = jwtService.generateToken(user.getEmail());
 
-        // Retour token
-        return new AuthResponse(token);
+        // Retour JWT + rôle
+        return AuthResponse.builder()
+
+                // Token JWT
+                .token(token)
+
+                // Rôle utilisateur
+                .role(user.getRole().name())
+
+                .build();
     }
 }

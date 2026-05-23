@@ -3,8 +3,7 @@ import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import {
-  provideHttpClient,
-  withFetch
+  provideHttpClient
 } from '@angular/common/http';
 
 import { routes } from './app.routes';
@@ -15,7 +14,6 @@ export const appConfig: ApplicationConfig = {
 
     provideRouter(routes),
 
-    // HTTP Client avec Fetch API
-    provideHttpClient(withFetch())
+    provideHttpClient()
   ]
 };

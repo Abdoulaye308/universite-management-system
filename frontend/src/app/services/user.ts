@@ -7,10 +7,11 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class Formation {
+export class User {
 
-  // URL backend Spring Boot
-  private apiUrl = 'http://localhost:8080/api/formations';
+  // API backend
+  private apiUrl =
+    'http://localhost:8080/api/users';
 
   // Constructor
   constructor(
@@ -20,44 +21,42 @@ export class Formation {
   }
 
   // =========================
-  // LISTE FORMATIONS
+  // LISTE USERS
   // =========================
-  getFormations(): Observable<any> {
+  getUsers(): Observable<any> {
 
     return this.http.get(this.apiUrl);
   }
 
   // =========================
-  // AJOUTER FORMATION
+  // AJOUTER USER
   // =========================
-  addFormation(
-    formation: any
-  ): Observable<any> {
+  addUser(user: any): Observable<any> {
 
     return this.http.post(
       this.apiUrl,
-      formation
+      user
     );
   }
 
   // =========================
-  // MODIFIER FORMATION
+  // MODIFIER USER
   // =========================
-  updateFormation(
+  updateUser(
     id: number,
-    formation: any
+    user: any
   ): Observable<any> {
 
     return this.http.put(
       `${this.apiUrl}/${id}`,
-      formation
+      user
     );
   }
 
   // =========================
-  // SUPPRIMER FORMATION
+  // DELETE USER
   // =========================
-  deleteFormation(
+  deleteUser(
     id: number
   ): Observable<any> {
 
