@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
@@ -57,7 +57,9 @@ export class Students implements OnInit {
 
   // Constructor
   constructor(
-    private studentService: Student
+    private studentService: Student,
+      private cdr: ChangeDetectorRef
+
   ) {
 
   }
@@ -80,6 +82,8 @@ export class Students implements OnInit {
 
           // Stocker données backend
           this.students = data;
+          this.cdr.detectChanges();
+
         },
 
         error: (error: any) => {

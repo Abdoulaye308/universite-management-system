@@ -106,19 +106,44 @@ path: 'admin/formations',
 component: Formations
 },
 
+
 {
-path: 'admin/emplois',
-component: Emplois
+  path: 'admin/emplois',
+
+  component: Emplois,
+
+  canActivate: [authGuard],
+
+  data: {
+
+    roles: ['ADMIN']
+  }
 },
 
 {
-path: 'admin/formateurs',
-component: Formateurs
+  path: 'admin/formateurs',
+
+  component: Formateurs,
+
+  canActivate: [authGuard],
+
+  data: {
+
+    roles: ['ADMIN']
+  }
 },
 
 {
-path: 'admin/reunions',
-component: Reunions
+  path: 'admin/reunions',
+
+  component: Reunions,
+
+  canActivate: [authGuard],
+
+  data: {
+
+    roles: ['ADMIN']
+  }
 },
 {
   path: '',

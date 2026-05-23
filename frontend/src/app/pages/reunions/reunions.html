@@ -1,1 +1,226 @@
-<p>reunions works!</p>
+<div class="container mt-4">
+
+  <h2>
+    Gestion des réunions
+  </h2>
+
+  <!-- ===================== -->
+  <!-- FORMULAIRE -->
+  <!-- ===================== -->
+
+  <div class="card p-3 mb-4">
+
+    <div class="row">
+
+      <!-- Type -->
+      <div class="col-md-4 mb-3">
+
+        <label>Type réunion</label>
+
+        <select
+          class="form-select"
+          [(ngModel)]="reunion.type"
+        >
+
+          <option value="Tutorat">
+            Tutorat
+          </option>
+
+          <option value="Préparation cours">
+            Préparation cours
+          </option>
+
+          <option value="Préparation évaluations">
+            Préparation évaluations
+          </option>
+
+        </select>
+      </div>
+
+      <!-- Sujet -->
+      <div class="col-md-8 mb-3">
+
+        <label>Sujet</label>
+
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="reunion.sujet"
+        >
+      </div>
+
+      <!-- Date -->
+      <div class="col-md-4 mb-3">
+
+        <label>Date</label>
+
+        <input
+          type="date"
+          class="form-control"
+          [(ngModel)]="reunion.date"
+        >
+      </div>
+
+      <!-- Heure -->
+      <div class="col-md-4 mb-3">
+
+        <label>Heure</label>
+
+        <input
+          type="time"
+          class="form-control"
+          [(ngModel)]="reunion.heure"
+        >
+      </div>
+
+      <!-- Salle -->
+      <div class="col-md-4 mb-3">
+
+        <label>Salle</label>
+
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="reunion.salle"
+        >
+      </div>
+
+      <!-- Participants -->
+      <div class="col-md-12 mb-3">
+
+        <label>Participants</label>
+
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="reunion.participants"
+        >
+      </div>
+
+      <!-- Compte rendu -->
+      <div class="col-md-12 mb-3">
+
+        <label>Compte rendu</label>
+
+        <textarea
+          rows="5"
+          class="form-control"
+          [(ngModel)]="reunion.compteRendu"
+        ></textarea>
+      </div>
+
+    </div>
+
+    <!-- Boutons -->
+
+    <button
+      *ngIf="!editMode"
+      class="btn btn-primary"
+      (click)="addReunion()"
+    >
+      Ajouter
+    </button>
+
+    <button
+      *ngIf="editMode"
+      class="btn btn-warning"
+      (click)="updateReunion()"
+    >
+      Modifier
+    </button>
+
+  </div>
+
+  <!-- ===================== -->
+  <!-- TABLE -->
+  <!-- ===================== -->
+
+  <table class="table table-bordered table-striped">
+
+    <thead>
+
+    <tr>
+
+      <th>ID</th>
+
+      <th>Type</th>
+
+      <th>Sujet</th>
+
+      <th>Date</th>
+
+      <th>Heure</th>
+
+      <th>Salle</th>
+
+      <th>Participants</th>
+
+      <th>Compte rendu</th>
+
+      <th>Actions</th>
+
+    </tr>
+
+    </thead>
+
+    <tbody>
+
+    <tr *ngFor="let r of reunions">
+
+      <td>{{ r.id }}</td>
+
+      <td>{{ r.type }}</td>
+
+      <td>{{ r.sujet }}</td>
+
+      <td>{{ r.date }}</td>
+
+      <td>{{ r.heure }}</td>
+
+      <td>{{ r.salle }}</td>
+
+      <td>{{ r.participants }}</td>
+
+      <!-- Compte rendu -->
+      <td>
+
+        <div
+          style="
+            max-width: 250px;
+            max-height: 120px;
+            overflow: auto;
+            white-space: pre-wrap;
+          "
+        >
+          {{ r.compteRendu }}
+        </div>
+
+      </td>
+
+      <td>
+
+        <!-- Modifier -->
+        <button
+          class="btn btn-warning btn-sm me-2"
+          (click)="editReunion(r)"
+        >
+          Modifier
+        </button>
+
+        <!-- Supprimer -->
+        <button
+          class="btn btn-danger btn-sm"
+          (click)="deleteReunion(r.id)"
+        >
+          Supprimer
+        </button>
+
+      </td>
+
+    </tr>
+
+    </tbody>
+
+  </table>
+
+</div>

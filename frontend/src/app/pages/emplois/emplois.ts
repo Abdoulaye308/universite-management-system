@@ -1,9 +1,212 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+
+import { CommonModule } from '@angular/common';
+
+import { FormsModule } from '@angular/forms';
+
+import { Emploi } from '../../services/emploi';
 
 @Component({
   selector: 'app-emplois',
-  imports: [],
+
+  standalone: true,
+
+  imports: [
+    CommonModule,
+    FormsModule
+  ],
+
   templateUrl: './emplois.html',
-  styleUrl: './emplois.css',
+
+  styleUrl: './emplois.css'
 })
-export class Emplois {}
+export class Emplois implements OnInit {
+
+  // Liste emplois
+  emplois: any[] = [];
+
+  // Formulaire
+  emploi = {
+
+    formation: '',
+
+    jour: '',
+
+    heureDebut: '',
+
+    heureFin: '',
+
+    salle: '',
+
+    module: '',
+
+    enseignant: ''
+  };
+
+  // Mode édition
+  editMode = false;
+
+  // ID édition
+  editEmploiId = 0;
+
+  // Constructor
+  constructor(
+    private emploiService: Emploi,
+    private cdr: ChangeDetectorRef
+
+  ) {
+
+  }
+
+  // Chargement page
+  ngOnInit(): void {
+
+    this.getEmplois();
+  }
+
+  // =========================
+  // CHARGER EMPLOIS
+  // =========================
+  getEmplois() {
+
+    this.emploiService.getEmplois()
+      .subscribe({
+
+        next: (data: any) => {
+
+          this.emplois = data;
+          this.cdr.detectChanges();
+
+        },
+
+        error: (error: any) => {
+
+          console.log(error);
+        }
+      });
+  }
+
+  // =========================
+  // AJOUTER EMPLOI
+  // =========================
+  addEmploi() {
+
+    this.emploiService.addEmploi(this.emploi)
+      .subscribe({
+
+        next: () => {
+
+          this.getEmplois();
+
+          this.resetForm();
+
+          alert('Séance ajoutée');
+        },
+
+        error: (error: any) => {
+
+          console.log(error);
+        }
+      });
+  }
+
+  // =========================
+  // CHARGER ÉDITION
+  // =========================
+  editEmploi(emploi: any) {
+
+    this.editMode = true;
+
+    this.editEmploiId = emploi.id;
+
+    this.emploi = {
+
+      formation: emploi.formation,
+
+      jour: emploi.jour,
+
+      heureDebut: emploi.heureDebut,
+
+      heureFin: emploi.heureFin,
+
+      salle: emploi.salle,
+
+      module: emploi.module,
+
+      enseignant: emploi.enseignant
+    };
+  }
+
+  // =========================
+  // UPDATE
+  // =========================
+  updateEmploi() {
+
+    this.emploiService.updateEmploi(
+      this.editEmploiId,
+      this.emploi
+    ).subscribe({
+
+      next: () => {
+
+        this.getEmplois();
+
+        this.editMode = false;
+
+        this.resetForm();
+
+        alert('Séance modifiée');
+      },
+
+      error: (error: any) => {
+
+        console.log(error);
+      }
+    });
+  }
+
+  // =========================
+  // DELETE
+  // =========================
+  deleteEmploi(id: number) {
+
+    this.emploiService.deleteEmploi(id)
+      .subscribe({
+
+        next: () => {
+
+          this.getEmplois();
+
+          alert('Séance supprimée');
+        },
+
+        error: (error: any) => {
+
+          console.log(error);
+        }
+      });
+  }
+
+  // =========================
+  // RESET
+  // =========================
+  resetForm() {
+
+    this.emploi = {
+
+      formation: '',
+
+      jour: '',
+
+      heureDebut: '',
+
+      heureFin: '',
+
+      salle: '',
+
+      module: '',
+
+      enseignant: ''
+    };
+  }
+}
