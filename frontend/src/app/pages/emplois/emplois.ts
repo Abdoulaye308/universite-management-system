@@ -2,6 +2,10 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
+import { FormationService } from '../../services/formation.service';
+
+import { Formateur } from '../../services/formateur';
+
 import { FormsModule } from '@angular/forms';
 
 import { Emploi } from '../../services/emploi';
@@ -24,6 +28,12 @@ export class Emplois implements OnInit {
 
   // Liste emplois
   emplois: any[] = [];
+
+  // Liste formations
+  formations: any[] = [];
+
+  // Liste formateurs
+  formateurs: any[] = [];
 
   // Formulaire
   emploi = {
@@ -52,6 +62,9 @@ export class Emplois implements OnInit {
   // Constructor
   constructor(
     private emploiService: Emploi,
+    private formationService: FormationService,
+
+    private formateurService: Formateur,
     private cdr: ChangeDetectorRef
 
   ) {
@@ -62,6 +75,9 @@ export class Emplois implements OnInit {
   ngOnInit(): void {
 
     this.getEmplois();
+    this.getFormations();
+
+    this.getFormateurs();
   }
 
   // =========================
@@ -85,6 +101,48 @@ export class Emplois implements OnInit {
         }
       });
   }
+
+  // =========================
+// LISTE FORMATIONS
+// =========================
+getFormations() {
+
+  this.formationService
+    .getFormations()
+    .subscribe({
+
+      next: (data: any) => {
+
+        this.formations = data;
+      },
+
+      error: (error: any) => {
+
+        console.log(error);
+      }
+    });
+}
+
+// =========================
+// LISTE FORMATEURS
+// =========================
+getFormateurs() {
+
+  this.formateurService
+    .getFormateurs()
+    .subscribe({
+
+      next: (data: any) => {
+
+        this.formateurs = data;
+      },
+
+      error: (error: any) => {
+
+        console.log(error);
+      }
+    });
+}
 
   // =========================
   // AJOUTER EMPLOI

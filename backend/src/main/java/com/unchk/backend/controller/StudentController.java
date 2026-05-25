@@ -40,6 +40,16 @@ public class StudentController {
         return studentService.getStudentById(id);
     }
 
+    // Rechercher étudiant par email
+    @GetMapping("/email/{email}")
+    public Student getStudentByEmail(
+            @PathVariable String email
+    ) {
+
+        return studentService
+                .getStudentByEmail(email);
+    }
+
     // Modifier étudiant
     @PutMapping("/{id}")
     public Student updateStudent(

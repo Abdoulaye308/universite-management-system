@@ -34,6 +34,9 @@ public class Student {
     // Prénom étudiant
     private String prenom;
 
+    @Column(unique = true)
+    private String email;
+
     // Date naissance
     private String dateNaissance;
 

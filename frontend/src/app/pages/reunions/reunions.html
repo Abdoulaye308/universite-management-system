@@ -85,6 +85,59 @@
         >
       </div>
 
+      <!-- Formation -->
+<div class="col-md-6 mb-3">
+
+  <label>Formation concernée</label>
+
+  <select
+    class="form-select"
+    [(ngModel)]="reunion.sujet"
+  >
+
+    <option value="">
+      Choisir une formation
+    </option>
+
+    <option
+      *ngFor="let formation of formations"
+      [value]="formation.nom"
+    >
+      {{ formation.nom }}
+    </option>
+
+  </select>
+
+</div>
+
+<!-- Formateur -->
+<div class="col-md-6 mb-3">
+
+  <label>Formateur</label>
+
+  <select
+    class="form-select"
+    [(ngModel)]="reunion.participants"
+  >
+
+    <option value="">
+      Choisir un formateur
+    </option>
+
+    <option
+      *ngFor="let formateur of formateurs"
+      [value]="formateur.nom + ' ' + formateur.prenom"
+    >
+      {{ formateur.nom }}
+      {{ formateur.prenom }}
+      -
+      {{ formateur.specialite }}
+    </option>
+
+  </select>
+
+</div>
+
       <!-- Participants -->
       <div class="col-md-12 mb-3">
 

@@ -7,72 +7,73 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class FormationService {
+export class Inscription {
 
-  // URL backend Spring Boot
-  private apiUrl = 'http://localhost:8080/api/formations';
+  // API URL
+  private apiUrl =
+    'http://localhost:8080/api/inscriptions';
 
-  // Constructor
   constructor(
     private http: HttpClient
   ) {
 
   }
-  
 
   // =========================
-  // LISTE FORMATIONS
+  // LISTE
   // =========================
-  getFormations(): Observable<any> {
+  getInscriptions(): Observable<any> {
 
     return this.http.get(this.apiUrl);
   }
 
   // =========================
-  // AJOUTER FORMATION
+  // INSCRIPTIONS ÉTUDIANT
   // =========================
-  addFormation(
-    formation: any
+  getByStudent(
+    studentId: number
+  ): Observable<any> {
+
+    return this.http.get(
+      `${this.apiUrl}/student/${studentId}`
+    );
+  }
+
+  // =========================
+  // AJOUT
+  // =========================
+  addInscription(
+    inscription: any
   ): Observable<any> {
 
     return this.http.post(
       this.apiUrl,
-      formation
+      inscription
     );
   }
 
   // =========================
-  // MODIFIER FORMATION
+  // MODIFIER
   // =========================
-  updateFormation(
+  updateInscription(
     id: number,
-    formation: any
+    inscription: any
   ): Observable<any> {
 
     return this.http.put(
       `${this.apiUrl}/${id}`,
-      formation
+      inscription
     );
   }
 
   // =========================
-  // SUPPRIMER FORMATION
+  // DELETE
   // =========================
-  deleteFormation(
+  deleteInscription(
     id: number
   ): Observable<any> {
 
     return this.http.delete(
-      `${this.apiUrl}/${id}`
-    );
-  }
-
-    // Formation par ID
-  getFormationById(
-    id: number
-  ): Observable<any> {
-
-    return this.http.get(
       `${this.apiUrl}/${id}`
     );
   }

@@ -4,7 +4,7 @@ import { Login } from './pages/login/login';
 
 import { Dashboard } from './pages/dashboard/dashboard';
 
-import { EtudiantDashboard } from './pages/etudiant-dashboard/etudiant-dashboard';
+import { DashboardEtudiant } from './pages/etudiant-dashboard/etudiant-dashboard';
 
 import { EnseignantDashboard } from './pages/enseignant-dashboard/enseignant-dashboard';
 
@@ -23,6 +23,8 @@ import { Reunions } from './pages/reunions/reunions';
 import { Users } from './pages/users/users';
 
 import { authGuard } from './guards/auth-guard';
+
+import { Inscriptions } from './pages/inscriptions/inscriptions';
 
 export const routes: Routes = [
 
@@ -47,7 +49,7 @@ component: Login
 {
   path: 'etudiant/dashboard',
 
-  component: EtudiantDashboard,
+  component: DashboardEtudiant,
 
   canActivate: [authGuard],
 
@@ -145,6 +147,20 @@ component: Formations
     roles: ['ADMIN']
   }
 },
+
+{
+  path: 'admin/inscriptions',
+
+  component: Inscriptions,
+
+  canActivate: [authGuard],
+
+  data: {
+
+    roles: ['ADMIN']
+  }
+},
+
 {
   path: '',
   redirectTo: 'login',

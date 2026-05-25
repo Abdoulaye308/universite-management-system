@@ -1,5 +1,9 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
+import { FormationService } from '../../services/formation.service';
+
+import { Formateur } from '../../services/formateur';
+
 import { CommonModule } from '@angular/common';
 
 import { FormsModule } from '@angular/forms';
@@ -24,6 +28,12 @@ export class Reunions implements OnInit {
 
   // Liste réunions
   reunions: any[] = [];
+
+  // Liste formations
+  formations: any[] = [];
+
+  // Liste formateurs
+  formateurs: any[] = [];
 
   // Formulaire
   reunion = {
@@ -51,7 +61,13 @@ export class Reunions implements OnInit {
 
   // Constructor
   constructor(
+
     private reunionService: Reunion,
+
+    private formationService: FormationService,
+
+    private formateurService: Formateur,
+
     private cdr: ChangeDetectorRef
 
   ) {
@@ -60,8 +76,11 @@ export class Reunions implements OnInit {
 
   // Chargement page
   ngOnInit(): void {
-
     this.getReunions();
+
+    this.getFormations();
+
+    this.getFormateurs();
   }
 
   // =========================
@@ -85,6 +104,48 @@ export class Reunions implements OnInit {
         }
       });
   }
+
+  // =========================
+// LISTE FORMATIONS
+// =========================
+getFormations() {
+
+  this.formationService
+    .getFormations()
+    .subscribe({
+
+      next: (data: any) => {
+
+        this.formations = data;
+      },
+
+      error: (error: any) => {
+
+        console.log(error);
+      }
+    });
+}
+
+// =========================
+// LISTE FORMATEURS
+// =========================
+getFormateurs() {
+
+  this.formateurService
+    .getFormateurs()
+    .subscribe({
+
+      next: (data: any) => {
+
+        this.formateurs = data;
+      },
+
+      error: (error: any) => {
+
+        console.log(error);
+      }
+    });
+}
 
   // =========================
   // AJOUT

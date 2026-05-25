@@ -53,4 +53,14 @@ updateStudent(
     student
   );
 }
+
+  // Étudiant par email
+  getStudentByEmail(
+    email: string
+  ): Observable<any> {
+
+    return this.http.get(
+      `${this.apiUrl}/email/${email}`
+    );
+  }
 }

@@ -4,6 +4,14 @@ import com.unchk.backend.entity.Student;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-// Repository JPA pour accéder à la table students
-public interface StudentRepository extends JpaRepository<Student, Long> {
+import java.util.Optional;
+
+// Repository JPA
+public interface StudentRepository
+        extends JpaRepository<Student, Long> {
+
+    // Rechercher étudiant par email
+    Optional<Student> findByEmail(
+            String email
+    );
 }

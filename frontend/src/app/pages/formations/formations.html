@@ -1,159 +1,144 @@
-<div class="container mt-4">
+<div class="page-shell">
 
-    <h2 class="mb-4">
-        Gestion des Formations
-    </h2>
+  <!-- HEADER -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Gestion des formations</h1>
+      <span class="page-sub">Ajouter, modifier ou supprimer des formations</span>
+    </div>
+  </div>
 
-    <!-- FORMULAIRE -->
-    <div class="card shadow p-4 mb-4">
+  <!-- FORMULAIRE -->
+  <div class="panel mb-4">
 
-        <h4 class="mb-3">
-
-            {{ editMode ? 'Modifier' : 'Ajouter' }}
-
-            une formation
-
-        </h4>
-
-        <form>
-
-            <div class="row">
-
-                <!-- Nom -->
-                <div class="col-md-4 mb-3">
-
-                    <input type="text" class="form-control" placeholder="Nom formation" [(ngModel)]="formation.nom"
-                        name="nom" required>
-
-                </div>
-
-                <!-- Type -->
-                <div class="col-md-4 mb-3">
-
-                    <input type="text" class="form-control" placeholder="Type formation"
-                        [(ngModel)]="formation.typeFormation" name="typeFormation" required>
-
-                </div>
-
-                <!-- Niveau -->
-                <div class="col-md-4 mb-3">
-
-                    <input type="text" class="form-control" placeholder="Niveau" [(ngModel)]="formation.niveau"
-                        name="niveau" required>
-
-                </div>
-
-                <!-- Date début -->
-                <div class="col-md-3 mb-3">
-
-                    <input type="date" class="form-control" [(ngModel)]="formation.dateDebut" name="dateDebut" required>
-
-                </div>
-
-                <!-- Date fin -->
-                <div class="col-md-3 mb-3">
-
-                    <input type="date" class="form-control" [(ngModel)]="formation.dateFin" name="dateFin" required>
-
-                </div>
-
-                <!-- Financement -->
-                <div class="col-md-3 mb-3">
-
-                    <input type="text" class="form-control" placeholder="Financement"
-                        [(ngModel)]="formation.financement" name="financement" required>
-
-                </div>
-
-                <!-- Hommes -->
-                <div class="col-md-1 mb-3">
-
-                    <input type="number" class="form-control" placeholder="H" [(ngModel)]="formation.nombreHommes"
-                        name="nombreHommes" required>
-
-                </div>
-
-                <!-- Femmes -->
-                <div class="col-md-2 mb-3">
-
-                    <input type="number" class="form-control" placeholder="F" [(ngModel)]="formation.nombreFemmes"
-                        name="nombreFemmes" required>
-
-                </div>
-
-            </div>
-
-            <!-- BUTTON -->
-            <button type="button" class="btn btn-primary" (click)="
-        editMode
-        ? updateFormation()
-        : addFormation()
-    ">
-
-                {{ editMode ? 'Modifier' : 'Ajouter' }}
-
-            </button>
-
-        </form>
-
+    <div class="panel-header">
+      <h2 class="panel-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        {{ editMode ? 'Modifier une formation' : 'Ajouter une formation' }}
+      </h2>
     </div>
 
-    <!-- TABLE -->
-<div class="card shadow p-4">
+    <form>
+      <div class="form-grid">
 
-    <h4 class="mb-3">
+        <div class="field">
+          <label class="field-label">Nom formation</label>
+          <input type="text" class="field-input" placeholder="Ex: Master GL" [(ngModel)]="formation.nom" name="nom" required>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Type formation</label>
+          <input type="text" class="field-input" placeholder="Ex: Master" [(ngModel)]="formation.typeFormation" name="typeFormation" required>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Niveau</label>
+          <input type="text" class="field-input" placeholder="Ex: Bac+5" [(ngModel)]="formation.niveau" name="niveau" required>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Date début</label>
+          <input type="date" class="field-input" [(ngModel)]="formation.dateDebut" name="dateDebut" required>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Date fin</label>
+          <input type="date" class="field-input" [(ngModel)]="formation.dateFin" name="dateFin" required>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Financement</label>
+          <input type="text" class="field-input" placeholder="Ex: Public" [(ngModel)]="formation.financement" name="financement" required>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Hommes</label>
+          <input type="number" class="field-input" placeholder="0" [(ngModel)]="formation.nombreHommes" name="nombreHommes" required>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Femmes</label>
+          <input type="number" class="field-input" placeholder="0" [(ngModel)]="formation.nombreFemmes" name="nombreFemmes" required>
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-primary" (click)="editMode ? updateFormation() : addFormation()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          {{ editMode ? 'Enregistrer les modifications' : 'Ajouter la formation' }}
+        </button>
+        <button *ngIf="editMode" type="button" class="btn-ghost" (click)="resetForm()">
+          Annuler
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- TABLE -->
+  <div class="panel">
+
+    <div class="panel-header">
+      <h2 class="panel-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
         Liste des formations
-    </h4>
-
-    <!-- Message de chargement / pas de données -->
-    <div *ngIf="formations.length === 0" class="alert alert-info">
-        ⏳ Chargement des formations...
+      </h2>
+      <span class="count-badge">{{ formations.length }}</span>
     </div>
 
-    <table class="table table-hover" *ngIf="formations.length > 0">
+    <!-- Chargement -->
+    <div *ngIf="formations.length === 0" class="empty-state">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      <span>Chargement des formations…</span>
+    </div>
 
+    <div class="table-wrap" *ngIf="formations.length > 0">
+      <table class="data-table">
         <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Type</th>
-                <th>Niveau</th>
-                <th>Date Début</th>
-                <th>Date Fin</th>
-                <th>Financement</th>
-                <th>Hommes</th>
-                <th>Femmes</th>
-                <th>Total</th>
-                <th>Actions</th>
-            </tr>
+          <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Type</th>
+            <th>Niveau</th>
+            <th>Date début</th>
+            <th>Date fin</th>
+            <th>Financement</th>
+            <th>H</th>
+            <th>F</th>
+            <th>Total</th>
+            <th>Actions</th>
+          </tr>
         </thead>
-
         <tbody>
-            <!-- Changement ici : utiliser *ngFor au lieu de @for -->
-            <tr *ngFor="let f of formations">
-                <td>{{ f.id }}</td>
-                <td>{{ f.nom }}</td>
-                <td>{{ f.typeFormation }}</td>
-                <td>{{ f.niveau }}</td>
-                <td>{{ f.dateDebut }}</td>
-                <td>{{ f.dateFin }}</td>
-                <td>{{ f.financement }}</td>
-                <td>{{ f.nombreHommes }}</td>
-                <td>{{ f.nombreFemmes }}</td>
-                <td>{{ f.nombreHommes + f.nombreFemmes }}</td>
-                <td>
-                    <button class="btn btn-warning btn-sm me-2" (click)="editFormation(f)">
-                        Modifier
-                    </button>
-                    <button class="btn btn-danger btn-sm" (click)="deleteFormation(f.id)">
-                        Supprimer
-                    </button>
-                </td>
-            </tr>
+          <tr *ngFor="let f of formations">
+            <td class="td-id">{{ f.id }}</td>
+            <td class="td-primary">{{ f.nom }}</td>
+            <td><span class="badge-type">{{ f.typeFormation }}</span></td>
+            <td><span class="badge-niveau">{{ f.niveau }}</span></td>
+            <td class="td-muted">{{ f.dateDebut }}</td>
+            <td class="td-muted">{{ f.dateFin }}</td>
+            <td>{{ f.financement }}</td>
+            <td class="td-num">{{ f.nombreHommes }}</td>
+            <td class="td-num">{{ f.nombreFemmes }}</td>
+            <td class="td-total">{{ f.nombreHommes + f.nombreFemmes }}</td>
+            <td>
+              <div class="action-group">
+                <button class="btn-edit" (click)="editFormation(f)">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  Modifier
+                </button>
+                <button class="btn-delete" (click)="deleteFormation(f.id)">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+                  Supprimer
+                </button>
+              </div>
+            </td>
+          </tr>
         </tbody>
+      </table>
+    </div>
 
-    </table>
-
-</div>
+  </div>
 
 </div>

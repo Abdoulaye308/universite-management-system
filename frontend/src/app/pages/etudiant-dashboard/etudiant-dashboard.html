@@ -1,1 +1,209 @@
-<p>etudiant-dashboard works!</p>
+<div class="container mt-4">
+
+  <!-- ===================== -->
+  <!-- HEADER -->
+  <!-- ===================== -->
+
+  <div class="d-flex justify-content-between">
+
+    <h2>
+      Dashboard Étudiant
+    </h2>
+
+    <button
+      class="btn btn-danger"
+      (click)="logout()"
+    >
+      Déconnexion
+    </button>
+
+  </div>
+
+  <hr>
+
+  <!-- ===================== -->
+  <!-- INFOS ÉTUDIANT -->
+  <!-- ===================== -->
+
+  <div
+    *ngIf="student"
+    class="card p-4 shadow"
+  >
+
+    <h4 class="mb-3">
+      Informations personnelles
+    </h4>
+
+    <p>
+      <strong>INE :</strong>
+      {{ student.ine }}
+    </p>
+
+    <p>
+      <strong>Nom :</strong>
+      {{ student.nom }}
+    </p>
+
+    <p>
+      <strong>Prénom :</strong>
+      {{ student.prenom }}
+    </p>
+
+    <p>
+      <strong>Email :</strong>
+      {{ student.email }}
+    </p>
+
+    <p>
+      <strong>Formation :</strong>
+      {{ student.formation }}
+    </p>
+
+    <p>
+      <strong>Promotion :</strong>
+      {{ student.promo }}
+    </p>
+
+    <p>
+      <strong>Diplôme :</strong>
+      {{ student.diplome }}
+    </p>
+
+  </div>
+  <!-- ===================== -->
+<!-- FORMATIONS -->
+<!-- ===================== -->
+
+<div class="card p-4 mt-4 shadow">
+
+  <h4 class="mb-3">
+    Mes formations
+  </h4>
+
+  <table
+    class="table table-bordered"
+    *ngIf="formations.length > 0"
+  >
+
+    <thead>
+
+    <tr>
+
+      <th>Nom</th>
+
+      <th>Type</th>
+
+      <th>Niveau</th>
+
+      <th>Date début</th>
+
+      <th>Date fin</th>
+
+    </tr>
+
+    </thead>
+
+    <tbody>
+
+    <tr *ngFor="let formation of formations">
+
+      <td>{{ formation.nom }}</td>
+
+      <td>{{ formation.typeFormation }}</td>
+
+      <td>{{ formation.niveau }}</td>
+
+      <td>{{ formation.dateDebut }}</td>
+
+      <td>{{ formation.dateFin }}</td>
+
+    </tr>
+
+    </tbody>
+
+  </table>
+
+  <div
+    *ngIf="formations.length === 0"
+    class="alert alert-info"
+  >
+
+    Aucune formation trouvée.
+
+  </div>
+
+</div>
+
+<!-- ===================== -->
+<!-- EMPLOIS DU TEMPS -->
+<!-- ===================== -->
+
+<div class="card p-4 mt-4 shadow">
+
+  <h4 class="mb-3">
+    Mon emploi du temps
+  </h4>
+
+  <table
+    class="table table-bordered"
+    *ngIf="emplois.length > 0"
+  >
+
+    <thead>
+
+    <tr>
+
+      <th>Formation</th>
+
+      <th>Jour</th>
+
+      <th>Début</th>
+
+      <th>Fin</th>
+
+      <th>Salle</th>
+
+      <th>Module</th>
+
+      <th>Enseignant</th>
+
+    </tr>
+
+    </thead>
+
+    <tbody>
+
+    <tr *ngFor="let emploi of emplois">
+
+      <td>{{ emploi.formation }}</td>
+
+      <td>{{ emploi.jour }}</td>
+
+      <td>{{ emploi.heureDebut }}</td>
+
+      <td>{{ emploi.heureFin }}</td>
+
+      <td>{{ emploi.salle }}</td>
+
+      <td>{{ emploi.module }}</td>
+
+      <td>{{ emploi.enseignant }}</td>
+
+    </tr>
+
+    </tbody>
+
+  </table>
+
+  <div
+    *ngIf="emplois.length === 0"
+    class="alert alert-info"
+  >
+
+    Aucun emploi du temps trouvé.
+
+  </div>
+
+</div>
+
+</div>

@@ -62,6 +62,13 @@ export class Login {
               response.token
             );
 
+            // Sauvegarder email
+localStorage.setItem(
+  'email',
+  this.email
+);
+
+
             // Sauvegarder rôle
             localStorage.setItem(
               'role',

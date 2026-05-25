@@ -40,6 +40,8 @@ export class Students implements OnInit {
 
     prenom: '',
 
+    email: '',
+
     dateNaissance: '',
 
     formation: '',
@@ -162,6 +164,8 @@ export class Students implements OnInit {
 
       prenom: student.prenom,
 
+      email: student.email,
+
       dateNaissance: student.dateNaissance,
 
       formation: student.formation,
@@ -221,6 +225,8 @@ export class Students implements OnInit {
       nom: '',
 
       prenom: '',
+
+      email: '',
 
       dateNaissance: '',
 

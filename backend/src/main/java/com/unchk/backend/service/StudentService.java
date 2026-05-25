@@ -45,6 +45,7 @@ public class StudentService {
         student.setIne(studentDetails.getIne());
         student.setNom(studentDetails.getNom());
         student.setPrenom(studentDetails.getPrenom());
+        student.setEmail(studentDetails.getEmail());
         student.setDateNaissance(studentDetails.getDateNaissance());
         student.setFormation(studentDetails.getFormation());
         student.setPromo(studentDetails.getPromo());
@@ -54,6 +55,19 @@ public class StudentService {
         student.setAutresFormations(studentDetails.getAutresFormations());
 
         return studentRepository.save(student);
+    }
+
+    // Rechercher étudiant par email
+    public Student getStudentByEmail(
+            String email
+    ) {
+
+        return studentRepository
+                .findByEmail(email)
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Etudiant introuvable"
+                        ));
     }
 
     // Supprimer étudiant
