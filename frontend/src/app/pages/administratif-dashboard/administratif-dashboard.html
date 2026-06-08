@@ -1,1 +1,126 @@
-<p>administratif-dashboard works!</p>
+<div class="container mt-4">
+
+  <!-- HEADER -->
+  <div
+    class="d-flex
+           justify-content-between
+           align-items-center
+           mb-4"
+  >
+
+    <div>
+
+      <h2>
+        Dashboard Administratif
+      </h2>
+
+      <p *ngIf="user">
+
+        Bienvenue
+
+        <strong>
+          {{ user.nom }}
+          {{ user.prenom }}
+        </strong>
+
+      </p>
+
+      <p *ngIf="user">
+
+        Service :
+
+        <strong>
+          {{ user.service }}
+        </strong>
+
+      </p>
+
+    </div>
+
+    <button
+      class="btn btn-danger"
+      (click)="logout()"
+    >
+      Déconnexion
+    </button>
+
+  </div>
+
+  <!-- ===================== -->
+  <!-- RÉUNIONS -->
+  <!-- ===================== -->
+
+  <div class="card p-3">
+
+    <h4>
+      Réunions de mon service
+    </h4>
+
+    <table
+      class="table
+             table-bordered
+             table-striped"
+    >
+
+      <thead>
+
+        <tr>
+
+          <th>Type</th>
+
+          <th>Sujet</th>
+
+          <th>Date</th>
+
+          <th>Heure</th>
+
+          <th>Salle</th>
+
+          <th>Service</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <tr
+          *ngFor="
+            let reunion
+            of reunions
+          "
+        >
+
+          <td>
+            {{ reunion.type }}
+          </td>
+
+          <td>
+            {{ reunion.sujet }}
+          </td>
+
+          <td>
+            {{ reunion.date }}
+          </td>
+
+          <td>
+            {{ reunion.heure }}
+          </td>
+
+          <td>
+            {{ reunion.salle }}
+          </td>
+
+          <td>
+            {{ reunion.serviceConcerne }}
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

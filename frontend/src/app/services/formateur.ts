@@ -66,4 +66,14 @@ export class Formateur {
       `${this.apiUrl}/${id}`
     );
   }
+
+  getByEmail(
+  email: string
+): Observable<any> {
+
+  return this.http.get(
+
+    `${this.apiUrl}/email/${email}`
+  );
+}
 }

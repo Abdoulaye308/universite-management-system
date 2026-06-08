@@ -1,14 +1,18 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-
-import { FormationService } from '../../services/formation.service';
-
-import { Formateur } from '../../services/formateur';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef
+} from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
 import { FormsModule } from '@angular/forms';
 
 import { Reunion } from '../../services/reunion';
+
+import { FormationService } from '../../services/formation.service';
+
+import { Formateur } from '../../services/formateur';
 
 @Component({
   selector: 'app-reunions',
@@ -24,18 +28,23 @@ import { Reunion } from '../../services/reunion';
 
   styleUrl: './reunions.css'
 })
-export class Reunions implements OnInit {
+export class Reunions
+  implements OnInit {
 
-  // Liste réunions
+  // =========================
+  // LISTES
+  // =========================
+
   reunions: any[] = [];
 
-  // Liste formations
   formations: any[] = [];
 
-  // Liste formateurs
   formateurs: any[] = [];
 
-  // Formulaire
+  // =========================
+  // FORMULAIRE
+  // =========================
+
   reunion = {
 
     type: '',
@@ -50,16 +59,31 @@ export class Reunions implements OnInit {
 
     participants: '',
 
-    compteRendu: ''
+    formationId: 0,
+
+    formationNom: '',
+
+    formateurId: 0,
+
+    formateurNom: '',
+
+    compteRendu: '',
+
+    serviceConcerne: ''
   };
 
-  // Mode édition
+  // =========================
+  // MODE ÉDITION
+  // =========================
+
   editMode = false;
 
-  // ID édition
   editReunionId = 0;
 
-  // Constructor
+  // =========================
+  // CONSTRUCTOR
+  // =========================
+
   constructor(
 
     private reunionService: Reunion,
@@ -74,8 +98,12 @@ export class Reunions implements OnInit {
 
   }
 
-  // Chargement page
+  // =========================
+  // INIT
+  // =========================
+
   ngOnInit(): void {
+
     this.getReunions();
 
     this.getFormations();
@@ -84,18 +112,20 @@ export class Reunions implements OnInit {
   }
 
   // =========================
-  // LISTE
+  // LISTE RÉUNIONS
   // =========================
+
   getReunions() {
 
-    this.reunionService.getReunions()
+    this.reunionService
+      .getReunions()
       .subscribe({
 
         next: (data: any) => {
 
           this.reunions = data;
-          this.cdr.detectChanges();
 
+          this.cdr.detectChanges();
         },
 
         error: (error: any) => {
@@ -106,80 +136,125 @@ export class Reunions implements OnInit {
   }
 
   // =========================
-// LISTE FORMATIONS
-// =========================
-getFormations() {
+  // LISTE FORMATIONS
+  // =========================
 
-  this.formationService
-    .getFormations()
-    .subscribe({
+  getFormations() {
 
-      next: (data: any) => {
+    this.formationService
+      .getFormations()
+      .subscribe({
 
-        this.formations = data;
-      },
+        next: (data: any) => {
 
-      error: (error: any) => {
+          this.formations = data;
+        },
 
-        console.log(error);
-      }
-    });
-}
+        error: (error: any) => {
 
-// =========================
-// LISTE FORMATEURS
-// =========================
-getFormateurs() {
+          console.log(error);
+        }
+      });
+  }
 
-  this.formateurService
-    .getFormateurs()
-    .subscribe({
+  // =========================
+  // LISTE FORMATEURS
+  // =========================
 
-      next: (data: any) => {
+  getFormateurs() {
 
-        this.formateurs = data;
-      },
+    this.formateurService
+      .getFormateurs()
+      .subscribe({
 
-      error: (error: any) => {
+        next: (data: any) => {
 
-        console.log(error);
-      }
-    });
-}
+          this.formateurs = data;
+        },
+
+        error: (error: any) => {
+
+          console.log(error);
+        }
+      });
+  }
+
+  // =========================
+  // CHANGEMENT FORMATION
+  // =========================
+
+  onFormationChange() {
+
+    const formation = this.formations.find(
+
+      (f: any) =>
+        f.id == this.reunion.formationId
+    );
+
+    if (formation) {
+
+      this.reunion.formationNom =
+        formation.nom;
+    }
+  }
+
+  // =========================
+  // CHANGEMENT FORMATEUR
+  // =========================
+
+  onFormateurChange() {
+
+    const formateur = this.formateurs.find(
+
+      (f: any) =>
+        f.id == this.reunion.formateurId
+    );
+
+    if (formateur) {
+
+      this.reunion.formateurNom =
+        formateur.nom +
+        ' ' +
+        formateur.prenom;
+    }
+  }
 
   // =========================
   // AJOUT
   // =========================
+
   addReunion() {
 
-    this.reunionService.addReunion(
-      this.reunion
-    ).subscribe({
+    this.reunionService
+      .addReunion(this.reunion)
+      .subscribe({
 
-      next: () => {
+        next: () => {
 
-        this.getReunions();
+          this.getReunions();
 
-        this.resetForm();
+          this.resetForm();
 
-        alert('Réunion ajoutée');
-      },
+          alert('Réunion ajoutée');
+        },
 
-      error: (error: any) => {
+        error: (error: any) => {
 
-        console.log(error);
-      }
-    });
+          console.log(error);
+        }
+      });
   }
 
   // =========================
   // ÉDITION
   // =========================
+
   editReunion(reunion: any) {
 
     this.editMode = true;
 
-    this.editReunionId = reunion.id;
+    this.editReunionId =
+      reunion.id;
 
     this.reunion = {
 
@@ -195,51 +270,74 @@ getFormateurs() {
 
       participants: reunion.participants,
 
-      compteRendu: reunion.compteRendu
+      formationId:
+        reunion.formationId,
+
+      formationNom:
+        reunion.formationNom,
+
+      formateurId:
+        reunion.formateurId,
+
+      formateurNom:
+        reunion.formateurNom,
+
+      compteRendu:
+        reunion.compteRendu,
+
+        serviceConcerne:
+        reunion.serviceConcerne
     };
   }
 
   // =========================
   // UPDATE
   // =========================
+
   updateReunion() {
 
-    this.reunionService.updateReunion(
-      this.editReunionId,
-      this.reunion
-    ).subscribe({
-
-      next: () => {
-
-        this.getReunions();
-
-        this.editMode = false;
-
-        this.resetForm();
-
-        alert('Réunion modifiée');
-      },
-
-      error: (error: any) => {
-
-        console.log(error);
-      }
-    });
-  }
-
-  // =========================
-  // DELETE
-  // =========================
-  deleteReunion(id: number) {
-
-    this.reunionService.deleteReunion(id)
+    this.reunionService
+      .updateReunion(
+        this.editReunionId,
+        this.reunion
+      )
       .subscribe({
 
         next: () => {
 
           this.getReunions();
 
-          alert('Réunion supprimée');
+          this.editMode = false;
+
+          this.resetForm();
+
+          alert('Réunion modifiée');
+        },
+
+        error: (error: any) => {
+
+          console.log(error);
+        }
+      });
+  }
+
+  // =========================
+  // DELETE
+  // =========================
+
+  deleteReunion(id: number) {
+
+    this.reunionService
+      .deleteReunion(id)
+      .subscribe({
+
+        next: () => {
+
+          this.getReunions();
+
+          alert(
+            'Réunion supprimée'
+          );
         },
 
         error: (error: any) => {
@@ -252,6 +350,7 @@ getFormateurs() {
   // =========================
   // RESET
   // =========================
+
   resetForm() {
 
     this.reunion = {
@@ -268,7 +367,17 @@ getFormateurs() {
 
       participants: '',
 
-      compteRendu: ''
+      formationId: 0,
+
+      formationNom: '',
+
+      formateurId: 0,
+
+      formateurNom: '',
+
+      compteRendu: '',
+
+      serviceConcerne: ''
     };
   }
 }

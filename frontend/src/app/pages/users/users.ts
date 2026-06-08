@@ -36,7 +36,9 @@ export class Users implements OnInit {
 
     password: '',
 
-    role: 'ETUDIANT'
+    role: 'ETUDIANT',
+
+    service: ''
   };
 
   // Mode édition
@@ -46,10 +48,10 @@ export class Users implements OnInit {
   editUserId = 0;
 
   // Constructor
- constructor(
-  private userService: User,
-  private cdr: ChangeDetectorRef
-) { }
+  constructor(
+    private userService: User,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   // Chargement page
   ngOnInit(): void {
@@ -60,18 +62,18 @@ export class Users implements OnInit {
   // =========================
   // CHARGER USERS
   // =========================
- getUsers() {
-  this.userService.getUsers()
-    .subscribe({
-      next: (data: any) => {
-        this.users = [...data];
-        this.cdr.detectChanges();
-      },
-      error: (error: any) => {
-        console.log(error);
-      }
-    });
-}
+  getUsers() {
+    this.userService.getUsers()
+      .subscribe({
+        next: (data: any) => {
+          this.users = [...data];
+          this.cdr.detectChanges();
+        },
+        error: (error: any) => {
+          console.log(error);
+        }
+      });
+  }
 
 
   // =========================
@@ -122,7 +124,10 @@ export class Users implements OnInit {
 
       password: '',
 
-      role: user.role
+      role: user.role,
+
+      service: user.service
+
     };
   }
 
@@ -179,6 +184,8 @@ export class Users implements OnInit {
       });
   }
 
+
+
   // =========================
   // RESET FORM
   // =========================
@@ -194,7 +201,10 @@ export class Users implements OnInit {
 
       password: '',
 
-      role: 'ETUDIANT'
+      role: 'ETUDIANT',
+
+      service: ''
+
     };
   }
 }

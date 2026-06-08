@@ -1,1 +1,176 @@
-<p>enseignant-dashboard works!</p>
+<div class="container mt-4">
+
+  <!-- TITRE -->
+  <div class="d-flex
+              justify-content-between
+              align-items-center
+              mb-4">
+
+    <div>
+
+      <h2>
+        Dashboard Enseignant
+      </h2>
+
+      <p *ngIf="formateur">
+
+        Bienvenue
+
+        <strong>
+          {{ formateur.nom }}
+          {{ formateur.prenom }}
+        </strong>
+
+      </p>
+
+    </div>
+
+    <button
+      class="btn btn-danger"
+      (click)="logout()"
+    >
+      Déconnexion
+    </button>
+
+  </div>
+
+  <!-- ===================== -->
+  <!-- RÉUNIONS -->
+  <!-- ===================== -->
+
+  <div class="card p-3 mb-4">
+
+    <h4>
+      Mes réunions
+    </h4>
+
+    <table
+      class="table table-bordered"
+    >
+
+      <thead>
+
+        <tr>
+
+          <th>Sujet</th>
+
+          <th>Date</th>
+
+          <th>Heure</th>
+
+          <th>Salle</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <tr
+          *ngFor="
+            let reunion
+            of reunions
+          "
+        >
+
+          <td>
+            {{ reunion.sujet }}
+          </td>
+
+          <td>
+            {{ reunion.date }}
+          </td>
+
+          <td>
+            {{ reunion.heure }}
+          </td>
+
+          <td>
+            {{ reunion.salle }}
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <!-- ===================== -->
+  <!-- EMPLOIS -->
+  <!-- ===================== -->
+
+  <div class="card p-3">
+
+    <h4>
+      Mes emplois du temps
+    </h4>
+
+    <table
+      class="table table-striped
+             table-bordered"
+    >
+
+      <thead>
+
+        <tr>
+
+          <th>Formation</th>
+
+          <th>Jour</th>
+
+          <th>Heure début</th>
+
+          <th>Heure fin</th>
+
+          <th>Module</th>
+
+          <th>Salle</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <tr
+          *ngFor="
+            let emploi
+            of emplois
+          "
+        >
+
+          <td>
+            {{ emploi.formation }}
+          </td>
+
+          <td>
+            {{ emploi.jour }}
+          </td>
+
+          <td>
+            {{ emploi.heureDebut }}
+          </td>
+
+          <td>
+            {{ emploi.heureFin }}
+          </td>
+
+          <td>
+            {{ emploi.module }}
+          </td>
+
+          <td>
+            {{ emploi.salle }}
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

@@ -64,4 +64,15 @@ public class FormateurService {
 
         repository.deleteById(id);
     }
+
+    public Formateur getByEmail(
+            String email
+    ) {
+
+        return repository.findByEmail(email)
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Formateur introuvable"
+                        ));
+    }
 }

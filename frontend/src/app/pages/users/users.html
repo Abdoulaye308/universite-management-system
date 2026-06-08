@@ -15,65 +15,59 @@
       <!-- Nom -->
       <div class="col-md-6 mb-3">
 
-        <label>
-          Nom
-        </label>
+        <label>Nom</label>
 
         <input
           type="text"
           class="form-control"
           [(ngModel)]="user.nom"
         >
+
       </div>
 
       <!-- Prénom -->
       <div class="col-md-6 mb-3">
 
-        <label>
-          Prénom
-        </label>
+        <label>Prénom</label>
 
         <input
           type="text"
           class="form-control"
           [(ngModel)]="user.prenom"
         >
+
       </div>
 
       <!-- Email -->
       <div class="col-md-6 mb-3">
 
-        <label>
-          Email
-        </label>
+        <label>Email</label>
 
         <input
           type="email"
           class="form-control"
           [(ngModel)]="user.email"
         >
+
       </div>
 
-      <!-- Password -->
+      <!-- Mot de passe -->
       <div class="col-md-6 mb-3">
 
-        <label>
-          Mot de passe
-        </label>
+        <label>Mot de passe</label>
 
         <input
           type="password"
           class="form-control"
           [(ngModel)]="user.password"
         >
+
       </div>
 
-      <!-- Role -->
+      <!-- Rôle -->
       <div class="col-md-6 mb-3">
 
-        <label>
-          Rôle
-        </label>
+        <label>Rôle</label>
 
         <select
           class="form-select"
@@ -97,13 +91,62 @@
           </option>
 
         </select>
+
+      </div>
+
+      <!-- Service -->
+      <div
+        class="col-md-6 mb-3"
+        *ngIf="user.role === 'ADMINISTRATIF'"
+      >
+
+        <label>Service</label>
+
+        <select
+          class="form-select"
+          [(ngModel)]="user.service"
+        >
+
+          <option value="">
+            Choisir un service
+          </option>
+
+          <option value="Scolarité">
+            Scolarité
+          </option>
+
+          <option value="Pédagogie">
+            Pédagogie
+          </option>
+
+          <option value="Finance">
+            Finance
+          </option>
+
+          <option value="Informatique">
+            Informatique
+          </option>
+
+          <option value="Administration">
+            Administration
+          </option>
+
+          <option value="Ressources Humaines">
+            Ressources Humaines
+          </option>
+
+          <option value="Stages">
+            Stages
+          </option>
+
+        </select>
+
       </div>
 
     </div>
 
     <!-- Boutons -->
 
-    <!-- Ajouter -->
     <button
       *ngIf="!editMode"
       class="btn btn-primary"
@@ -112,7 +155,6 @@
       Ajouter
     </button>
 
-    <!-- Modifier -->
     <button
       *ngIf="editMode"
       class="btn btn-warning"
@@ -124,66 +166,78 @@
   </div>
 
   <!-- ===================== -->
-  <!-- TABLE USERS -->
+  <!-- TABLEAU -->
   <!-- ===================== -->
 
   <table class="table table-bordered table-striped">
 
     <thead>
 
-    <tr>
+      <tr>
 
-      <th>ID</th>
+        <th>ID</th>
 
-      <th>Nom</th>
+        <th>Nom</th>
 
-      <th>Prénom</th>
+        <th>Prénom</th>
 
-      <th>Email</th>
+        <th>Email</th>
 
-      <th>Rôle</th>
+        <th>Rôle</th>
 
-      <th>Actions</th>
+        <th>Service</th>
 
-    </tr>
+        <th>Actions</th>
+
+      </tr>
 
     </thead>
 
     <tbody>
 
-    <tr *ngFor="let u of users">
+      <tr *ngFor="let u of users">
 
-      <td>{{ u.id }}</td>
+        <td>{{ u.id }}</td>
 
-      <td>{{ u.nom }}</td>
+        <td>{{ u.nom }}</td>
 
-      <td>{{ u.prenom }}</td>
+        <td>{{ u.prenom }}</td>
 
-      <td>{{ u.email }}</td>
+        <td>{{ u.email }}</td>
 
-      <td>{{ u.role }}</td>
+        <td>{{ u.role }}</td>
 
-      <td>
+        <td>
 
-        <!-- Modifier -->
-        <button
-          class="btn btn-warning btn-sm me-2"
-          (click)="editUser(u)"
-        >
-          Modifier
-        </button>
+          <span *ngIf="u.service">
+            {{ u.service }}
+          </span>
 
-        <!-- Supprimer -->
-        <button
-          class="btn btn-danger btn-sm"
-          (click)="deleteUser(u.id)"
-        >
-          Supprimer
-        </button>
+          <span *ngIf="!u.service">
+            -
+          </span>
 
-      </td>
+        </td>
 
-    </tr>
+        <td>
+
+          <button
+            class="btn btn-warning btn-sm me-2"
+            (click)="editUser(u)"
+          >
+            Modifier
+          </button>
+
+          <button
+            class="btn btn-danger btn-sm"
+            (click)="deleteUser(u.id)"
+          >
+            Supprimer
+          </button>
+
+        </td>
+
+      </tr>
 
     </tbody>
 

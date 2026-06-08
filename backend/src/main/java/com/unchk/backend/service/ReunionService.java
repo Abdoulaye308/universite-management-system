@@ -54,6 +54,24 @@ public class ReunionService {
         reunion.setSalle(details.getSalle());
         reunion.setParticipants(details.getParticipants());
         reunion.setCompteRendu(details.getCompteRendu());
+        reunion.setFormationId(
+                details.getFormationId()
+        );
+
+        reunion.setFormationNom(
+                details.getFormationNom()
+        );
+
+        reunion.setFormateurId(
+                details.getFormateurId()
+        );
+
+        reunion.setFormateurNom(
+                details.getFormateurNom()
+        );
+        reunion.setServiceConcerne(
+                details.getServiceConcerne()
+        );
 
         return repository.save(reunion);
     }

@@ -12,10 +12,12 @@
 
     <div class="row">
 
-      <!-- Type -->
+      <!-- TYPE -->
       <div class="col-md-4 mb-3">
 
-        <label>Type réunion</label>
+        <label>
+          Type réunion
+        </label>
 
         <select
           class="form-select"
@@ -35,136 +37,200 @@
           </option>
 
         </select>
+
       </div>
 
-      <!-- Sujet -->
+      <!-- SUJET -->
       <div class="col-md-8 mb-3">
 
-        <label>Sujet</label>
+        <label>
+          Sujet
+        </label>
 
         <input
           type="text"
           class="form-control"
           [(ngModel)]="reunion.sujet"
         >
+
       </div>
 
-      <!-- Date -->
+      <!-- DATE -->
       <div class="col-md-4 mb-3">
 
-        <label>Date</label>
+        <label>
+          Date
+        </label>
 
         <input
           type="date"
           class="form-control"
           [(ngModel)]="reunion.date"
         >
+
       </div>
 
-      <!-- Heure -->
+      <!-- HEURE -->
       <div class="col-md-4 mb-3">
 
-        <label>Heure</label>
+        <label>
+          Heure
+        </label>
 
         <input
           type="time"
           class="form-control"
           [(ngModel)]="reunion.heure"
         >
+
       </div>
 
-      <!-- Salle -->
+      <!-- SALLE -->
       <div class="col-md-4 mb-3">
 
-        <label>Salle</label>
+        <label>
+          Salle
+        </label>
 
         <input
           type="text"
           class="form-control"
           [(ngModel)]="reunion.salle"
         >
+
       </div>
 
-      <!-- Formation -->
+      <!-- FORMATION -->
+      <div class="col-md-6 mb-3">
+
+        <label>
+          Formation concernée
+        </label>
+
+        <select
+          class="form-select"
+          [(ngModel)]="reunion.formationId"
+          (change)="onFormationChange()"
+        >
+
+          <option value="0">
+            Choisir une formation
+          </option>
+
+          <option
+            *ngFor="let formation of formations"
+            [value]="formation.id"
+          >
+
+            {{ formation.nom }}
+
+          </option>
+
+        </select>
+
+      </div>
+
+      <!-- FORMATEUR -->
+      <div class="col-md-6 mb-3">
+
+        <label>
+          Formateur concerné
+        </label>
+
+        <select
+          class="form-select"
+          [(ngModel)]="reunion.formateurId"
+          (change)="onFormateurChange()"
+        >
+
+          <option value="0">
+            Choisir un formateur
+          </option>
+
+          <option
+            *ngFor="let formateur of formateurs"
+            [value]="formateur.id"
+          >
+
+            {{ formateur.nom }}
+            {{ formateur.prenom }}
+            -
+            {{ formateur.specialite }}
+
+          </option>
+
+        </select>
+
+      </div>
+      <!-- SERVICE -->
 <div class="col-md-6 mb-3">
 
-  <label>Formation concernée</label>
+  <label>
+    Service concerné
+  </label>
 
   <select
     class="form-select"
-    [(ngModel)]="reunion.sujet"
+    [(ngModel)]="reunion.serviceConcerne"
   >
 
     <option value="">
-      Choisir une formation
+      Choisir un service
     </option>
 
-    <option
-      *ngFor="let formation of formations"
-      [value]="formation.nom"
-    >
-      {{ formation.nom }}
+    <option value="Scolarité">
+      Scolarité
+    </option>
+
+    <option value="Pédagogie">
+      Pédagogie
+    </option>
+
+    <option value="Direction">
+      Direction
+    </option>
+
+    <option value="Finance">
+      Finance
     </option>
 
   </select>
 
 </div>
 
-<!-- Formateur -->
-<div class="col-md-6 mb-3">
-
-  <label>Formateur</label>
-
-  <select
-    class="form-select"
-    [(ngModel)]="reunion.participants"
-  >
-
-    <option value="">
-      Choisir un formateur
-    </option>
-
-    <option
-      *ngFor="let formateur of formateurs"
-      [value]="formateur.nom + ' ' + formateur.prenom"
-    >
-      {{ formateur.nom }}
-      {{ formateur.prenom }}
-      -
-      {{ formateur.specialite }}
-    </option>
-
-  </select>
-
-</div>
-
-      <!-- Participants -->
+      <!-- PARTICIPANTS -->
       <div class="col-md-12 mb-3">
 
-        <label>Participants</label>
+        <label>
+          Participants
+        </label>
 
         <input
           type="text"
           class="form-control"
           [(ngModel)]="reunion.participants"
         >
+
       </div>
 
-      <!-- Compte rendu -->
+      <!-- COMPTE RENDU -->
       <div class="col-md-12 mb-3">
 
-        <label>Compte rendu</label>
+        <label>
+          Compte rendu
+        </label>
 
         <textarea
           rows="5"
           class="form-control"
           [(ngModel)]="reunion.compteRendu"
         ></textarea>
+
       </div>
 
     </div>
 
-    <!-- Boutons -->
+    <!-- BOUTONS -->
 
     <button
       *ngIf="!editMode"
@@ -188,89 +254,102 @@
   <!-- TABLE -->
   <!-- ===================== -->
 
-  <table class="table table-bordered table-striped">
+  <table
+    class="table table-bordered table-striped"
+  >
 
     <thead>
 
-    <tr>
+      <tr>
 
-      <th>ID</th>
+        <th>ID</th>
 
-      <th>Type</th>
+        <th>Type</th>
 
-      <th>Sujet</th>
+        <th>Sujet</th>
 
-      <th>Date</th>
+        <th>Formation</th>
 
-      <th>Heure</th>
+        <th>Formateur</th>
 
-      <th>Salle</th>
+        <th>Date</th>
 
-      <th>Participants</th>
+        <th>Heure</th>
 
-      <th>Compte rendu</th>
+        <th>Salle</th>
 
-      <th>Actions</th>
+        <th>Participants</th>
 
-    </tr>
+        <th>Compte rendu</th>
+
+        <th>Actions</th>
+
+      </tr>
 
     </thead>
 
     <tbody>
 
-    <tr *ngFor="let r of reunions">
+      <tr *ngFor="let r of reunions">
 
-      <td>{{ r.id }}</td>
+        <td>{{ r.id }}</td>
 
-      <td>{{ r.type }}</td>
+        <td>{{ r.type }}</td>
 
-      <td>{{ r.sujet }}</td>
+        <td>{{ r.sujet }}</td>
 
-      <td>{{ r.date }}</td>
+        <td>{{ r.formationNom }}</td>
 
-      <td>{{ r.heure }}</td>
+        <td>{{ r.formateurNom }}</td>
 
-      <td>{{ r.salle }}</td>
+        <td>{{ r.date }}</td>
 
-      <td>{{ r.participants }}</td>
+        <td>{{ r.heure }}</td>
 
-      <!-- Compte rendu -->
-      <td>
+        <td>{{ r.salle }}</td>
 
-        <div
-          style="
-            max-width: 250px;
-            max-height: 120px;
-            overflow: auto;
-            white-space: pre-wrap;
-          "
-        >
-          {{ r.compteRendu }}
-        </div>
+        <td>{{ r.participants }}</td>
 
-      </td>
+        <!-- COMPTE RENDU -->
+        <td>
 
-      <td>
+          <div
+            style="
+              max-width: 250px;
+              max-height: 120px;
+              overflow: auto;
+              white-space: pre-wrap;
+            "
+          >
 
-        <!-- Modifier -->
-        <button
-          class="btn btn-warning btn-sm me-2"
-          (click)="editReunion(r)"
-        >
-          Modifier
-        </button>
+            {{ r.compteRendu }}
 
-        <!-- Supprimer -->
-        <button
-          class="btn btn-danger btn-sm"
-          (click)="deleteReunion(r.id)"
-        >
-          Supprimer
-        </button>
+          </div>
 
-      </td>
+        </td>
 
-    </tr>
+        <!-- ACTIONS -->
+        <td>
+
+          <!-- MODIFIER -->
+          <button
+            class="btn btn-warning btn-sm me-2"
+            (click)="editReunion(r)"
+          >
+            Modifier
+          </button>
+
+          <!-- DELETE -->
+          <button
+            class="btn btn-danger btn-sm"
+            (click)="deleteReunion(r.id)"
+          >
+            Supprimer
+          </button>
+
+        </td>
+
+      </tr>
 
     </tbody>
 

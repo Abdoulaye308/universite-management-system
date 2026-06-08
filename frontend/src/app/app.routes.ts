@@ -6,9 +6,9 @@ import { Dashboard } from './pages/dashboard/dashboard';
 
 import { DashboardEtudiant } from './pages/etudiant-dashboard/etudiant-dashboard';
 
-import { EnseignantDashboard } from './pages/enseignant-dashboard/enseignant-dashboard';
+import { DashboardEnseignant } from './pages/enseignant-dashboard/enseignant-dashboard';
 
-import { AdministratifDashboard } from './pages/administratif-dashboard/administratif-dashboard';
+import { DashboardAdministratif } from './pages/administratif-dashboard/administratif-dashboard';
 
 import { Students } from './pages/students/students';
 
@@ -62,7 +62,7 @@ component: Login
 {
   path: 'enseignant/dashboard',
 
-  component: EnseignantDashboard,
+  component: DashboardEnseignant,
 
   canActivate: [authGuard],
 
@@ -75,7 +75,7 @@ component: Login
 {
   path: 'administratif/dashboard',
 
-  component: AdministratifDashboard,
+  component: DashboardAdministratif,
 
   canActivate: [authGuard],
 

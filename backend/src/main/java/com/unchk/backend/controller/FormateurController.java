@@ -63,4 +63,12 @@ public class FormateurController {
 
         return "Formateur supprimé avec succès";
     }
+
+    @GetMapping("/email/{email}")
+    public Formateur getByEmail(
+            @PathVariable String email
+    ) {
+
+        return service.getByEmail(email);
+    }
 }

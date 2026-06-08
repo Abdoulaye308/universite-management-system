@@ -4,6 +4,8 @@ import com.unchk.backend.entity.User;
 
 import com.unchk.backend.repository.UserRepository;
 
+import com.unchk.backend.service.UserService;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +22,7 @@ public class UserController {
 
     // Injection repository
     private final UserRepository userRepository;
+    private final UserService service;
 
     // Encodeur password
     private final PasswordEncoder passwordEncoder;
@@ -73,6 +76,8 @@ public class UserController {
 
         user.setRole(updatedUser.getRole());
 
+        user.setService(updatedUser.getService());
+
         // Modifier password seulement si rempli
         if (
                 updatedUser.getPassword() != null &&
@@ -101,4 +106,17 @@ public class UserController {
 
         return "Utilisateur supprimé";
     }
+
+    // =========================
+    // RECHERCHE EMAIL
+    // =========================
+
+    @GetMapping("/email/{email}")
+    public User getByEmail(
+            @PathVariable String email
+    ) {
+
+        return service.getByEmail(email);
+    }
+
 }

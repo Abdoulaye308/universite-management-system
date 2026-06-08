@@ -7,8 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-@Entity // Table SQL
+@Entity
 @Table(name = "reunions")
 @Getter
 @Setter
@@ -17,33 +16,45 @@ import lombok.Setter;
 @Builder
 public class Reunion {
 
-    // Clé primaire
     @Id
-
-    // ID auto incrémenté
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     // Type réunion
-    // Tutorat, Cours, Evaluation
     private String type;
 
-    // Sujet réunion
+    // Sujet
     private String sujet;
 
-    // Date réunion
+    // Date
     private String date;
 
-    // Heure réunion
+    // Heure
     private String heure;
 
     // Salle
     private String salle;
 
-    // Participants
+    // =========================
+    // FORMATION
+    // =========================
+    private Long formationId;
+
+    private String formationNom;
+
+    // =========================
+    // FORMATEUR
+    // =========================
+    private Long formateurId;
+
+    private String formateurNom;
+
+    // Participants texte libre
     private String participants;
 
     // Compte rendu
     @Column(length = 5000)
     private String compteRendu;
+
+    private String serviceConcerne;
 }
