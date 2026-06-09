@@ -12,6 +12,8 @@ from '../../services/reunion';
 import { User }
 from '../../services/user';
 
+import { Document }
+  from '../../services/document';
 @Component({
   selector:
     'app-dashboard-administratif',
@@ -43,6 +45,8 @@ export class DashboardAdministratif
 
   reunions: any[] = [];
 
+  documents: any[] = [];
+
   // =========================
   // CONSTRUCTOR
   // =========================
@@ -54,6 +58,8 @@ export class DashboardAdministratif
     private userService: User,
 
     private reunionService: Reunion,
+
+    private documentService: Document,
         private cdr: ChangeDetectorRef
 
 
@@ -74,6 +80,7 @@ export class DashboardAdministratif
         this.user = { ...data };
         console.log(this.user);
         this.loadReunions();
+        this.loadDocuments();
         // Pas de cdr.detectChanges() ici
       },
       error: (error: any) => { console.log(error); }
@@ -98,6 +105,21 @@ export class DashboardAdministratif
     },
     error: (error: any) => { console.log(error); }
   });
+}
+
+loadDocuments() {
+
+  this.documentService
+    .getDocumentsByRole(
+      'ADMINISTRATIF'
+    )
+    .subscribe({
+
+      next: (data: any) => {
+
+        this.documents = data;
+      }
+    });
 }
 
   // =========================

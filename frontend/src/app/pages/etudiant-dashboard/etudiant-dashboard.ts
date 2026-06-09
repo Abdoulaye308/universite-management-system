@@ -10,6 +10,8 @@ import { Emploi } from '../../services/emploi';
 import { CommonModule } from '@angular/common';
 
 import { Student } from '../../services/student';
+import { Document }
+  from '../../services/document';
 
 @Component({
   selector: 'app-dashboard-etudiant',
@@ -34,6 +36,8 @@ export class DashboardEtudiant
   // Emplois du temps étudiant
   emplois: any[] = [];
 
+  documents: any[] = [];
+
   // Constructor
   constructor(
 
@@ -43,6 +47,7 @@ export class DashboardEtudiant
     private formationService: FormationService,
     private studentService: Student,
     private emploiService: Emploi,
+    private documentService: Document,
     private cdr: ChangeDetectorRef   // ← ajout
 
   ) {
@@ -72,6 +77,7 @@ export class DashboardEtudiant
 
             // Charger ses inscriptions
             this.loadStudentFormations();
+            this.loadDocuments();
 
             this.cdr.detectChanges();
 
@@ -150,6 +156,21 @@ export class DashboardEtudiant
       console.log(error);
     }
   });
+}
+
+loadDocuments() {
+
+  this.documentService
+    .getDocumentsByRole(
+      'ETUDIANT'
+    )
+    .subscribe({
+
+      next: (data: any) => {
+
+        this.documents = data;
+      }
+    });
 }
   // =========================
   // DÉCONNEXION

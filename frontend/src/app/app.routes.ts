@@ -162,6 +162,16 @@ component: Formations
 },
 
 {
+  path: 'documents',
+  loadComponent: () =>
+    import(
+      './pages/documents/documents'
+    ).then(
+      m => m.Documents
+    )
+},
+
+{
   path: '',
   redirectTo: 'login',
   pathMatch: 'full'

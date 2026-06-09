@@ -1,0 +1,147 @@
+<div class="container mt-4">
+
+    <h2>
+        Gestion des documents
+    </h2>
+
+    <div class="card p-3 mb-4">
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+
+                <label>Titre</label>
+
+                <input class="form-control" [(ngModel)]="document.titre">
+
+            </div>
+
+            <div class="col-md-6 mb-3">
+
+                <label>Type</label>
+
+                <select class="form-select" [(ngModel)]="document.type">
+
+                    <option value="CIRCULAIRE">
+                        CIRCULAIRE
+                    </option>
+
+                    <option value="NOTE_SERVICE">
+                        NOTE_SERVICE
+                    </option>
+
+                    <option value="NOTE_ADMINISTRATIVE">
+                        NOTE_ADMINISTRATIVE
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="col-md-6 mb-3">
+
+                <label>Rôle cible</label>
+
+                <select class="form-select" [(ngModel)]="document.roleCible">
+
+                    <option value="ETUDIANT">
+                        ETUDIANT
+                    </option>
+
+                    <option value="ENSEIGNANT">
+                        ENSEIGNANT
+                    </option>
+
+                    <option value="ADMINISTRATIF">
+                        ADMINISTRATIF
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="col-md-6 mb-3">
+
+                <label>Date</label>
+
+                <input type="date" class="form-control" [(ngModel)]="document.dateCreation">
+
+            </div>
+
+            <div class="col-md-12 mb-3">
+
+                <label>Description</label>
+
+                <textarea rows="4" class="form-control" [(ngModel)]="document.description"></textarea>
+
+            </div>
+
+        </div>
+
+        <button *ngIf="!editMode" class="btn btn-primary" (click)="addDocument()">
+            Ajouter
+        </button>
+
+        <button *ngIf="editMode" class="btn btn-warning" (click)="updateDocument()">
+            Modifier
+        </button>
+
+    </div>
+
+    <table class="table table-bordered">
+
+        <thead>
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Titre</th>
+
+                <th>Type</th>
+
+                <th>Rôle</th>
+
+                <th>Date</th>
+
+                <th>Actions</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr *ngFor="
+          let d of documents
+        ">
+
+                <td>{{ d.id }}</td>
+
+                <td>{{ d.titre }}</td>
+
+                <td>{{ d.type }}</td>
+
+                <td>{{ d.roleCible }}</td>
+
+                <td>{{ d.dateCreation }}</td>
+
+                <td>
+
+                    <button class="btn btn-warning btn-sm me-2" (click)="editDocument(d)">
+                        Modifier
+                    </button>
+
+                    <button class="btn btn-danger btn-sm" (click)="deleteDocument(d.id)">
+                        Supprimer
+                    </button>
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
