@@ -172,6 +172,16 @@ component: Formations
 },
 
 {
+  path: 'notifications',
+  loadComponent: () =>
+    import(
+      './pages/notifications/notifications'
+    ).then(
+      m => m.Notifications
+    )
+},
+
+{
   path: '',
   redirectTo: 'login',
   pathMatch: 'full'

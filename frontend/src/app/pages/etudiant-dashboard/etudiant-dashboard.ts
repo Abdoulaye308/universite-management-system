@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-
+import { NotificationService }
+  from '../../services/notification.service';
 import { Inscription } from '../../services/inscription';
 import { FormationService } from '../../services/formation.service';
 
@@ -37,6 +38,7 @@ export class DashboardEtudiant
   emplois: any[] = [];
 
   documents: any[] = [];
+  notifications: any[] = [];
 
   // Constructor
   constructor(
@@ -48,6 +50,8 @@ export class DashboardEtudiant
     private studentService: Student,
     private emploiService: Emploi,
     private documentService: Document,
+    private notificationService: NotificationService,
+
     private cdr: ChangeDetectorRef   // ← ajout
 
   ) {
@@ -78,7 +82,7 @@ export class DashboardEtudiant
             // Charger ses inscriptions
             this.loadStudentFormations();
             this.loadDocuments();
-
+            this.loadNotifications();
             this.cdr.detectChanges();
 
             console.log(data);
@@ -139,39 +143,74 @@ export class DashboardEtudiant
   // EMPLOIS DU TEMPS
   // =========================
   loadEmplois() {
-  this.emploiService.getEmplois().subscribe({
-    next: (data: any[]) => {
+    this.emploiService.getEmplois().subscribe({
+      next: (data: any[]) => {
 
-      this.emplois = [...data.filter(
-        (emploi: any) =>
-          this.formations.some(
-            (formation: any) => formation.nom === emploi.formation
-          )
-      )];
+        this.emplois = [...data.filter(
+          (emploi: any) =>
+            this.formations.some(
+              (formation: any) => formation.nom === emploi.formation
+            )
+        )];
 
-      this.cdr.detectChanges(); // ← manquait ici
-      console.log(this.emplois);
-    },
-    error: (error: any) => {
-      console.log(error);
-    }
-  });
-}
-
-loadDocuments() {
-
-  this.documentService
-    .getDocumentsByRole(
-      'ETUDIANT'
-    )
-    .subscribe({
-
-      next: (data: any) => {
-
-        this.documents = data;
+        this.cdr.detectChanges(); // ← manquait ici
+        console.log(this.emplois);
+      },
+      error: (error: any) => {
+        console.log(error);
       }
     });
-}
+  }
+
+  loadDocuments() {
+
+    this.documentService
+      .getDocumentsByRole(
+        'ETUDIANT'
+      )
+      .subscribe({
+
+        next: (data: any) => {
+
+          this.documents = data;
+        }
+      });
+  }
+  // =========================
+  // CHARGER NOTIFICATIONS
+  // =========================
+
+  loadNotifications() {
+
+    this.notificationService
+      .getNotifications()
+      .subscribe({
+
+        next: (data: any[]) => {
+
+          this.notifications = data.filter(
+
+            (notification: any) =>
+
+              notification.roleCible ===
+              'ETUDIANT')
+            .slice(-3)
+            .reverse();
+          ;
+
+          this.cdr.detectChanges();
+
+          console.log(
+            this.notifications
+          );
+        },
+
+        error: (error: any) => {
+
+          console.log(error);
+        }
+      });
+  }
   // =========================
   // DÉCONNEXION
   // =========================

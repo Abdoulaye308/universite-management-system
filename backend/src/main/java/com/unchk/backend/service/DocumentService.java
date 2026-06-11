@@ -2,9 +2,10 @@ package com.unchk.backend.service;
 
 import com.unchk.backend.entity.Document;
 import com.unchk.backend.repository.DocumentRepository;
-
+import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
-
+import com.unchk.backend.entity.Notification;
+import com.unchk.backend.repository.NotificationRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,11 +15,36 @@ import java.util.List;
 public class DocumentService {
 
     private final DocumentRepository repository;
+    private final NotificationRepository notificationRepository;
+    private final NotificationService notificationService;
 
     // Ajouter
     public Document save(Document document) {
 
-        return repository.save(document);
+        Document savedDocument =
+                repository.save(document);
+
+        Notification notification =
+                Notification.builder()
+                        .titre("Nouveau document")
+                        .message(
+                                "Le document \""
+                                        + document.getTitre()
+                                        + "\" a été ajouté."
+                        )
+                        .roleCible(
+                                document.getRoleCible()
+                        )
+                        .dateCreation(
+                                LocalDate.now().toString()
+                        )
+                        .build();
+
+        notificationService.save(
+                notification
+        );
+
+        return savedDocument;
     }
 
     // Liste
@@ -83,6 +109,34 @@ public class DocumentService {
                 details.getDateCreation()
         );
 
-        return repository.save(document);
+        // Sauvegarde document
+        Document updatedDocument =
+                repository.save(document);
+
+        // Création notification
+        Notification notification =
+                Notification.builder()
+                        .titre(
+                                "Document modifié"
+                        )
+                        .message(
+                                "Le document \""
+                                        + document.getTitre()
+                                        + "\" a été mis à jour."
+                        )
+                        .roleCible(
+                                document.getRoleCible()
+                        )
+                        .dateCreation(
+                                java.time.LocalDate.now()
+                                        .toString()
+                        )
+                        .build();
+
+        notificationService.save(
+                notification
+        );
+
+        return updatedDocument;
     }
 }

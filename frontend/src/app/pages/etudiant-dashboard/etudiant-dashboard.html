@@ -71,6 +71,50 @@
 
   </div>
   <!-- ===================== -->
+<!-- NOTIFICATIONS -->
+<!-- ===================== -->
+
+<div class="card p-3 mb-4">
+
+  <h4>
+    Mes notifications
+  </h4>
+
+  <div
+    *ngIf="
+      notifications.length === 0
+    "
+    class="alert alert-info"
+  >
+    Aucune notification
+  </div>
+
+  <div
+    *ngFor="
+      let notification
+      of notifications
+    "
+    class="alert alert-warning"
+  >
+
+    <h6>
+      {{ notification.titre }}
+    </h6>
+
+    <p>
+      {{ notification.message }}
+    </p>
+
+    <small>
+
+      {{ notification.dateCreation }}
+
+    </small>
+
+  </div>
+
+</div>
+  <!-- ===================== -->
 <!-- FORMATIONS -->
 <!-- ===================== -->
 
@@ -203,6 +247,43 @@
     Aucun emploi du temps trouvé.
 
   </div>
+
+</div>
+
+<div class="card p-3 mt-4">
+
+  <h4>
+    Mes documents
+  </h4>
+
+  <table class="table table-bordered">
+
+    <thead>
+      <tr>
+        <th>Titre</th>
+        <th>Type</th>
+        <th>Contenu</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr *ngFor="let document of documents">
+
+        <td>{{ document.titre }}</td>
+
+        <td>{{ document.type }}</td>
+
+        <td>{{ document.description }}</td>
+
+        <td>{{ document.dateCreation }}</td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
 
 </div>
 

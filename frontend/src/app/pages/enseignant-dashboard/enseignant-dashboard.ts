@@ -1,20 +1,22 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-
-
+import { NotificationService }
+  from '../../services/notification.service';
+import { Document }
+  from '../../services/document';
 import { CommonModule }
-from '@angular/common';
+  from '@angular/common';
 
 import { Router }
-from '@angular/router';
+  from '@angular/router';
 
 import { Reunion }
-from '../../services/reunion';
+  from '../../services/reunion';
 
 import { Emploi }
-from '../../services/emploi';
+  from '../../services/emploi';
 
 import { Formateur }
-from '../../services/formateur';
+  from '../../services/formateur';
 
 @Component({
   selector:
@@ -54,27 +56,32 @@ export class DashboardEnseignant
   emplois: any[] = [];
 
   // =========================
-  // CONSTRUCTOR
+  // NOTIFICATIONS
   // =========================
 
+  notifications: any[] = [];
+  documents: any[] = [];
+
+  // =========================
+  // CONSTRUCTOR
+  // =========================
   constructor(
 
     private router: Router,
 
-    private formateurService:
-      Formateur,
+    private formateurService: Formateur,
 
-    private reunionService:
-      Reunion,
+    private reunionService: Reunion,
 
-    private emploiService:
-      Emploi,
-          private cdr: ChangeDetectorRef   // ← ajout
+    private emploiService: Emploi,
+    private documentService: Document,
 
 
-  ) {
+    private notificationService: NotificationService,
 
-  }
+    private cdr: ChangeDetectorRef
+
+  ) { }
 
   // =========================
   // INIT
@@ -107,7 +114,10 @@ export class DashboardEnseignant
             this.loadReunions();
 
             this.loadEmplois();
-                        this.cdr.detectChanges();
+            this.loadNotifications();
+                      this.loadDocuments();
+
+            this.cdr.detectChanges();
 
           },
 
@@ -123,35 +133,84 @@ export class DashboardEnseignant
   // CHARGER RÉUNIONS
   // =========================
 
- loadReunions() {
-  this.reunionService.getReunions().subscribe({
-    next: (data: any[]) => {
-      this.reunions = [...data.filter(
-        (reunion: any) => reunion.formateurId === this.formateur.id
-      )];
-      this.cdr.detectChanges(); // ✓ déjà présent
-    },
-    error: (error: any) => { console.log(error); }
-  });
-}
+  loadReunions() {
+    this.reunionService.getReunions().subscribe({
+      next: (data: any[]) => {
+        this.reunions = [...data.filter(
+          (reunion: any) => reunion.formateurId === this.formateur.id
+        )];
+        this.cdr.detectChanges(); // ✓ déjà présent
+      },
+      error: (error: any) => { console.log(error); }
+    });
+  }
 
   // =========================
   // CHARGER EMPLOIS
   // =========================
 
- loadEmplois() {
-  this.emploiService.getEmplois().subscribe({
-    next: (data: any[]) => {
-      this.emplois = [...data.filter(
-        (emploi: any) =>
-          emploi.enseignant === this.formateur.nom + ' ' + this.formateur.prenom
-      )];
-      this.cdr.detectChanges(); // ← manquait ici
-    },
-    error: (error: any) => { console.log(error); }
-  });
-}
+  loadEmplois() {
+    this.emploiService.getEmplois().subscribe({
+      next: (data: any[]) => {
+        this.emplois = [...data.filter(
+          (emploi: any) =>
+            emploi.enseignant === this.formateur.nom + ' ' + this.formateur.prenom
+        )];
+        this.cdr.detectChanges(); // ← manquait ici
+      },
+      error: (error: any) => { console.log(error); }
+    });
+  }
+  // =========================
+  // CHARGER NOTIFICATIONS
+  // =========================
 
+  loadNotifications() {
+
+    this.notificationService
+      .getNotifications()
+      .subscribe({
+
+        next: (data: any[]) => {
+
+          this.notifications = data.filter(
+
+            (notification: any) =>
+
+              notification.roleCible ===
+              'ENSEIGNANT')
+            .slice(-3)
+            .reverse();
+          ;
+
+          this.cdr.detectChanges();
+
+          console.log(
+            this.notifications
+          );
+        },
+
+        error: (error: any) => {
+
+          console.log(error);
+        }
+      });
+  }
+
+  loadDocuments() {
+
+    this.documentService
+      .getDocumentsByRole(
+        'ENSEIGNANT'
+      )
+      .subscribe({
+
+        next: (data: any) => {
+
+          this.documents = data;
+        }
+      });
+  }
   // =========================
   // LOGOUT
   // =========================

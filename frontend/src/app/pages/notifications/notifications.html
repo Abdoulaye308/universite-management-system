@@ -1,0 +1,79 @@
+<div class="container mt-4">
+
+  <h2>Gestion des notifications</h2>
+
+  <!-- FORM -->
+  <div class="card p-3 mb-3">
+
+    <input class="form-control mb-2"
+      placeholder="Titre"
+      [(ngModel)]="notification.titre">
+
+    <textarea class="form-control mb-2"
+      placeholder="Message"
+      [(ngModel)]="notification.message"></textarea>
+
+    <select class="form-select mb-2"
+      [(ngModel)]="notification.roleCible">
+
+      <option value="ETUDIANT">ETUDIANT</option>
+      <option value="ENSEIGNANT">ENSEIGNANT</option>
+      <option value="ADMINISTRATIF">ADMINISTRATIF</option>
+
+    </select>
+
+    <input type="date"
+      class="form-control mb-2"
+      [(ngModel)]="notification.dateCreation">
+
+    <button *ngIf="!editMode"
+      class="btn btn-primary"
+      (click)="add()">
+      Ajouter
+    </button>
+
+    <button *ngIf="editMode"
+      class="btn btn-warning"
+      (click)="update()">
+      Modifier
+    </button>
+
+  </div>
+
+  <!-- TABLE -->
+  <table class="table table-bordered">
+
+    <tr>
+      <th>ID</th>
+      <th>Titre</th>
+      <th>Message</th>
+      <th>Rôle</th>
+      <th>Date</th>
+      <th>Actions</th>
+    </tr>
+
+    <tr *ngFor="let n of notifications">
+
+      <td>{{ n.id }}</td>
+      <td>{{ n.titre }}</td>
+      <td>{{ n.message }}</td>
+      <td>{{ n.roleCible }}</td>
+      <td>{{ n.dateCreation }}</td>
+
+      <td>
+        <button class="btn btn-warning btn-sm"
+          (click)="edit(n)">
+          Modifier
+        </button>
+
+        <button class="btn btn-danger btn-sm"
+          (click)="delete(n.id)">
+          Supprimer
+        </button>
+      </td>
+
+    </tr>
+
+  </table>
+
+</div>

@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-
+import { NotificationService }
+from '../../services/notification.service';
 import { CommonModule }
 from '@angular/common';
 
@@ -46,6 +47,12 @@ export class DashboardAdministratif
   reunions: any[] = [];
 
   documents: any[] = [];
+  // =========================
+// NOTIFICATIONS
+// =========================
+
+notifications: any[] = [];
+  
 
   // =========================
   // CONSTRUCTOR
@@ -60,6 +67,8 @@ export class DashboardAdministratif
     private reunionService: Reunion,
 
     private documentService: Document,
+      private notificationService: NotificationService,
+
         private cdr: ChangeDetectorRef
 
 
@@ -81,6 +90,7 @@ export class DashboardAdministratif
         console.log(this.user);
         this.loadReunions();
         this.loadDocuments();
+        this.loadNotifications();
         // Pas de cdr.detectChanges() ici
       },
       error: (error: any) => { console.log(error); }
@@ -120,7 +130,45 @@ loadDocuments() {
         this.documents = data;
       }
     });
+}// =========================
+// CHARGER NOTIFICATIONS
+// =========================
+
+loadNotifications() {
+
+  this.notificationService
+    .getNotifications()
+    .subscribe({
+
+      next: (data: any[]) => {
+
+        this.notifications = data.filter(
+
+          (notification: any) =>
+
+            notification.roleCible ===
+            this.user.role
+
+            ||
+
+            notification.roleCible ===
+            'TOUS')
+            .slice(-3)
+  .reverse();
+            ;
+
+        this.cdr.detectChanges();
+
+
+      },
+
+      error: (error: any) => {
+
+        console.log(error);
+      }
+    });
 }
+
 
   // =========================
   // LOGOUT
