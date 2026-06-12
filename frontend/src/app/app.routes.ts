@@ -10,6 +10,8 @@ import { Formations } from './pages/formations/formations';
 import { Emplois } from './pages/emplois/emplois';
 import { Documents } from './pages/documents/documents';
 import { Notifications } from './pages/notifications/notifications';
+import { Partenaires }
+  from './pages/partenaires/partenaires';
 import { Budgets }
   from './pages/budgets/budgets';
 import { AdminDocuments }
@@ -57,6 +59,10 @@ export const routes: Routes = [
       {
         path: 'budgets',
         component: Budgets
+      },
+      {
+        path: 'partenaires',
+        component: Partenaires
       }
 
     ]

@@ -1,0 +1,126 @@
+<div class="container mt-4">
+
+  <h2>
+    Gestion des partenaires
+  </h2>
+
+  <div class="card p-3 mb-4">
+
+    <div class="row">
+
+      <div class="col-md-6 mb-3">
+        <label>organisme</label>
+        <input
+          class="form-control"
+          [(ngModel)]="partenaire.organisme">
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label>Type partenariat</label>
+        <input
+          class="form-control"
+          [(ngModel)]="partenaire.typePartenariat">
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label>Contact</label>
+        <input
+          class="form-control"
+          [(ngModel)]="partenaire.contact">
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label>Email</label>
+        <input
+          class="form-control"
+          [(ngModel)]="partenaire.email">
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label>Téléphone</label>
+        <input
+          class="form-control"
+          [(ngModel)]="partenaire.telephone">
+      </div>
+
+    </div>
+
+    <button
+      *ngIf="!editMode"
+      class="btn btn-primary"
+      (click)="addPartenaire()">
+      Ajouter
+    </button>
+
+    <button
+      *ngIf="editMode"
+      class="btn btn-warning"
+      (click)="updatePartenaire()">
+      Modifier
+    </button>
+
+  </div>
+
+  <table class="table table-bordered">
+
+    <thead>
+
+      <tr>
+
+        <th>ID</th>
+
+        <th>Organisme</th>
+
+        <th>Type</th>
+
+        <th>Contact</th>
+
+        <th>Email</th>
+
+        <th>Téléphone</th>
+
+        <th>Actions</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      <tr *ngFor="let p of partenaires">
+
+        <td>{{ p.id }}</td>
+
+        <td>{{ p.organisme }}</td>
+
+        <td>{{ p.typePartenariat }}</td>
+
+        <td>{{ p.contact }}</td>
+
+        <td>{{ p.email }}</td>
+
+        <td>{{ p.telephone }}</td>
+
+        <td>
+
+          <button
+            class="btn btn-warning btn-sm me-2"
+            (click)="editPartenaire(p)">
+            Modifier
+          </button>
+
+          <button
+            class="btn btn-danger btn-sm"
+            (click)="deletePartenaire(p.id)">
+            Supprimer
+          </button>
+
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div>
