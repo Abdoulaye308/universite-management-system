@@ -1,0 +1,168 @@
+<div class="container mt-4">
+
+  <h2>
+    Gestion Budgétaire
+  </h2>
+
+  <div class="card p-3 mb-4">
+
+    <div class="row">
+
+      <div class="col-md-4 mb-3">
+
+        <label>Type</label>
+
+        <select
+          class="form-select"
+          [(ngModel)]="budget.type">
+
+          <option value="PROJET_BUDGET">
+            Projet Budget
+          </option>
+
+          <option value="NOTE_ORIENTATION">
+            Note Orientation
+          </option>
+
+          <option value="BUDGET_REALISE">
+            Budget Réalisé
+          </option>
+
+        </select>
+
+      </div>
+
+      <div class="col-md-8 mb-3">
+
+        <label>Titre</label>
+
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="budget.titre">
+
+      </div>
+
+      <div class="col-md-12 mb-3">
+
+        <label>Description</label>
+
+        <textarea
+          rows="4"
+          class="form-control"
+          [(ngModel)]="budget.description">
+        </textarea>
+
+      </div>
+
+      <div class="col-md-6 mb-3">
+
+        <label>Montant</label>
+
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="budget.montant">
+
+      </div>
+
+      <div class="col-md-6 mb-3">
+
+        <label>Date</label>
+
+        <input
+          type="date"
+          class="form-control"
+          [(ngModel)]="budget.dateCreation">
+
+      </div>
+
+    </div>
+
+    <button
+      *ngIf="!editMode"
+      class="btn btn-primary"
+      (click)="addBudget()">
+
+      Ajouter
+
+    </button>
+
+    <button
+      *ngIf="editMode"
+      class="btn btn-warning"
+      (click)="updateBudget()">
+
+      Modifier
+
+    </button>
+
+  </div>
+
+  <table
+    class="table table-bordered table-striped">
+
+    <thead>
+
+      <tr>
+
+        <th>ID</th>
+
+        <th>Type</th>
+
+        <th>Titre</th>
+
+        <th>Montant</th>
+
+        <th>Date</th>
+
+        <th>Actions</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      <tr
+        *ngFor="
+          let b of budgets
+        ">
+
+        <td>{{ b.id }}</td>
+
+        <td>{{ b.type }}</td>
+
+        <td>{{ b.titre }}</td>
+
+        <td>{{ b.montant }}</td>
+
+        <td>{{ b.dateCreation }}</td>
+
+        <td>
+
+          <button
+            class="btn btn-warning btn-sm me-2"
+            (click)="editBudget(b)">
+
+            Modifier
+
+          </button>
+
+          <button
+            class="btn btn-danger btn-sm"
+            (click)="deleteBudget(b.id)">
+
+            Supprimer
+
+          </button>
+
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div>
