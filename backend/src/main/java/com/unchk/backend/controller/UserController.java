@@ -36,9 +36,7 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    // =========================
     // AJOUTER UTILISATEUR
-    // =========================
     @PostMapping
     public User createUser(
             @RequestBody User user

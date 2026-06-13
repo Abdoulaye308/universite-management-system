@@ -183,7 +183,15 @@ export class Users implements OnInit {
         }
       });
   }
-
+getRoleClass(role: string): string {
+  const map: any = {
+    'ADMIN':          'role-admin',
+    'ETUDIANT':       'role-etudiant',
+    'ENSEIGNANT':     'role-enseignant',
+    'ADMINISTRATIF':  'role-administratif'
+  };
+  return map[role] || '';
+}
 
 
   // =========================

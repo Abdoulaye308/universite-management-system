@@ -16,19 +16,19 @@ import java.util.List;
 public class PartenaireController {
 
     private final PartenaireService service;
-
+    //ajout
     @PostMapping
     public Partenaire save(
             @RequestBody Partenaire partenaire
     ) {
         return service.save(partenaire);
     }
-
+    //récupérer la liste complet
     @GetMapping
     public List<Partenaire> getAll() {
         return service.getAll();
     }
-
+    //modifier
     @PutMapping("/{id}")
     public Partenaire update(
             @PathVariable Long id,
@@ -36,7 +36,7 @@ public class PartenaireController {
     ) {
         return service.update(id, partenaire);
     }
-
+    //supprimer
     @DeleteMapping("/{id}")
     public void delete(
             @PathVariable Long id

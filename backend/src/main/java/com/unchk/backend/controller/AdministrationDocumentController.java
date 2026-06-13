@@ -17,7 +17,7 @@ import java.util.List;
 public class AdministrationDocumentController {
 
     private final AdministrationDocumentService service;
-
+     // ajout
     @PostMapping
     public AdministrationDocument add(
             @RequestBody
@@ -25,19 +25,19 @@ public class AdministrationDocumentController {
     ) {
         return service.save(document);
     }
-
+//récupérer tous les docs
     @GetMapping
     public List<AdministrationDocument> getAll() {
         return service.getAll();
     }
-
+    //récupérer un document par son ID
     @GetMapping("/{id}")
     public AdministrationDocument getById(
             @PathVariable Long id
     ) {
         return service.getById(id);
     }
-
+    // modifier un document en passant par son Id
     @PutMapping("/{id}")
     public AdministrationDocument update(
             @PathVariable Long id,
@@ -46,7 +46,7 @@ public class AdministrationDocumentController {
     ) {
         return service.update(id, document);
     }
-
+    //supprimer
     @DeleteMapping("/{id}")
     public void delete(
             @PathVariable Long id

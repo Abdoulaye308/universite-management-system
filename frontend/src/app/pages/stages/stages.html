@@ -1,0 +1,186 @@
+<div class="container mt-4">
+
+    <h2>
+        Gestion des stages
+    </h2>
+
+    <div class="card p-3 mb-4">
+
+        <div class="row">
+
+            <!-- Etudiant -->
+            <div class="col-md-6 mb-3">
+
+                <label>Etudiant</label>
+
+                <select class="form-select" [(ngModel)]="stage.studentId" (change)="onStudentChange()">
+
+                    <option value="0">
+                        Choisir un étudiant
+                    </option>
+
+                    <option *ngFor="let s of students" [value]="s.id">
+
+                        {{ s.prenom }} {{ s.nom }}
+
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- Formation -->
+            <div class="col-md-6 mb-3">
+
+                <label>Formation</label>
+
+                <input type="text" class="form-control" [value]="stage.formation" readonly>
+
+            </div>
+
+            <!-- Partenaire -->
+            <div class="col-md-6 mb-3">
+
+                <label>Partenaire</label>
+
+                <select class="form-select" [(ngModel)]="stage.organisme" (change)="onPartenaireChange()">
+
+                    <option value="0">
+                        Choisir un partenaire
+                    </option>
+
+                    <option *ngFor="let p of partenaires" [value]="p.id">
+
+                        {{ p.organisme }}
+
+                    </option>
+
+                </select>
+
+            </div>
+
+          
+            <!-- Date début -->
+            <div class="col-md-6 mb-3">
+
+                <label>Date début</label>
+
+                <input type="date" class="form-control" [(ngModel)]="stage.dateDebut">
+            </div>
+
+            <!-- Date fin -->
+            <div class="col-md-6 mb-3">
+
+                <label>Date fin</label>
+
+                <input type="date" class="form-control" [(ngModel)]="stage.dateFin">
+            </div>
+
+            <!-- Statut -->
+            <div class="col-md-6 mb-3">
+
+                <label>Statut</label>
+
+                <select class="form-select" [(ngModel)]="stage.statut">
+
+                    <option>
+                        EN_COURS
+                    </option>
+
+                    <option>
+                        TERMINE
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- Bilan -->
+            <div class="col-md-12 mb-3">
+
+                <label>Bilan</label>
+
+                <textarea rows="4" class="form-control" [(ngModel)]="stage.bilan">
+        </textarea>
+
+            </div>
+
+        </div>
+
+        <button *ngIf="!editMode" class="btn btn-primary" (click)="addStage()">
+
+            Ajouter
+
+        </button>
+
+        <button *ngIf="editMode" class="btn btn-warning" (click)="updateStage()">
+
+            Modifier
+
+        </button>
+
+    </div>
+
+    <table class="table table-bordered">
+
+        <thead>
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Etudiant</th>
+
+                <th>Partenaire</th>
+
+                <th>Statut</th>
+                <th>Formation</th>
+                <th>Date début</th>
+                <th>Date fin</th>
+                <th>Bilan</th>
+
+                <th>Actions</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr *ngFor="let s of stages">
+
+                <td>{{ s.id }}</td>
+
+                <td>{{ s.etudiant }}</td>
+
+                <td>{{ s.organisme }}</td>
+
+                <td>{{ s.statut }}</td>
+                <td>{{ s.formation }}</td>
+                <td>{{ s.dateDebut }}</td>
+                <td>{{ s.dateFin }}</td>
+                <td>{{ s.bilan }}</td>
+
+                <td>
+
+                    <button class="btn btn-warning btn-sm me-2" (click)="editStage(s)">
+
+                        Modifier
+
+                    </button>
+
+                    <button class="btn btn-danger btn-sm" (click)="deleteStage(s.id)">
+
+                        Supprimer
+
+                    </button>
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>

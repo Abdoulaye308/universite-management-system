@@ -10,10 +10,14 @@ import { Formations } from './pages/formations/formations';
 import { Emplois } from './pages/emplois/emplois';
 import { Documents } from './pages/documents/documents';
 import { Notifications } from './pages/notifications/notifications';
+import { Insertions }
+  from './pages/insertions/insertions';
 import { Partenaires }
   from './pages/partenaires/partenaires';
 import { Budgets }
   from './pages/budgets/budgets';
+import { Stages }
+  from './pages/stages/stages';
 import { AdminDocuments }
   from './pages/admin-documents/admin-documents';
 import { Formateurs } from './pages/formateurs/formateurs';
@@ -24,7 +28,6 @@ import { authGuard } from './guards/auth-guard';
 import { AdminLayout } from './layouts/admin-layout/admin-layout';
 
 export const routes: Routes = [
-
   { path: 'login', component: Login },
 
   {
@@ -37,11 +40,16 @@ export const routes: Routes = [
       { path: 'students', component: Students },
       { path: 'formations', component: Formations },
       { path: 'emplois', component: Emplois },
-
       { path: 'formateurs', component: Formateurs },
       { path: 'reunions', component: Reunions },
       { path: 'inscriptions', component: Inscriptions },
       { path: 'users', component: Users },
+      { path: 'admin-documents', component: AdminDocuments },
+      { path: 'budgets', component: Budgets },
+      { path: 'partenaires', component: Partenaires },
+      { path: 'stages', component: Stages },
+      { path: 'insertions', component: Insertions },
+
       {
         path: 'documents',
         loadComponent: () =>
@@ -52,30 +60,15 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/notifications/notifications').then(m => m.Notifications)
       },
-      {
-        path: 'admin-documents',
-        component: AdminDocuments
-      },
-      {
-        path: 'budgets',
-        component: Budgets
-      },
-      {
-        path: 'partenaires',
-        component: Partenaires
-      }
-
     ]
   },
 
-
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: '**', redirectTo: 'login' },
-
+  // ← Ces routes doivent être AVANT le wildcard
   { path: 'etudiant/dashboard', component: DashboardEtudiant, canActivate: [authGuard], data: { roles: ['ETUDIANT'] } },
   { path: 'enseignant/dashboard', component: DashboardEnseignant, canActivate: [authGuard], data: { roles: ['ENSEIGNANT'] } },
   { path: 'administratif/dashboard', component: DashboardAdministratif, canActivate: [authGuard], data: { roles: ['ADMINISTRATIF'] } },
 
+  // ← Toujours en dernier
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', redirectTo: 'login' }
 ];

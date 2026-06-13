@@ -16,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.web.bind.annotation.*;
 
-@RestController // Indique que cette classe expose des API REST
+@RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 @CrossOrigin("*")

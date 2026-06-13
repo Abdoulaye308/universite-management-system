@@ -16,7 +16,7 @@ import java.util.List;
 public class DocumentController {
 
     private final DocumentService service;
-
+//creation
     @PostMapping
     public Document save(
             @RequestBody Document document
@@ -24,13 +24,13 @@ public class DocumentController {
 
         return service.save(document);
     }
-
+//récupérer la liste
     @GetMapping
     public List<Document> getAll() {
 
         return service.getAll();
     }
-
+// récupérer un role
     @GetMapping("/role/{role}")
     public List<Document> getByRole(
             @PathVariable String role
@@ -39,9 +39,7 @@ public class DocumentController {
         return service.getByRole(role);
     }
 
-    // =========================
 // UPDATE
-// =========================
     @PutMapping("/{id}")
     public Document update(
             @PathVariable Long id,
@@ -53,7 +51,7 @@ public class DocumentController {
                 document
         );
     }
-
+//supprimer
     @DeleteMapping("/{id}")
     public void delete(
             @PathVariable Long id

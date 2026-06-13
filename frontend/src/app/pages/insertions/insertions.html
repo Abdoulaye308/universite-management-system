@@ -1,0 +1,275 @@
+<div class="container mt-4">
+
+  <h2>
+    Insertion professionnelle
+  </h2>
+
+  <!-- ===================== -->
+  <!-- FORMULAIRE -->
+  <!-- ===================== -->
+
+  <div class="card p-3 mb-4">
+
+    <div class="row">
+
+      <!-- Etudiant -->
+      <div class="col-md-6 mb-3">
+
+        <label>
+          Etudiant
+        </label>
+
+        <select
+          class="form-select"
+          [(ngModel)]="insertion.studentId"
+          (change)="onStudentChange()"
+        >
+
+          <option value="0">
+            Choisir un étudiant
+          </option>
+
+          <option
+            *ngFor="let s of students"
+            [value]="s.id"
+          >
+            {{ s.nom }} {{ s.prenom }}
+          </option>
+
+        </select>
+
+      </div>
+
+      <!-- Nom étudiant -->
+      <div class="col-md-6 mb-3">
+
+        <label>
+          Nom étudiant
+        </label>
+
+        <input
+          type="text"
+          class="form-control"
+          [value]="insertion.etudiant"
+          readonly
+        >
+
+      </div>
+
+      <!-- Situation -->
+      <div class="col-md-6 mb-3">
+
+        <label>
+          Situation
+        </label>
+
+        <select
+          class="form-select"
+          [(ngModel)]="insertion.typeInsertion"
+        >
+
+          <option value="AUTO_EMPLOI">
+            AUTO_EMPLOI
+          </option>
+
+          <option value="EMPLOI_SALARIE">
+            EMPLOI_SALARIE
+          </option>
+
+        </select>
+
+      </div>
+
+      <!-- Entreprise -->
+      <div class="col-md-6 mb-3">
+
+        <label>
+          Entreprise
+        </label>
+
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="insertion.entreprise"
+        >
+
+      </div>
+
+      <!-- Poste -->
+      <div class="col-md-6 mb-3">
+
+        <label>
+          Poste
+        </label>
+
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="insertion.poste"
+        >
+
+      </div>
+
+      <!-- Date insertion -->
+      <div class="col-md-6 mb-3">
+
+        <label>
+          Date insertion
+        </label>
+
+        <input
+          type="date"
+          class="form-control"
+          [(ngModel)]="insertion.dateInsertion"
+        >
+
+      </div>
+
+      <!-- Commentaire -->
+      <div class="col-md-12 mb-3">
+
+        <label>
+          Commentaire
+        </label>
+
+        <textarea
+          rows="4"
+          class="form-control"
+          [(ngModel)]="insertion.commentaire"
+        ></textarea>
+
+      </div>
+
+    </div>
+
+    <!-- Ajouter -->
+
+    <button
+      *ngIf="!editMode"
+      class="btn btn-primary"
+      (click)="addInsertion()"
+    >
+      Ajouter
+    </button>
+
+    <!-- Modifier -->
+
+    <button
+      *ngIf="editMode"
+      class="btn btn-warning"
+      (click)="updateInsertion()"
+    >
+      Modifier
+    </button>
+
+  </div>
+
+  <!-- ===================== -->
+  <!-- STATISTIQUES -->
+  <!-- ===================== -->
+
+  <div class="row mb-4">
+
+    <div class="col-md-6">
+
+      <div class="card text-center p-3">
+
+        <h5>
+          Auto-emploi
+        </h5>
+
+        <h2>
+          {{ autoEmploiCount }}
+        </h2>
+
+      </div>
+
+    </div>
+
+    <div class="col-md-6">
+
+      <div class="card text-center p-3">
+
+        <h5>
+          Emploi salarié
+        </h5>
+
+        <h2>
+          {{ emploiSalarieCount }}
+        </h2>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ===================== -->
+  <!-- TABLEAU -->
+  <!-- ===================== -->
+
+  <table class="table table-bordered table-striped">
+
+    <thead>
+
+      <tr>
+
+        <th>ID</th>
+
+        <th>Etudiant</th>
+
+        <th>Situation</th>
+
+        <th>Entreprise</th>
+
+        <th>Poste</th>
+
+        <th>Date</th>
+
+        <th>Actions</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      <tr *ngFor="let i of insertions">
+
+        <td>{{ i.id }}</td>
+
+        <td>{{ i.etudiant }}</td>
+
+        <td>{{ i.typeInsertion }}</td>
+
+        <td>{{ i.entreprise }}</td>
+
+        <td>{{ i.poste }}</td>
+
+        <td>{{ i.dateInsertion }}</td>
+
+        <td>
+
+          <button
+            class="btn btn-warning btn-sm me-2"
+            (click)="editInsertion(i)"
+          >
+            Modifier
+          </button>
+
+          <button
+            class="btn btn-danger btn-sm"
+            (click)="deleteInsertion(i.id)"
+          >
+            Supprimer
+          </button>
+
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div>

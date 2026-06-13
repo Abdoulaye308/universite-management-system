@@ -16,7 +16,7 @@ import java.util.List;
 public class BudgetController {
 
     private final BudgetService service;
-
+    //ajout
     @PostMapping
     public Budget add(
             @RequestBody Budget budget
@@ -24,13 +24,13 @@ public class BudgetController {
 
         return service.save(budget);
     }
-
+    //récupérer la liste des budgets
     @GetMapping
     public List<Budget> getAll() {
 
         return service.getAll();
     }
-
+//modifier
     @PutMapping("/{id}")
     public Budget update(
             @PathVariable Long id,
@@ -42,7 +42,7 @@ public class BudgetController {
                 budget
         );
     }
-
+    //supprimer
     @DeleteMapping("/{id}")
     public void delete(
             @PathVariable Long id
