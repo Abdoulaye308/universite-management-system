@@ -81,52 +81,27 @@ export class Insertions
     this.loadStudents();
   }
 
-  loadInsertions() {
-
-  this.insertionService
-    .getInsertions()
-    .subscribe({
-
-      next: (data: any) => {
-
-        this.insertions = data;
-
-        // Statistiques
-        this.autoEmploiCount =
-  data.filter(
-    (i: any) =>
-      i.typeInsertion === 'AUTO_EMPLOI'
-  ).length;
-
-this.emploiSalarieCount =
-  data.filter(
-    (i: any) =>
-      i.typeInsertion === 'EMPLOI_SALARIE'
-  ).length;
-
-        this.cdr.detectChanges();
-      },
-
-      error: (error: any) => {
-
-        console.log(error);
-      }
-    });
+  loadStudents() {
+  this.studentService.getStudents().subscribe({
+    next: (data: any) => {
+      this.students = [...data];        // ← spread
+      this.cdr.detectChanges();         // ← force l'affichage dans le select
+    },
+    error: (error: any) => { console.log(error); }
+  });
 }
 
-  loadStudents() {
-
-    this.studentService
-      .getStudents()
-      .subscribe({
-
-        next: (data: any) => {
-
-          this.students = data;
-        }
-      });
-  }
-
+loadInsertions() {
+  this.insertionService.getInsertions().subscribe({
+    next: (data: any) => {
+      this.insertions = [...data];
+      this.autoEmploiCount = data.filter((i: any) => i.typeInsertion === 'AUTO_EMPLOI').length;
+      this.emploiSalarieCount = data.filter((i: any) => i.typeInsertion === 'EMPLOI_SALARIE').length;
+      this.cdr.detectChanges();
+    },
+    error: (error: any) => { console.log(error); }
+  });
+}
   onStudentChange() {
 
     const student =

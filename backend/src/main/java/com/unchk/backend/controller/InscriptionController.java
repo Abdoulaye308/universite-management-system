@@ -43,6 +43,26 @@ public class InscriptionController {
         return service.getByStudent(studentId);
     }
 
+    @GetMapping("/{id}")
+    public Inscription getById(
+            @PathVariable Long id
+    ) {
+
+        return service.getById(id);
+    }
+
+    @PutMapping("/{id}")
+    public Inscription update(
+            @PathVariable Long id,
+            @RequestBody Inscription inscription
+    ) {
+
+        return service.update(
+                id,
+                inscription
+        );
+    }
+
     // Formation
     @GetMapping("/formation/{formationId}")
     public List<Inscription> getByFormation(

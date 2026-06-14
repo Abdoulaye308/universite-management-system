@@ -63,9 +63,7 @@ export class Reunions
 
     formationNom: '',
 
-    formateurId: 0,
-
-    formateurNom: '',
+    cible: '',
 
     compteRendu: '',
 
@@ -202,22 +200,7 @@ export class Reunions
   // CHANGEMENT FORMATEUR
   // =========================
 
-  onFormateurChange() {
-
-    const formateur = this.formateurs.find(
-
-      (f: any) =>
-        f.id == this.reunion.formateurId
-    );
-
-    if (formateur) {
-
-      this.reunion.formateurNom =
-        formateur.nom +
-        ' ' +
-        formateur.prenom;
-    }
-  }
+  
 
   // =========================
   // AJOUT
@@ -225,25 +208,69 @@ export class Reunions
 
   addReunion() {
 
-    this.reunionService
-      .addReunion(this.reunion)
-      .subscribe({
+  // Vérification destinataire
+  if (!this.reunion.cible) {
 
-        next: () => {
+    alert(
+      'Veuillez choisir un destinataire.'
+    );
 
-          this.getReunions();
-
-          this.resetForm();
-
-          alert('Réunion ajoutée');
-        },
-
-        error: (error: any) => {
-
-          console.log(error);
-        }
-      });
+    return;
   }
+
+  // Si réunion destinée à une formation
+  if (
+    this.reunion.cible === 'FORMATION'
+    &&
+    !this.reunion.formationId
+  ) {
+
+    alert(
+      'Veuillez choisir une formation.'
+    );
+
+    return;
+  }
+
+  // Si réunion destinée à un service
+  if (
+    this.reunion.cible === 'SERVICE'
+    &&
+    !this.reunion.serviceConcerne
+  ) {
+
+    alert(
+      'Veuillez choisir un service.'
+    );
+
+    return;
+  }
+
+  this.reunionService
+    .addReunion(this.reunion)
+    .subscribe({
+
+      next: () => {
+
+        this.getReunions();
+
+        this.resetForm();
+
+        alert(
+          'Réunion ajoutée avec succès.'
+        );
+      },
+
+      error: (error: any) => {
+
+        console.error(error);
+
+        alert(
+          'Erreur lors de l\'ajout de la réunion.'
+        );
+      }
+    });
+}
 
   // =========================
   // ÉDITION
@@ -276,11 +303,9 @@ export class Reunions
       formationNom:
         reunion.formationNom,
 
-      formateurId:
-        reunion.formateurId,
+     
 
-      formateurNom:
-        reunion.formateurNom,
+      cible: reunion.cible,
 
       compteRendu:
         reunion.compteRendu,
@@ -347,6 +372,17 @@ export class Reunions
       });
   }
 
+  getCibleClass(cible: string): string {
+  const map: any = {
+    'TOUS':           'cible-tous',
+    'FORMATEURS':     'cible-formateurs',
+    'ADMINISTRATIFS': 'cible-admin',
+    'FORMATION':      'cible-formation',
+    'SERVICE':        'cible-service'
+  };
+  return map[cible] || '';
+}
+
   // =========================
   // RESET
   // =========================
@@ -371,9 +407,9 @@ export class Reunions
 
       formationNom: '',
 
-      formateurId: 0,
-
-      formateurNom: '',
+      
+cible: '',
+      
 
       compteRendu: '',
 

@@ -20,41 +20,29 @@ public class Reunion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Type réunion
     private String type;
 
-    // Sujet
     private String sujet;
 
-    // Date
     private String date;
 
-    // Heure
     private String heure;
 
-    // Salle
     private String salle;
 
-    // =========================
-    // FORMATION
-    // =========================
+    // FORMATION (optionnel)
     private Long formationId;
 
     private String formationNom;
 
-    // =========================
-    // FORMATEUR
-    // =========================
-    private Long formateurId;
+    // CIBLE
+    private String cible;
 
-    private String formateurNom;
+    // Service
+    private String serviceConcerne;
 
-    // Participants texte libre
     private String participants;
 
-    // Compte rendu
     @Column(length = 5000)
     private String compteRendu;
-
-    private String serviceConcerne;
 }

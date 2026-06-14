@@ -34,7 +34,8 @@ public class Formateur {
     // Type
     // Enseignant, Associé, Tuteur
     private String type;
-
+    @Column(name = "formation_id")
+    private Long formationId;
     // Spécialité
     private String specialite;
 }

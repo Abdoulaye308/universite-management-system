@@ -153,18 +153,13 @@ export class Partenaires
   }
 
   resetForm() {
-
-    this.partenaire = {
-
-      organisme: '',
-
-      typePartenariat: '',
-
-      contact: '',
-
-      email: '',
-
-      telephone: ''
-    };
-  }
+  this.partenaire = {
+    organisme: '',
+    typePartenariat: '',
+    contact: '',
+    email: '',
+    telephone: ''
+  };
+  this.editMode = false;
+}
 }

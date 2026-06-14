@@ -1,7 +1,6 @@
 package com.unchk.backend.service;
 
 import com.unchk.backend.entity.Inscription;
-
 import com.unchk.backend.repository.InscriptionRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,7 @@ public class InscriptionService {
 
     private final InscriptionRepository repository;
 
-    // Ajouter inscription
+    // AJOUT
     public Inscription save(
             Inscription inscription
     ) {
@@ -24,27 +23,68 @@ public class InscriptionService {
         return repository.save(inscription);
     }
 
-    // Liste
+    // LISTE
     public List<Inscription> getAll() {
 
         return repository.findAll();
     }
 
-    // Supprimer
-    public void delete(Long id) {
+    // PAR ID
+    public Inscription getById(
+            Long id
+    ) {
+
+        return repository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Inscription introuvable"
+                        ));
+    }
+
+    // UPDATE
+
+    public Inscription update(
+            Long id,
+            Inscription details
+    ) {
+
+        Inscription inscription =
+                getById(id);
+
+        inscription.setStudentId(
+                details.getStudentId()
+        );
+
+        inscription.setFormationId(
+                details.getFormationId()
+        );
+
+        return repository.save(
+                inscription
+        );
+    }
+
+    // DELETE
+
+    public void delete(
+            Long id
+    ) {
 
         repository.deleteById(id);
     }
 
-    // Étudiant
+    // PAR ETUDIANT
+
     public List<Inscription> getByStudent(
             Long studentId
     ) {
 
-        return repository.findByStudentId(studentId);
+        return repository.findByStudentId(
+                studentId
+        );
     }
 
-    // Formation
+    // PAR FORMATION
     public List<Inscription> getByFormation(
             Long formationId
     ) {

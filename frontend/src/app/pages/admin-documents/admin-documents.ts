@@ -34,7 +34,7 @@ import {
 })
 export class AdminDocuments
 implements OnInit {
-
+selectedDocument: any = null;
   documents: any[] = [];
 
   editMode = false;
@@ -51,12 +51,9 @@ implements OnInit {
 
     dateCreation: ''
   };
-  selectedDocument: any = null;
 
-voirDocument(doc: any) {
 
-  this.selectedDocument = doc;
-}
+
 
   constructor(
 
@@ -169,17 +166,45 @@ voirDocument(doc: any) {
       });
   }
 
-  resetForm() {
+  
 
-    this.document = {
+voirDocument(doc: any) {
+  this.selectedDocument = doc;
+}
 
-      type: '',
-
-      titre: '',
-
-      contenu: '',
-
-      dateCreation: ''
-    };
+fermerModal(event: MouseEvent) {
+  // Ferme uniquement si clic sur l'overlay (pas sur la box)
+  if ((event.target as HTMLElement).classList.contains('modal-overlay')) {
+    this.selectedDocument = null;
   }
+}
+
+getTypeLabel(type: string): string {
+  const map: any = {
+    'COURRIER_ARRIVEE':    'Courrier arrivé',
+    'COURRIER_DEPART':     'Courrier départ',
+    'NOTE_SERVICE':        'Note de service',
+    'NOTE_ADMINISTRATIVE': 'Note administrative',
+    'CIRCULAIRE':          'Circulaire'
+  };
+  return map[type] || type;
+}
+
+getTypeClass(type: string): string {
+  const map: any = {
+    'COURRIER_ARRIVEE':    'type-arrivee',
+    'COURRIER_DEPART':     'type-depart',
+    'NOTE_SERVICE':        'type-note-service',
+    'NOTE_ADMINISTRATIVE': 'type-note-admin',
+    'CIRCULAIRE':          'type-circulaire'
+  };
+  return map[type] || '';
+}
+
+resetForm() {
+  this.document = { type: '', titre: '', contenu: '', dateCreation: '' };
+  this.editMode = false;
+}
+
+  
 }

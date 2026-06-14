@@ -1,14 +1,28 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef
+} from '@angular/core';
 
-import { CommonModule } from '@angular/common';
+import {
+  CommonModule
+} from '@angular/common';
 
-import { FormsModule } from '@angular/forms';
+import {
+  FormsModule
+} from '@angular/forms';
 
-import { Inscription } from '../../services/inscription';
+import {
+  Inscription
+} from '../../services/inscription';
 
-import { Student } from '../../services/student';
+import {
+  Student
+} from '../../services/student';
 
-import { FormationService } from '../../services/formation.service';
+import {
+  FormationService
+} from '../../services/formation.service';
 
 @Component({
   selector: 'app-inscriptions',
@@ -27,16 +41,16 @@ import { FormationService } from '../../services/formation.service';
 export class Inscriptions
   implements OnInit {
 
-  // Liste inscriptions
+  // LISTES
+
   inscriptions: any[] = [];
 
-  // Liste étudiants
   students: any[] = [];
 
-  // Liste formations
   formations: any[] = [];
 
-  // Formulaire
+  // FORMULAIRE
+
   inscription = {
 
     studentId: 0,
@@ -44,7 +58,14 @@ export class Inscriptions
     formationId: 0
   };
 
-  // Constructor
+  // MODE EDITION
+
+  editMode = false;
+
+  editInscriptionId = 0;
+
+  // CONSTRUCTOR
+
   constructor(
 
     private inscriptionService:
@@ -53,14 +74,16 @@ export class Inscriptions
     private studentService:
       Student,
 
-    private formationService: FormationService,
-    private cdr: ChangeDetectorRef
+    private formationService:
+      FormationService,
 
-  ) {
+    private cdr:
+      ChangeDetectorRef
 
-  }
+  ) { }
 
-  // Chargement page
+  // INIT
+
   ngOnInit(): void {
 
     this.getInscriptions();
@@ -70,20 +93,18 @@ export class Inscriptions
     this.getFormations();
   }
 
-  // =========================
-  // CHARGER INSCRIPTIONS
-  // =========================
+  // INSCRIPTIONS
   getInscriptions() {
 
     this.inscriptionService
       .getInscriptions()
       .subscribe({
 
-        next: (data: any) => {
+        next: (data: any[]) => {
 
           this.inscriptions = data;
-          this.cdr.detectChanges();      // force la mise à jour de la vue
 
+          this.cdr.detectChanges();
         },
 
         error: (error: any) => {
@@ -93,18 +114,18 @@ export class Inscriptions
       });
   }
 
-  // =========================
-  // CHARGER ÉTUDIANTS
-  // =========================
+  // ETUDIANTS
+
   getStudents() {
 
     this.studentService
       .getStudents()
       .subscribe({
 
-        next: (data: any) => {
+        next: (data: any[]) => {
 
           this.students = data;
+
           this.cdr.detectChanges();
         },
 
@@ -115,18 +136,18 @@ export class Inscriptions
       });
   }
 
-  // =========================
-  // CHARGER FORMATIONS
-  // =========================
+  // FORMATIONS
+
   getFormations() {
 
     this.formationService
       .getFormations()
       .subscribe({
 
-        next: (data: any) => {
+        next: (data: any[]) => {
 
           this.formations = data;
+
           this.cdr.detectChanges();
         },
 
@@ -137,27 +158,37 @@ export class Inscriptions
       });
   }
 
-  // =========================
-  // AJOUTER
-  // =========================
+  // AJOUT
+
   addInscription() {
 
+    if (
+      !this.inscription.studentId ||
+      !this.inscription.formationId
+    ) {
+
+      alert(
+        'Veuillez sélectionner un étudiant et une formation.'
+      );
+
+      return;
+    }
+
     this.inscriptionService
-      .addInscription(this.inscription)
+      .addInscription(
+        this.inscription
+      )
       .subscribe({
 
         next: () => {
 
           this.getInscriptions();
 
-          this.inscription = {
+          this.resetForm();
 
-            studentId: 0,
-
-            formationId: 0
-          };
-
-          alert('Inscription ajoutée');
+          alert(
+            'Inscription ajoutée'
+          );
         },
 
         error: (error: any) => {
@@ -167,10 +198,66 @@ export class Inscriptions
       });
   }
 
-  // =========================
+  // EDITION
+  editInscription(
+    inscription: any
+  ) {
+
+    this.editMode = true;
+
+    this.editInscriptionId =
+      inscription.id;
+
+    this.inscription = {
+
+      studentId:
+        inscription.studentId,
+
+      formationId:
+        inscription.formationId
+    };
+  }
+
+  // UPDATE
+  updateInscription() {
+
+    this.inscriptionService
+      .updateInscription(
+        this.editInscriptionId,
+        this.inscription
+      )
+      .subscribe({
+
+        next: () => {
+
+          this.getInscriptions();
+
+          this.resetForm();
+
+          alert(
+            'Inscription modifiée'
+          );
+        },
+
+        error: (error: any) => {
+
+          console.log(error);
+        }
+      });
+  }
+
   // DELETE
-  // =========================
-  deleteInscription(id: number) {
+  deleteInscription(
+    id: number
+  ) {
+
+    if (
+      !confirm(
+        'Supprimer cette inscription ?'
+      )
+    ) {
+      return;
+    }
 
     this.inscriptionService
       .deleteInscription(id)
@@ -180,7 +267,9 @@ export class Inscriptions
 
           this.getInscriptions();
 
-          alert('Inscription supprimée');
+          alert(
+            'Inscription supprimée'
+          );
         },
 
         error: (error: any) => {
@@ -190,29 +279,51 @@ export class Inscriptions
       });
   }
 
-  // =========================
-  // NOM ÉTUDIANT
-  // =========================
-  getStudentName(id: number) {
+  // RESET
+
+  resetForm() {
+
+    this.inscription = {
+
+      studentId: 0,
+
+      formationId: 0
+    };
+
+    this.editMode = false;
+
+    this.editInscriptionId = 0;
+  }
+
+  // NOM ETUDIANT
+  getStudentName(
+    id: number
+  ) {
 
     const student =
       this.students.find(
-        s => s.id === id
+
+        (s: any) =>
+          s.id === id
       );
 
     return student
-      ? student.prenom + ' ' + student.nom
+      ? student.prenom +
+      ' ' +
+      student.nom
       : 'Inconnu';
   }
 
-  // =========================
   // NOM FORMATION
-  // =========================
-  getFormationName(id: number) {
+  getFormationName(
+    id: number
+  ) {
 
     const formation =
       this.formations.find(
-        f => f.id === id
+
+        (f: any) =>
+          f.id === id
       );
 
     return formation

@@ -115,7 +115,7 @@ export class DashboardEnseignant
 
             this.loadEmplois();
             this.loadNotifications();
-                      this.loadDocuments();
+            this.loadDocuments();
 
             this.cdr.detectChanges();
 
@@ -132,18 +132,81 @@ export class DashboardEnseignant
   // =========================
   // CHARGER RÉUNIONS
   // =========================
+isReunionActive(
+  reunion: any
+): boolean {
 
-  loadReunions() {
-    this.reunionService.getReunions().subscribe({
-      next: (data: any[]) => {
-        this.reunions = [...data.filter(
-          (reunion: any) => reunion.formateurId === this.formateur.id
-        )];
-        this.cdr.detectChanges(); // ✓ déjà présent
-      },
-      error: (error: any) => { console.log(error); }
-    });
+  if (!reunion.date) {
+    return false;
   }
+
+  const dateReunion =
+    new Date(reunion.date);
+
+  const aujourdHui =
+    new Date();
+
+  // Tolérance de 1 jour
+  dateReunion.setDate(
+    dateReunion.getDate() + 1
+  );
+
+  return dateReunion >= aujourdHui;
+}
+
+isReunionVisible(
+  reunion: any
+): boolean {
+
+  if (
+    !this.isReunionActive(
+      reunion
+    )
+  ) {
+    return false;
+  }
+
+  if (
+    reunion.cible === 'TOUS'
+  ) {
+    return true;
+  }
+
+  if (
+    reunion.cible === 'FORMATEURS'
+  ) {
+    return true;
+  }
+
+  return false;
+}
+loadReunions() {
+
+  this.reunionService
+    .getReunions()
+    .subscribe({
+
+      next: (data: any[]) => {
+
+        this.reunions =
+          data.filter(
+
+            reunion =>
+
+              this.isReunionVisible(
+                reunion
+              )
+          );
+
+        this.cdr.detectChanges();
+      },
+
+      error: (error: any) => {
+
+        console.log(error);
+      }
+    });
+}
 
   // =========================
   // CHARGER EMPLOIS

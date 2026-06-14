@@ -1,17 +1,17 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NotificationService }
-from '../../services/notification.service';
+  from '../../services/notification.service';
 import { CommonModule }
-from '@angular/common';
+  from '@angular/common';
 
 import { Router }
-from '@angular/router';
+  from '@angular/router';
 
 import { Reunion }
-from '../../services/reunion';
+  from '../../services/reunion';
 
 import { User }
-from '../../services/user';
+  from '../../services/user';
 
 import { Document }
   from '../../services/document';
@@ -48,11 +48,11 @@ export class DashboardAdministratif
 
   documents: any[] = [];
   // =========================
-// NOTIFICATIONS
-// =========================
+  // NOTIFICATIONS
+  // =========================
 
-notifications: any[] = [];
-  
+  notifications: any[] = [];
+
 
   // =========================
   // CONSTRUCTOR
@@ -67,9 +67,9 @@ notifications: any[] = [];
     private reunionService: Reunion,
 
     private documentService: Document,
-      private notificationService: NotificationService,
+    private notificationService: NotificationService,
 
-        private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef
 
 
   ) {
@@ -81,85 +81,108 @@ notifications: any[] = [];
   // =========================
 
   ngOnInit(): void {
-  const email = localStorage.getItem('email');
+    const email = localStorage.getItem('email');
 
-  if (email) {
-    this.userService.getByEmail(email).subscribe({
-      next: (data: any) => {
-        this.user = { ...data };
-        console.log(this.user);
-        this.loadReunions();
-        this.loadDocuments();
-        this.loadNotifications();
-        // Pas de cdr.detectChanges() ici
-      },
-      error: (error: any) => { console.log(error); }
-    });
+    if (email) {
+      this.userService.getByEmail(email).subscribe({
+        next: (data: any) => {
+          this.user = { ...data };
+          console.log(this.user);
+          this.loadReunions();
+          this.loadDocuments();
+          this.loadNotifications();
+          // Pas de cdr.detectChanges() ici
+        },
+        error: (error: any) => { console.log(error); }
+      });
+    }
   }
-}
   // =========================
   // CHARGER RÉUNIONS
   // =========================
 
-  loadReunions() {
-  this.reunionService.getReunions().subscribe({
-    next: (data: any[]) => {
-
-      // cdr.detectChanges() était dans le .filter() — bug !
-      this.reunions = [...data.filter(
-        (reunion: any) => reunion.serviceConcerne === this.user.service
-      )];
-      this.cdr.detectChanges(); // ← après l'assignation, pas dedans
-
-      console.log(this.reunions);
-    },
-    error: (error: any) => { console.log(error); }
-  });
-}
-
-loadDocuments() {
-
-  this.documentService
-    .getDocumentsByRole(
-      'ADMINISTRATIF'
-    )
-    .subscribe({
-
-      next: (data: any) => {
-
-        this.documents = data;
-      }
-    });
-}// =========================
-// CHARGER NOTIFICATIONS
+ // =========================
+// VISIBILITE REUNION
 // =========================
+isReunionActive(
+  reunion: any
+): boolean {
 
-loadNotifications() {
+  if (!reunion.date) {
+    return false;
+  }
 
-  this.notificationService
-    .getNotifications()
+  const dateReunion =
+    new Date(reunion.date);
+
+  const aujourdHui =
+    new Date();
+
+  // Tolérance de 1 jour
+  dateReunion.setDate(
+    dateReunion.getDate() + 1
+  );
+
+  return dateReunion >= aujourdHui;
+}
+isReunionVisible(
+  reunion: any
+): boolean {
+
+  if (
+    !this.isReunionActive(
+      reunion
+    )
+  ) {
+    return false;
+  }
+
+  if (
+    reunion.cible === 'TOUS'
+  ) {
+    return true;
+  }
+
+  if (
+    reunion.cible === 'ADMINISTRATIFS'
+  ) {
+    return true;
+  }
+
+  if (
+    reunion.cible === 'SERVICE'
+    &&
+    reunion.serviceConcerne ===
+    this.user.service
+  ) {
+    return true;
+  }
+
+  return false;
+}
+loadReunions() {
+
+  this.reunionService
+    .getReunions()
     .subscribe({
 
       next: (data: any[]) => {
 
-        this.notifications = data.filter(
+        this.reunions =
+          data.filter(
 
-          (notification: any) =>
+            (reunion: any) =>
 
-            notification.roleCible ===
-            this.user.role
-
-            ||
-
-            notification.roleCible ===
-            'TOUS')
-            .slice(-3)
-  .reverse();
-            ;
+              this.isReunionVisible(
+                reunion
+              )
+          );
 
         this.cdr.detectChanges();
 
-
+        console.log(
+          this.reunions
+        );
       },
 
       error: (error: any) => {
@@ -168,6 +191,58 @@ loadNotifications() {
       }
     });
 }
+
+  loadDocuments() {
+
+    this.documentService
+      .getDocumentsByRole(
+        'ADMINISTRATIF'
+      )
+      .subscribe({
+
+        next: (data: any) => {
+
+          this.documents = data;
+        }
+      });
+  }// =========================
+  // CHARGER NOTIFICATIONS
+  // =========================
+
+  loadNotifications() {
+
+    this.notificationService
+      .getNotifications()
+      .subscribe({
+
+        next: (data: any[]) => {
+
+          this.notifications = data.filter(
+
+            (notification: any) =>
+
+              notification.roleCible ===
+              this.user.role
+
+              ||
+
+              notification.roleCible ===
+              'TOUS')
+            .slice(-3)
+            .reverse();
+          ;
+
+          this.cdr.detectChanges();
+
+
+        },
+
+        error: (error: any) => {
+
+          console.log(error);
+        }
+      });
+  }
 
 
   // =========================

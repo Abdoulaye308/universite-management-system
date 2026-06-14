@@ -54,7 +54,7 @@ public class FormateurService {
         formateur.setGrade(details.getGrade());
         formateur.setType(details.getType());
         formateur.setSpecialite(details.getSpecialite());
-
+        formateur.setFormationId(details.getFormationId());
         // Sauvegarde
         return repository.save(formateur);
     }

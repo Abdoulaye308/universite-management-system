@@ -1,275 +1,175 @@
-<div class="container mt-4">
+<div class="page-shell">
 
-  <h2>
-    Insertion professionnelle
-  </h2>
+  <!-- HEADER -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Insertion professionnelle</h1>
+      <span class="page-sub">Suivre l'insertion des diplômés dans le monde professionnel</span>
+    </div>
+  </div>
 
-  <!-- ===================== -->
+  <!-- KPI -->
+  <div class="kpi-grid mb-4">
+    <div class="kpi-card kpi-blue">
+      <div class="kpi-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+      </div>
+      <div>
+        <span class="kpi-label">Total insertions</span>
+        <span class="kpi-value">{{ insertions.length }}</span>
+      </div>
+    </div>
+    <div class="kpi-card kpi-emerald">
+      <div class="kpi-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+      </div>
+      <div>
+        <span class="kpi-label">Emploi salarié</span>
+        <span class="kpi-value">{{ emploiSalarieCount }}</span>
+      </div>
+    </div>
+    <div class="kpi-card kpi-amber">
+      <div class="kpi-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <div>
+        <span class="kpi-label">Auto-emploi</span>
+        <span class="kpi-value">{{ autoEmploiCount }}</span>
+      </div>
+    </div>
+  </div>
+
   <!-- FORMULAIRE -->
-  <!-- ===================== -->
+  <div class="panel mb-4">
 
-  <div class="card p-3 mb-4">
+    <div class="panel-header">
+      <h2 class="panel-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+        {{ editMode ? 'Modifier une insertion' : 'Ajouter une insertion' }}
+      </h2>
+    </div>
 
-    <div class="row">
+    <div class="form-grid">
 
-      <!-- Etudiant -->
-      <div class="col-md-6 mb-3">
-
-        <label>
-          Etudiant
-        </label>
-
-        <select
-          class="form-select"
-          [(ngModel)]="insertion.studentId"
-          (change)="onStudentChange()"
-        >
-
-          <option value="0">
-            Choisir un étudiant
-          </option>
-
-          <option
-            *ngFor="let s of students"
-            [value]="s.id"
-          >
+      <div class="field">
+        <label class="field-label">Étudiant</label>
+        <select class="field-input field-select" [(ngModel)]="insertion.studentId" (change)="onStudentChange()">
+          <option [value]="0">Choisir un étudiant</option>
+          <option *ngFor="let s of students" [value]="s.id">
             {{ s.nom }} {{ s.prenom }}
           </option>
-
         </select>
-
       </div>
 
-      <!-- Nom étudiant -->
-      <div class="col-md-6 mb-3">
-
-        <label>
-          Nom étudiant
-        </label>
-
-        <input
-          type="text"
-          class="form-control"
-          [value]="insertion.etudiant"
-          readonly
-        >
-
+      <div class="field">
+        <label class="field-label">Nom étudiant</label>
+        <input type="text" class="field-input field-readonly" [value]="insertion.etudiant" readonly placeholder="Auto-rempli">
       </div>
 
-      <!-- Situation -->
-      <div class="col-md-6 mb-3">
-
-        <label>
-          Situation
-        </label>
-
-        <select
-          class="form-select"
-          [(ngModel)]="insertion.typeInsertion"
-        >
-
-          <option value="AUTO_EMPLOI">
-            AUTO_EMPLOI
-          </option>
-
-          <option value="EMPLOI_SALARIE">
-            EMPLOI_SALARIE
-          </option>
-
+      <div class="field">
+        <label class="field-label">Situation</label>
+        <select class="field-input field-select" [(ngModel)]="insertion.typeInsertion">
+          <option value="EMPLOI_SALARIE">Emploi salarié</option>
+          <option value="AUTO_EMPLOI">Auto-emploi</option>
         </select>
-
       </div>
 
-      <!-- Entreprise -->
-      <div class="col-md-6 mb-3">
-
-        <label>
-          Entreprise
-        </label>
-
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="insertion.entreprise"
-        >
-
+      <div class="field">
+        <label class="field-label">Entreprise</label>
+        <input type="text" class="field-input" placeholder="Nom de l'entreprise" [(ngModel)]="insertion.entreprise">
       </div>
 
-      <!-- Poste -->
-      <div class="col-md-6 mb-3">
-
-        <label>
-          Poste
-        </label>
-
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="insertion.poste"
-        >
-
+      <div class="field">
+        <label class="field-label">Poste</label>
+        <input type="text" class="field-input" placeholder="Intitulé du poste" [(ngModel)]="insertion.poste">
       </div>
 
-      <!-- Date insertion -->
-      <div class="col-md-6 mb-3">
-
-        <label>
-          Date insertion
-        </label>
-
-        <input
-          type="date"
-          class="form-control"
-          [(ngModel)]="insertion.dateInsertion"
-        >
-
-      </div>
-
-      <!-- Commentaire -->
-      <div class="col-md-12 mb-3">
-
-        <label>
-          Commentaire
-        </label>
-
-        <textarea
-          rows="4"
-          class="form-control"
-          [(ngModel)]="insertion.commentaire"
-        ></textarea>
-
+      <div class="field">
+        <label class="field-label">Date d'insertion</label>
+        <input type="date" class="field-input" [(ngModel)]="insertion.dateInsertion">
       </div>
 
     </div>
 
-    <!-- Ajouter -->
-
-    <button
-      *ngIf="!editMode"
-      class="btn btn-primary"
-      (click)="addInsertion()"
-    >
-      Ajouter
-    </button>
-
-    <!-- Modifier -->
-
-    <button
-      *ngIf="editMode"
-      class="btn btn-warning"
-      (click)="updateInsertion()"
-    >
-      Modifier
-    </button>
-
-  </div>
-
-  <!-- ===================== -->
-  <!-- STATISTIQUES -->
-  <!-- ===================== -->
-
-  <div class="row mb-4">
-
-    <div class="col-md-6">
-
-      <div class="card text-center p-3">
-
-        <h5>
-          Auto-emploi
-        </h5>
-
-        <h2>
-          {{ autoEmploiCount }}
-        </h2>
-
-      </div>
-
+    <div class="field field-full">
+      <label class="field-label">Commentaire</label>
+      <textarea class="field-input field-textarea" rows="4" placeholder="Commentaire…" [(ngModel)]="insertion.commentaire"></textarea>
     </div>
 
-    <div class="col-md-6">
-
-      <div class="card text-center p-3">
-
-        <h5>
-          Emploi salarié
-        </h5>
-
-        <h2>
-          {{ emploiSalarieCount }}
-        </h2>
-
-      </div>
-
+    <div class="form-actions">
+      <button *ngIf="!editMode" type="button" class="btn-primary" (click)="addInsertion()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        Ajouter l'insertion
+      </button>
+      <button *ngIf="editMode" type="button" class="btn-primary" (click)="updateInsertion()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        Enregistrer les modifications
+      </button>
+      <button *ngIf="editMode" type="button" class="btn-ghost" (click)="resetForm(); editMode = false">
+        Annuler
+      </button>
     </div>
 
   </div>
 
-  <!-- ===================== -->
-  <!-- TABLEAU -->
-  <!-- ===================== -->
+  <!-- TABLE -->
+  <div class="panel">
 
-  <table class="table table-bordered table-striped">
+    <div class="panel-header">
+      <h2 class="panel-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Liste des insertions
+      </h2>
+      <span class="count-badge">{{ insertions.length }}</span>
+    </div>
 
-    <thead>
+    <div *ngIf="insertions.length === 0" class="empty-state">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+      <span>Aucune insertion enregistrée</span>
+    </div>
 
-      <tr>
+    <div class="table-wrap" *ngIf="insertions.length > 0">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Étudiant</th>
+            <th>Situation</th>
+            <th>Entreprise</th>
+            <th>Poste</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of insertions">
+            <td class="td-id">{{ i.id }}</td>
+            <td class="td-primary">{{ i.etudiant }}</td>
+            <td>
+              <span class="badge-situation" [ngClass]="i.typeInsertion === 'AUTO_EMPLOI' ? 'sit-auto' : 'sit-salarie'">
+                {{ i.typeInsertion === 'AUTO_EMPLOI' ? 'Auto-emploi' : 'Emploi salarié' }}
+              </span>
+            </td>
+            <td class="td-muted">{{ i.entreprise || '—' }}</td>
+            <td class="td-muted">{{ i.poste || '—' }}</td>
+            <td class="td-muted">{{ i.dateInsertion }}</td>
+            <td>
+              <div class="action-group">
+                <button class="btn-edit" (click)="editInsertion(i)">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  Modifier
+                </button>
+                <button class="btn-delete" (click)="deleteInsertion(i.id)">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+                  Supprimer
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-        <th>ID</th>
-
-        <th>Etudiant</th>
-
-        <th>Situation</th>
-
-        <th>Entreprise</th>
-
-        <th>Poste</th>
-
-        <th>Date</th>
-
-        <th>Actions</th>
-
-      </tr>
-
-    </thead>
-
-    <tbody>
-
-      <tr *ngFor="let i of insertions">
-
-        <td>{{ i.id }}</td>
-
-        <td>{{ i.etudiant }}</td>
-
-        <td>{{ i.typeInsertion }}</td>
-
-        <td>{{ i.entreprise }}</td>
-
-        <td>{{ i.poste }}</td>
-
-        <td>{{ i.dateInsertion }}</td>
-
-        <td>
-
-          <button
-            class="btn btn-warning btn-sm me-2"
-            (click)="editInsertion(i)"
-          >
-            Modifier
-          </button>
-
-          <button
-            class="btn btn-danger btn-sm"
-            (click)="deleteInsertion(i.id)"
-          >
-            Supprimer
-          </button>
-
-        </td>
-
-      </tr>
-
-    </tbody>
-
-  </table>
+  </div>
 
 </div>

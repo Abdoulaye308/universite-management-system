@@ -43,6 +43,7 @@
       <div class="field">
         <label class="field-label">Type</label>
         <select class="field-input field-select" [(ngModel)]="formateur.type">
+          <option value="">Choisir un type</option>
           <option value="Enseignant">Enseignant</option>
           <option value="Enseignant associé">Enseignant associé</option>
           <option value="Tuteur">Tuteur</option>
@@ -53,6 +54,16 @@
       <div class="field">
         <label class="field-label">Spécialité</label>
         <input type="text" class="field-input" placeholder="Ex: Génie Logiciel" [(ngModel)]="formateur.specialite">
+      </div>
+
+      <div class="field">
+        <label class="field-label">Formation rattachée</label>
+        <select class="field-input field-select" [(ngModel)]="formateur.formationId">
+          <option [value]="null">Choisir une formation</option>
+          <option *ngFor="let f of formations" [value]="f.id">
+            {{ f.nom }} — {{ f.niveau }}
+          </option>
+        </select>
       </div>
 
     </div>
@@ -100,6 +111,7 @@
             <th>Grade</th>
             <th>Type</th>
             <th>Spécialité</th>
+            <th>Formation</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -112,6 +124,12 @@
             <td>{{ f.grade }}</td>
             <td><span class="badge-type">{{ f.type }}</span></td>
             <td><span class="badge-specialite">{{ f.specialite }}</span></td>
+            <td>
+              <span class="badge-formation" *ngIf="f.formationId">
+                {{ getFormationName(f.formationId) }}
+              </span>
+              <span class="td-muted" *ngIf="!f.formationId">—</span>
+            </td>
             <td>
               <div class="action-group">
                 <button class="btn-edit" (click)="editFormateur(f)">

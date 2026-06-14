@@ -1,358 +1,185 @@
-<div class="container mt-4">
+<div class="page-shell">
 
-  <h2>
-    Gestion des réunions
-  </h2>
+  <!-- HEADER -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Gestion des réunions</h1>
+      <span class="page-sub">Planifier et suivre les réunions</span>
+    </div>
+  </div>
 
-  <!-- ===================== -->
   <!-- FORMULAIRE -->
-  <!-- ===================== -->
+  <div class="panel mb-4">
 
-  <div class="card p-3 mb-4">
+    <div class="panel-header">
+      <h2 class="panel-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        {{ editMode ? 'Modifier une réunion' : 'Planifier une réunion' }}
+      </h2>
+    </div>
 
-    <div class="row">
+    <div class="form-grid">
 
-      <!-- TYPE -->
-      <div class="col-md-4 mb-3">
-
-        <label>
-          Type réunion
-        </label>
-
-        <select
-          class="form-select"
-          [(ngModel)]="reunion.type"
-        >
-
-          <option value="Tutorat">
-            Tutorat
-          </option>
-
-          <option value="Préparation cours">
-            Préparation cours
-          </option>
-
-          <option value="Préparation évaluations">
-            Préparation évaluations
-          </option>
-
+      <div class="field">
+        <label class="field-label">Type de réunion</label>
+        <select class="field-input field-select" [(ngModel)]="reunion.type">
+          <option value="">Choisir un type</option>
+          <option value="Tutorat">Tutorat</option>
+          <option value="Préparation cours">Préparation cours</option>
+          <option value="Préparation évaluations">Préparation évaluations</option>
         </select>
-
       </div>
 
-      <!-- SUJET -->
-      <div class="col-md-8 mb-3">
-
-        <label>
-          Sujet
-        </label>
-
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="reunion.sujet"
-        >
-
+      <div class="field field-wide">
+        <label class="field-label">Sujet</label>
+        <input type="text" class="field-input" placeholder="Sujet de la réunion" [(ngModel)]="reunion.sujet">
       </div>
 
-      <!-- DATE -->
-      <div class="col-md-4 mb-3">
-
-        <label>
-          Date
-        </label>
-
-        <input
-          type="date"
-          class="form-control"
-          [(ngModel)]="reunion.date"
-        >
-
+      <div class="field">
+        <label class="field-label">Date</label>
+        <input type="date" class="field-input" [(ngModel)]="reunion.date">
       </div>
 
-      <!-- HEURE -->
-      <div class="col-md-4 mb-3">
-
-        <label>
-          Heure
-        </label>
-
-        <input
-          type="time"
-          class="form-control"
-          [(ngModel)]="reunion.heure"
-        >
-
+      <div class="field">
+        <label class="field-label">Heure</label>
+        <input type="time" class="field-input" [(ngModel)]="reunion.heure">
       </div>
 
-      <!-- SALLE -->
-      <div class="col-md-4 mb-3">
-
-        <label>
-          Salle
-        </label>
-
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="reunion.salle"
-        >
-
+      <div class="field">
+        <label class="field-label">Salle</label>
+        <input type="text" class="field-input" placeholder="Ex: Salle A1" [(ngModel)]="reunion.salle">
       </div>
 
-      <!-- FORMATION -->
-      <div class="col-md-6 mb-3">
-
-        <label>
-          Formation concernée
-        </label>
-
-        <select
-          class="form-select"
-          [(ngModel)]="reunion.formationId"
-          (change)="onFormationChange()"
-        >
-
-          <option value="0">
-            Choisir une formation
-          </option>
-
-          <option
-            *ngFor="let formation of formations"
-            [value]="formation.id"
-          >
-
-            {{ formation.nom }}
-
-          </option>
-
+      <div class="field">
+        <label class="field-label">Destinataires</label>
+        <select class="field-input field-select" [(ngModel)]="reunion.cible">
+          <option value="">Choisir les destinataires</option>
+          <option value="TOUS">Toute l'école</option>
+          <option value="FORMATEURS">Tous les formateurs</option>
+          <option value="ADMINISTRATIFS">Tous les administratifs</option>
+          <option value="FORMATION">Une formation</option>
+          <option value="SERVICE">Un service administratif</option>
         </select>
-
       </div>
 
-      <!-- FORMATEUR -->
-      <div class="col-md-6 mb-3">
-
-        <label>
-          Formateur concerné
-        </label>
-
-        <select
-          class="form-select"
-          [(ngModel)]="reunion.formateurId"
-          (change)="onFormateurChange()"
-        >
-
-          <option value="0">
-            Choisir un formateur
-          </option>
-
-          <option
-            *ngFor="let formateur of formateurs"
-            [value]="formateur.id"
-          >
-
-            {{ formateur.nom }}
-            {{ formateur.prenom }}
-            -
-            {{ formateur.specialite }}
-
-          </option>
-
+      <!-- Formation — uniquement si cible = FORMATION -->
+      <div class="field" *ngIf="reunion.cible === 'FORMATION'">
+        <label class="field-label">Formation concernée</label>
+        <select class="field-input field-select" [(ngModel)]="reunion.formationId" (change)="onFormationChange()">
+          <option [value]="0">Choisir une formation</option>
+          <option *ngFor="let f of formations" [value]="f.id">{{ f.nom }}</option>
         </select>
-
-      </div>
-      <!-- SERVICE -->
-<div class="col-md-6 mb-3">
-
-  <label>
-    Service concerné
-  </label>
-
-  <select
-    class="form-select"
-    [(ngModel)]="reunion.serviceConcerne"
-  >
-
-    <option value="">
-      Choisir un service
-    </option>
-
-    <option value="Scolarité">
-      Scolarité
-    </option>
-
-    <option value="Pédagogie">
-      Pédagogie
-    </option>
-
-    <option value="Direction">
-      Direction
-    </option>
-
-    <option value="Finance">
-      Finance
-    </option>
-
-  </select>
-
-</div>
-
-      <!-- PARTICIPANTS -->
-      <div class="col-md-12 mb-3">
-
-        <label>
-          Participants
-        </label>
-
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="reunion.participants"
-        >
-
       </div>
 
-      <!-- COMPTE RENDU -->
-      <div class="col-md-12 mb-3">
+      <!-- Service — uniquement si cible = SERVICE -->
+      <div class="field" *ngIf="reunion.cible === 'SERVICE'">
+        <label class="field-label">Service concerné</label>
+        <select class="field-input field-select" [(ngModel)]="reunion.serviceConcerne">
+          <option value="">Choisir un service</option>
+          <option value="Scolarité">Scolarité</option>
+          <option value="Pédagogie">Pédagogie</option>
+          <option value="Direction">Direction</option>
+          <option value="Finance">Finance</option>
+        </select>
+      </div>
 
-        <label>
-          Compte rendu
-        </label>
-
-        <textarea
-          rows="5"
-          class="form-control"
-          [(ngModel)]="reunion.compteRendu"
-        ></textarea>
-
+      <div class="field field-wide">
+        <label class="field-label">Participants</label>
+        <input type="text" class="field-input" placeholder="Noms des participants" [(ngModel)]="reunion.participants">
       </div>
 
     </div>
 
-    <!-- BOUTONS -->
+    <!-- Compte rendu — pleine largeur -->
+    <div class="field field-full">
+      <label class="field-label">Compte rendu</label>
+      <textarea class="field-input field-textarea" rows="4" placeholder="Compte rendu de la réunion…" [(ngModel)]="reunion.compteRendu"></textarea>
+    </div>
 
-    <button
-      *ngIf="!editMode"
-      class="btn btn-primary"
-      (click)="addReunion()"
-    >
-      Ajouter
-    </button>
-
-    <button
-      *ngIf="editMode"
-      class="btn btn-warning"
-      (click)="updateReunion()"
-    >
-      Modifier
-    </button>
+    <div class="form-actions">
+      <button *ngIf="!editMode" type="button" class="btn-primary" (click)="addReunion()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        Planifier la réunion
+      </button>
+      <button *ngIf="editMode" type="button" class="btn-primary" (click)="updateReunion()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        Enregistrer les modifications
+      </button>
+      <button *ngIf="editMode" type="button" class="btn-ghost" (click)="resetForm()">
+        Annuler
+      </button>
+    </div>
 
   </div>
 
-  <!-- ===================== -->
   <!-- TABLE -->
-  <!-- ===================== -->
+  <div class="panel">
 
-  <table
-    class="table table-bordered table-striped"
-  >
+    <div class="panel-header">
+      <h2 class="panel-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Liste des réunions
+      </h2>
+      <span class="count-badge">{{ reunions.length }}</span>
+    </div>
 
-    <thead>
+    <div *ngIf="reunions.length === 0" class="empty-state">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span>Aucune réunion planifiée</span>
+    </div>
 
-      <tr>
+    <div class="table-wrap" *ngIf="reunions.length > 0">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Sujet</th>
+            <th>Cible</th>
+            <th>Formation / Service</th>
+            <th>Date</th>
+            <th>Heure</th>
+            <th>Salle</th>
+            <th>Participants</th>
+            <th>Compte rendu</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let r of reunions">
+            <td class="td-id">{{ r.id }}</td>
+            <td><span class="badge-type">{{ r.type }}</span></td>
+            <td class="td-primary">{{ r.sujet }}</td>
+            <td><span class="badge-cible" [ngClass]="getCibleClass(r.cible)">{{ r.cible }}</span></td>
+            <td class="td-muted">
+              <span *ngIf="r.formationNom">{{ r.formationNom }}</span>
+              <span *ngIf="r.serviceConcerne && !r.formationNom">{{ r.serviceConcerne }}</span>
+              <span *ngIf="!r.formationNom && !r.serviceConcerne">—</span>
+            </td>
+            <td class="td-muted">{{ r.date }}</td>
+            <td class="td-muted">{{ r.heure }}</td>
+            <td class="td-muted">{{ r.salle }}</td>
+            <td class="td-muted">{{ r.participants }}</td>
+            <td>
+              <div class="compte-rendu-cell">{{ r.compteRendu || '—' }}</div>
+            </td>
+            <td>
+              <div class="action-group">
+                <button class="btn-edit" (click)="editReunion(r)">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  Modifier
+                </button>
+                <button class="btn-delete" (click)="deleteReunion(r.id)">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+                  Supprimer
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-        <th>ID</th>
-
-        <th>Type</th>
-
-        <th>Sujet</th>
-
-        <th>Formation</th>
-
-        <th>Formateur</th>
-
-        <th>Date</th>
-
-        <th>Heure</th>
-
-        <th>Salle</th>
-
-        <th>Participants</th>
-
-        <th>Compte rendu</th>
-
-        <th>Actions</th>
-
-      </tr>
-
-    </thead>
-
-    <tbody>
-
-      <tr *ngFor="let r of reunions">
-
-        <td>{{ r.id }}</td>
-
-        <td>{{ r.type }}</td>
-
-        <td>{{ r.sujet }}</td>
-
-        <td>{{ r.formationNom }}</td>
-
-        <td>{{ r.formateurNom }}</td>
-
-        <td>{{ r.date }}</td>
-
-        <td>{{ r.heure }}</td>
-
-        <td>{{ r.salle }}</td>
-
-        <td>{{ r.participants }}</td>
-
-        <!-- COMPTE RENDU -->
-        <td>
-
-          <div
-            style="
-              max-width: 250px;
-              max-height: 120px;
-              overflow: auto;
-              white-space: pre-wrap;
-            "
-          >
-
-            {{ r.compteRendu }}
-
-          </div>
-
-        </td>
-
-        <!-- ACTIONS -->
-        <td>
-
-          <!-- MODIFIER -->
-          <button
-            class="btn btn-warning btn-sm me-2"
-            (click)="editReunion(r)"
-          >
-            Modifier
-          </button>
-
-          <!-- DELETE -->
-          <button
-            class="btn btn-danger btn-sm"
-            (click)="deleteReunion(r.id)"
-          >
-            Supprimer
-          </button>
-
-        </td>
-
-      </tr>
-
-    </tbody>
-
-  </table>
+  </div>
 
 </div>

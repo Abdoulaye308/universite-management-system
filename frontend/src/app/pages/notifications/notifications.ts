@@ -85,6 +85,24 @@ export class Notifications implements OnInit {
         this.getNotifications();
       });
   }
+  getRoleClass(role: string): string {
+  const map: any = {
+    'ETUDIANT':      'role-etudiant',
+    'ENSEIGNANT':    'role-enseignant',
+    'ADMINISTRATIF': 'role-admin'
+  };
+  return map[role] || '';
+}
+
+resetForm() {
+  this.notification = {
+    titre: '',
+    message: '',
+    roleCible: '',
+    dateCreation: ''
+  };
+  this.editMode = false;
+}
 
   reset() {
     this.notification = {

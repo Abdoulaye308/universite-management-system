@@ -55,9 +55,9 @@ export class Budgets
   constructor(
     private budgetService:
       BudgetService,
-          private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef
 
-  ) {}
+  ) { }
 
   ngOnInit(): void {
 
@@ -73,7 +73,7 @@ export class Budgets
         next: (data: any) => {
 
           this.budgets = data;
-                    this.cdr.detectChanges();
+          this.cdr.detectChanges();
 
         }
       });
@@ -167,19 +167,38 @@ export class Budgets
       });
   }
 
-  resetForm() {
+  getTypeLabel(type: string): string {
+  const map: any = {
+    'PROJET_BUDGET':   'Projet Budget',
+    'NOTE_ORIENTATION': "Note d'orientation",
+    'BUDGET_REALISE':  'Budget réalisé'
+  };
+  return map[type] || type;
+}
 
-    this.budget = {
+getTypeClass(type: string): string {
+  const map: any = {
+    'PROJET_BUDGET':    'type-projet',
+    'NOTE_ORIENTATION': 'type-orientation',
+    'BUDGET_REALISE':   'type-realise'
+  };
+  return map[type] || '';
+}
 
-      type: '',
+getTotalMontant(): number {
+  return this.budgets.reduce((sum: number, b: any) => sum + (b.montant || 0), 0);
+}
 
-      titre: '',
+getBudgetRealise(): number {
+  return this.budgets
+    .filter((b: any) => b.type === 'BUDGET_REALISE')
+    .reduce((sum: number, b: any) => sum + (b.montant || 0), 0);
+}
 
-      description: '',
+resetForm() {
+  this.budget = { type: '', titre: '', description: '', montant: 0, dateCreation: '' };
+  this.editMode = false;
+}
 
-      montant: 0,
-
-      dateCreation: ''
-    };
-  }
+ 
 }

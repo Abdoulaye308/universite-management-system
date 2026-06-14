@@ -172,6 +172,32 @@ editDocument(
     });
 }
 
+getTypeLabel(type: string): string {
+  const map: any = {
+    'CIRCULAIRE':           'Circulaire',
+    'NOTE_SERVICE':         'Note de service',
+    'NOTE_ADMINISTRATIVE':  'Note administrative'
+  };
+  return map[type] || type;
+}
+
+getTypeClass(type: string): string {
+  const map: any = {
+    'CIRCULAIRE':           'type-circulaire',
+    'NOTE_SERVICE':         'type-note-service',
+    'NOTE_ADMINISTRATIVE':  'type-note-admin'
+  };
+  return map[type] || '';
+}
+
+getRoleClass(role: string): string {
+  const map: any = {
+    'ETUDIANT':      'role-etudiant',
+    'ENSEIGNANT':    'role-enseignant',
+    'ADMINISTRATIF': 'role-admin'
+  };
+  return map[role] || '';
+}
   // =====================
   // RESET
   // =====================

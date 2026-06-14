@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { FormationService } from '../../services/formation.service';
 
 import { CommonModule } from '@angular/common';
 
@@ -24,7 +25,7 @@ export class Formateurs implements OnInit {
 
   // Liste formateurs
   formateurs: any[] = [];
-
+ formations: any[] = [];
   // Formulaire
   formateur = {
 
@@ -38,7 +39,8 @@ export class Formateurs implements OnInit {
 
     type: '',
 
-    specialite: ''
+    specialite: '',
+    formationId: null
   };
 
   // Mode édition
@@ -50,6 +52,7 @@ export class Formateurs implements OnInit {
   // Constructor
   constructor(
     private formateurService: Formateur,
+    private formationService: FormationService,
     private cdr: ChangeDetectorRef
 
   ) {
@@ -60,8 +63,17 @@ export class Formateurs implements OnInit {
   ngOnInit(): void {
 
     this.getFormateurs();
+    this.getFormations();
   }
-
+ getFormations() {
+    this.formationService.getFormations().subscribe({
+      next: (data: any) => {
+        this.formations = [...data];
+        this.cdr.detectChanges();
+      },
+      error: (error: any) => { console.log(error); }
+    });
+  }
   // =========================
   // LISTE
   // =========================
@@ -130,7 +142,8 @@ export class Formateurs implements OnInit {
 
       type: formateur.type,
 
-      specialite: formateur.specialite
+      specialite: formateur.specialite,
+      formationId: formateur.formationId
     };
   }
 
@@ -183,6 +196,10 @@ export class Formateurs implements OnInit {
         }
       });
   }
+  getFormationName(id: number): string {
+  const f = this.formations.find(f => f.id === id);
+  return f ? f.nom : '—';
+}
 
   // =========================
   // RESET
@@ -201,7 +218,8 @@ export class Formateurs implements OnInit {
 
       type: '',
 
-      specialite: ''
+      specialite: '',
+      formationId: null
     };
   }
 }

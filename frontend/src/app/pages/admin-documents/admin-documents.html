@@ -1,182 +1,162 @@
-<div class="container mt-4">
+<div class="page-shell">
 
-    <h2>
-        Gestion documentaire
-    </h2>
+  <!-- HEADER -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Gestion documentaire</h1>
+      <span class="page-sub">Gérer les courriers et documents administratifs</span>
+    </div>
+  </div>
 
-    <div class="card p-3 mb-4">
+  <!-- FORMULAIRE -->
+  <div class="panel mb-4">
 
-        <div class="row">
+    <div class="panel-header">
+      <h2 class="panel-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        {{ editMode ? 'Modifier un document' : 'Ajouter un document' }}
+      </h2>
+    </div>
 
-            <div class="col-md-4 mb-3">
+    <div class="form-grid">
 
-                <label>Type</label>
+      <div class="field">
+        <label class="field-label">Type</label>
+        <select class="field-input field-select" [(ngModel)]="document.type">
+          <option value="">Choisir un type</option>
+          <option value="COURRIER_ARRIVEE">Courrier arrivé</option>
+          <option value="COURRIER_DEPART">Courrier départ</option>
+          <option value="NOTE_SERVICE">Note de service</option>
+          <option value="NOTE_ADMINISTRATIVE">Note administrative</option>
+          <option value="CIRCULAIRE">Circulaire</option>
+        </select>
+      </div>
 
-                <select class="form-select" [(ngModel)]="document.type">
+      <div class="field field-wide">
+        <label class="field-label">Titre</label>
+        <input type="text" class="field-input" placeholder="Titre du document" [(ngModel)]="document.titre">
+      </div>
 
-                    <option value="COURRIER_ARRIVEE">
-                        Courrier arrivé
-                    </option>
-
-                    <option value="COURRIER_DEPART">
-                        Courrier départ
-                    </option>
-
-                    <option value="NOTE_SERVICE">
-                        Note de service
-                    </option>
-
-                    <option value="NOTE_ADMINISTRATIVE">
-                        Note administrative
-                    </option>
-
-                    <option value="CIRCULAIRE">
-                        Circulaire
-                    </option>
-
-                </select>
-
-            </div>
-
-            <div class="col-md-8 mb-3">
-
-                <label>Titre</label>
-
-                <input type="text" class="form-control" [(ngModel)]="document.titre">
-
-            </div>
-
-            <div class="col-md-12 mb-3">
-
-                <label>Contenu</label>
-
-                <textarea rows="5" class="form-control" [(ngModel)]="document.contenu">
-        </textarea>
-
-            </div>
-
-            <div class="col-md-4 mb-3">
-
-                <label>Date</label>
-
-                <input type="date" class="form-control" [(ngModel)]="document.dateCreation">
-
-            </div>
-
-        </div>
-
-        <button *ngIf="!editMode" class="btn btn-primary" (click)="addDocument()">
-
-            Ajouter
-
-        </button>
-
-        <button *ngIf="editMode" class="btn btn-warning" (click)="updateDocument()">
-
-            Modifier
-
-        </button>
+      <div class="field">
+        <label class="field-label">Date</label>
+        <input type="date" class="field-input" [(ngModel)]="document.dateCreation">
+      </div>
 
     </div>
 
-    <table class="table table-bordered table-striped">
+    <div class="field field-full">
+      <label class="field-label">Contenu</label>
+      <textarea class="field-input field-textarea" rows="5" placeholder="Contenu du document…" [(ngModel)]="document.contenu"></textarea>
+    </div>
 
+    <div class="form-actions">
+      <button *ngIf="!editMode" type="button" class="btn-primary" (click)="addDocument()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        Ajouter le document
+      </button>
+      <button *ngIf="editMode" type="button" class="btn-primary" (click)="updateDocument()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        Enregistrer les modifications
+      </button>
+      <button *ngIf="editMode" type="button" class="btn-ghost" (click)="resetForm()">
+        Annuler
+      </button>
+    </div>
+
+  </div>
+
+  <!-- TABLE -->
+  <div class="panel">
+
+    <div class="panel-header">
+      <h2 class="panel-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Liste des documents
+      </h2>
+      <span class="count-badge">{{ documents.length }}</span>
+    </div>
+
+    <div *ngIf="documents.length === 0" class="empty-state">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <span>Aucun document enregistré</span>
+    </div>
+
+    <div class="table-wrap" *ngIf="documents.length > 0">
+      <table class="data-table">
         <thead>
-
-            <tr>
-
-                <th>ID</th>
-
-                <th>Type</th>
-
-                <th>Titre</th>
-
-                <th>Date</th>
-
-                <th>Actions</th>
-
-            </tr>
-
+          <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Titre</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
         </thead>
-
         <tbody>
-
-            <tr *ngFor="
-          let doc
-          of documents
-        ">
-
-                <td>
-                    {{ doc.id }}
-                </td>
-
-                <td>
-                    {{ doc.type }}
-                </td>
-
-                <td>
-                    {{ doc.titre }}
-                </td>
-
-                <td>
-                    {{ doc.dateCreation }}
-                </td>
-
-                <td>
-
-                    <button class="btn btn-warning btn-sm me-2" (click)="editDocument(doc)">
-
-                        Modifier
-
-                    </button>
-
-                    <button class="btn btn-danger btn-sm" (click)="deleteDocument(doc.id)">
-
-                        Supprimer
-
-                    </button>
-                    <button
-  class="btn btn-info btn-sm"
-  (click)="voirDocument(doc)"
->
-  Voir
-</button>
-
-                </td>
-
-            </tr>
-
+          <tr *ngFor="let doc of documents">
+            <td class="td-id">{{ doc.id }}</td>
+            <td><span class="badge-type" [ngClass]="getTypeClass(doc.type)">{{ getTypeLabel(doc.type) }}</span></td>
+            <td class="td-primary">{{ doc.titre }}</td>
+            <td class="td-muted">{{ doc.dateCreation }}</td>
+            <td>
+              <div class="action-group">
+                <button class="btn-view" (click)="voirDocument(doc)">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  Voir
+                </button>
+                <button class="btn-edit" (click)="editDocument(doc)">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  Modifier
+                </button>
+                <button class="btn-delete" (click)="deleteDocument(doc.id)">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+                  Supprimer
+                </button>
+              </div>
+            </td>
+          </tr>
         </tbody>
-        
-
-    </table>
-    <div
-  *ngIf="selectedDocument"
-  class="card mt-4 p-3"
->
-
-  <h4>
-    {{ selectedDocument.titre }}
-  </h4>
-
-  <p>
-    <strong>Type :</strong>
-    {{ selectedDocument.type }}
-  </p>
-
-  <p>
-    <strong>Date :</strong>
-    {{ selectedDocument.dateCreation }}
-  </p>
-
-  <hr>
-
-  <div style="white-space: pre-wrap">
-
-    {{ selectedDocument.contenu }}
+      </table>
+    </div>
 
   </div>
 
 </div>
 
+<!-- ===================== -->
+<!-- MODAL VOIR DOCUMENT  -->
+<!-- ===================== -->
+<div class="modal-overlay" *ngIf="selectedDocument" (click)="fermerModal($event)">
+  <div class="modal-box">
+
+    <div class="modal-header">
+      <div class="modal-title-group">
+        <span class="badge-type" [ngClass]="getTypeClass(selectedDocument.type)">
+          {{ getTypeLabel(selectedDocument.type) }}
+        </span>
+        <h2 class="modal-title">{{ selectedDocument.titre }}</h2>
+      </div>
+      <button class="modal-close" (click)="selectedDocument = null">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="modal-meta">
+      <span class="meta-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        {{ selectedDocument.dateCreation }}
+      </span>
+    </div>
+
+    <div class="modal-divider"></div>
+
+    <div class="modal-contenu">{{ selectedDocument.contenu }}</div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn-ghost" (click)="selectedDocument = null">
+        Fermer
+      </button>
+    </div>
+
+  </div>
 </div>

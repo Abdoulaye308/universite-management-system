@@ -80,8 +80,9 @@ public class ReunionService {
         reunion.setFormationId(details.getFormationId());
         reunion.setFormationNom(details.getFormationNom());
 
-        reunion.setFormateurId(details.getFormateurId());
-        reunion.setFormateurNom(details.getFormateurNom());
+        reunion.setCible(
+                details.getCible()
+        );
 
         reunion.setServiceConcerne(
                 details.getServiceConcerne()
