@@ -20,17 +20,12 @@ export class Formateur {
 
   }
 
-  // =========================
   // LISTE
-  // =========================
   getFormateurs(): Observable<any> {
 
     return this.http.get(this.apiUrl);
   }
-
-  // =========================
   // AJOUT
-  // =========================
   addFormateur(
     formateur: any
   ): Observable<any> {
@@ -41,9 +36,7 @@ export class Formateur {
     );
   }
 
-  // =========================
   // UPDATE
-  // =========================
   updateFormateur(
     id: number,
     formateur: any
@@ -55,9 +48,7 @@ export class Formateur {
     );
   }
 
-  // =========================
   // DELETE
-  // =========================
   deleteFormateur(
     id: number
   ): Observable<any> {

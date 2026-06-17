@@ -41,10 +41,8 @@ export class Users implements OnInit {
     service: ''
   };
 
-  // Mode édition
   editMode = false;
 
-  // ID utilisateur édition
   editUserId = 0;
 
   // Constructor
@@ -59,9 +57,7 @@ export class Users implements OnInit {
     this.getUsers();
   }
 
-  // =========================
   // CHARGER USERS
-  // =========================
   getUsers() {
     this.userService.getUsers()
       .subscribe({
@@ -75,10 +71,7 @@ export class Users implements OnInit {
       });
   }
 
-
-  // =========================
   // AJOUT USER
-  // =========================
   addUser() {
 
     this.userService.addUser(this.user)
@@ -86,10 +79,8 @@ export class Users implements OnInit {
 
         next: () => {
 
-          // Rafraîchir liste
           this.getUsers();
 
-          // Reset formulaire
           this.resetForm();
 
           alert('Utilisateur ajouté');
@@ -102,18 +93,13 @@ export class Users implements OnInit {
       });
   }
 
-  // =========================
   // CHARGER USER ÉDITION
-  // =========================
   editUser(user: any) {
 
-    // Activer mode édition
     this.editMode = true;
 
-    // Sauvegarder ID
     this.editUserId = user.id;
 
-    // Charger données
     this.user = {
 
       nom: user.nom,
@@ -131,9 +117,7 @@ export class Users implements OnInit {
     };
   }
 
-  // =========================
   // UPDATE USER
-  // =========================
   updateUser() {
 
     this.userService.updateUser(
@@ -143,13 +127,10 @@ export class Users implements OnInit {
 
       next: () => {
 
-        // Recharger liste
         this.getUsers();
 
-        // Désactiver édition
         this.editMode = false;
 
-        // Reset
         this.resetForm();
 
         alert('Utilisateur modifié');
@@ -162,9 +143,7 @@ export class Users implements OnInit {
     });
   }
 
-  // =========================
   // DELETE USER
-  // =========================
   deleteUser(id: number) {
 
     this.userService.deleteUser(id)
@@ -193,10 +172,7 @@ getRoleClass(role: string): string {
   return map[role] || '';
 }
 
-
-  // =========================
-  // RESET FORM
-  // =========================
+  // RESET 
   resetForm() {
 
     this.user = {

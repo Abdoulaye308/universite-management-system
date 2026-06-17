@@ -47,10 +47,15 @@
           <input type="date" class="field-input" [(ngModel)]="student.dateNaissance" name="dateNaissance" required>
         </div>
 
-        <div class="field">
-          <label class="field-label">Formation</label>
-          <input type="text" class="field-input" placeholder="Formation" [(ngModel)]="student.formation" name="formation" required>
-        </div>
+       <div class="field">
+  <label class="field-label">Formation</label>
+  <select class="field-input field-select" [(ngModel)]="student.formationId" name="formationId" (change)="onFormationChange()">
+    <option [value]="0">Choisir une formation</option>
+    <option *ngFor="let f of formations" [value]="f.id">
+      {{ f.nom }}
+    </option>
+  </select>
+</div>
 
         <div class="field">
           <label class="field-label">Promotion</label>
@@ -101,6 +106,15 @@
         Liste des étudiants
       </h2>
       <span class="count-badge">{{ students.length }}</span>
+       <button class="btn-export" (click)="exportPdf()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="12" y1="18" x2="12" y2="12"/>
+        <line x1="9" y1="15" x2="15" y2="15"/>
+      </svg>
+      Exporter PDF
+    </button>
     </div>
 
     <div class="table-wrap">

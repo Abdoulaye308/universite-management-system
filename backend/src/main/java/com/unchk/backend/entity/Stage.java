@@ -21,32 +21,21 @@ public class Stage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // =========================
     // ETUDIANT
-    // =========================
-
     private Long studentId;
 
     private String etudiant;
 
-    // =========================
     // FORMATION
-    // =========================
-
     private String formation;
 
-    // =========================
     // PARTENAIRE
-    // =========================
 
     private Long partenaireId;
 
     private String organisme;
 
-    // =========================
     // STAGE
-    // =========================
-
     private String dateDebut;
 
     private String dateFin;
@@ -54,10 +43,7 @@ public class Stage {
     // En cours / Terminé / Abandonné
     private String statut;
 
-    // =========================
     // BILAN
-    // =========================
-
     @Column(length = 5000)
     private String bilan;
 }

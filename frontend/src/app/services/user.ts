@@ -20,17 +20,13 @@ export class User {
 
   }
 
-  // =========================
   // LISTE USERS
-  // =========================
   getUsers(): Observable<any> {
 
     return this.http.get(this.apiUrl);
   }
 
-  // =========================
   // AJOUTER USER
-  // =========================
   addUser(user: any): Observable<any> {
 
     return this.http.post(
@@ -39,9 +35,7 @@ export class User {
     );
   }
 
-  // =========================
   // MODIFIER USER
-  // =========================
   updateUser(
     id: number,
     user: any
@@ -53,9 +47,7 @@ export class User {
     );
   }
 
-  // =========================
   // DELETE USER
-  // =========================
   deleteUser(
     id: number
   ): Observable<any> {

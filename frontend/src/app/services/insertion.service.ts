@@ -12,12 +12,12 @@ export class Insertion {
 
   constructor(
     private http: HttpClient
-  ) {}
+  ) { }
 
   getInsertions() {
     return this.http.get(this.api);
   }
-
+  //ajout
   addInsertion(data: any) {
     return this.http.post(
       this.api,
@@ -25,6 +25,7 @@ export class Insertion {
     );
   }
 
+  //modifier
   updateInsertion(
     id: number,
     data: any
@@ -35,6 +36,7 @@ export class Insertion {
     );
   }
 
+  //supprimer
   deleteInsertion(id: number) {
     return this.http.delete(
       `${this.api}/${id}`

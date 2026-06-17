@@ -80,6 +80,15 @@ export class Partenaires
   }
 
   addPartenaire() {
+         if (
+    !this.partenaire.organisme?.trim() ||
+    !this.partenaire.typePartenariat?.trim() ||
+    !this.partenaire.email?.trim() ||
+    !this.partenaire.telephone?.trim()
+  ) {
+    alert('Veuillez remplir tous les champs obligatoires.');
+    return;
+  }
 
     this.partenaireService
       .addPartenaire(
@@ -92,6 +101,7 @@ export class Partenaires
           this.loadPartenaires();
 
           this.resetForm();
+          alert('Partenaire ajouté');
         }
       });
   }
@@ -133,6 +143,7 @@ export class Partenaires
           this.editMode = false;
 
           this.resetForm();
+          alert('Partenaire modifié');
         }
       });
   }
@@ -148,6 +159,7 @@ export class Partenaires
         next: () => {
 
           this.loadPartenaires();
+          alert('Partenaire supprimé');
         }
       });
   }

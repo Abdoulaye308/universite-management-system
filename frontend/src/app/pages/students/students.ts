@@ -3,6 +3,9 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { FormsModule } from '@angular/forms';
+import {
+  FormationService
+} from '../../services/formation.service';
 
 import { Student } from '../../services/student';
 
@@ -25,6 +28,7 @@ export class Students implements OnInit {
   // Liste des étudiants
   students: any[] = [];
 
+formations: any[] = [];
   // Mode édition
   editMode = false;
 
@@ -54,12 +58,17 @@ export class Students implements OnInit {
 
     diplome: '',
 
+        formationId: 0,
+
+
     autresFormations: ''
   };
 
   // Constructor
   constructor(
     private studentService: Student,
+    private formationService:
+      FormationService,
       private cdr: ChangeDetectorRef
 
   ) {
@@ -70,11 +79,11 @@ export class Students implements OnInit {
   ngOnInit(): void {
 
     this.getStudents();
+    this.getFormations();
+
   }
 
-  // =========================
   // RÉCUPÉRER ÉTUDIANTS
-  // =========================
   getStudents() {
 
     this.studentService.getStudents()
@@ -95,10 +104,45 @@ export class Students implements OnInit {
       });
   }
 
-  // =========================
+   getFormations() {
+
+    this.formationService
+      .getFormations()
+      .subscribe({
+
+        next: (data: any[]) => {
+
+          this.formations = data;
+
+          this.cdr.detectChanges();
+        },
+
+        error: (error: any) => {
+
+          console.log(error);
+        }
+      });
+  }
+  onFormationChange() {
+  const f = this.formations.find(f => f.id == this.student.formationId);
+  if (f) {
+    this.student.formation = f.nom;
+  }
+}
+
+
   // AJOUTER ÉTUDIANT
-  // =========================
   addStudent() {
+     if (
+    !this.student.nom?.trim() ||
+    !this.student.prenom?.trim() ||
+    !this.student.ine?.trim() ||
+    !this.student.dateNaissance ||
+    !this.student.promo.trim()
+  ) {
+    alert('Veuillez remplir tous les champs obligatoires.');
+    return;
+  }
 
     this.studentService.addStudent(this.student)
       .subscribe({
@@ -121,9 +165,7 @@ export class Students implements OnInit {
       });
   }
 
-  // =========================
   // SUPPRIMER ÉTUDIANT
-  // =========================
   deleteStudent(id: number) {
 
     this.studentService.deleteStudent(id)
@@ -143,19 +185,13 @@ export class Students implements OnInit {
         }
       });
   }
-
-  // =========================
   // CHARGER ÉTUDIANT À MODIFIER
-  // =========================
   editStudent(student: any) {
 
-    // Activer mode édition
     this.editMode = true;
 
-    // Sauvegarder ID
     this.editStudentId = student.id;
 
-    // Copier données étudiant
     this.student = {
 
       ine: student.ine,
@@ -178,13 +214,14 @@ export class Students implements OnInit {
 
       diplome: student.diplome,
 
+  formationId:student.formationId,
+
+
       autresFormations: student.autresFormations
     };
   }
 
-  // =========================
   // MODIFIER ÉTUDIANT
-  // =========================
   updateStudent() {
 
     this.studentService.updateStudent(
@@ -194,13 +231,10 @@ export class Students implements OnInit {
 
       next: () => {
 
-        // Rafraîchir tableau
         this.getStudents();
 
-        // Désactiver mode édition
         this.editMode = false;
 
-        // Reset formulaire
         this.resetForm();
 
         alert('Étudiant modifié');
@@ -213,9 +247,43 @@ export class Students implements OnInit {
     });
   }
 
-  // =========================
+  // télécharger le pdf
+  downloadPdf() {
+
+  this.studentService
+    .exportPdf()
+    .subscribe({
+
+      next: (data: Blob) => {
+
+        const fileURL =
+          window.URL.createObjectURL(data);
+
+        const link =
+          document.createElement('a');
+
+        link.href = fileURL;
+
+        link.download =
+          'etudiants.pdf';
+
+        link.click();
+      }
+    });
+}
+exportPdf() {
+
+  window.open(
+    'http://localhost:8080/api/students/export/pdf',
+    '_blank'
+  );
+  alert(
+            'Pdf téléchargé'
+          );
+
+}
+
   // RESET FORMULAIRE
-  // =========================
   resetForm() {
 
     this.student = {
@@ -239,6 +307,8 @@ export class Students implements OnInit {
       anneeSortie: 0,
 
       diplome: '',
+              formationId: 0,
+
 
       autresFormations: ''
     };

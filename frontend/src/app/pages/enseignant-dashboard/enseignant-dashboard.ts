@@ -36,35 +36,13 @@ import { Formateur }
 })
 export class DashboardEnseignant
   implements OnInit {
-
-  // =========================
-  // FORMATEUR CONNECTÉ
-  // =========================
-
   formateur: any = null;
-
-  // =========================
-  // RÉUNIONS
-  // =========================
-
   reunions: any[] = [];
-
-  // =========================
-  // EMPLOIS
-  // =========================
-
   emplois: any[] = [];
-
-  // =========================
-  // NOTIFICATIONS
-  // =========================
-
   notifications: any[] = [];
   documents: any[] = [];
 
-  // =========================
   // CONSTRUCTOR
-  // =========================
   constructor(
 
     private router: Router,
@@ -76,17 +54,13 @@ export class DashboardEnseignant
     private emploiService: Emploi,
     private documentService: Document,
 
-
     private notificationService: NotificationService,
 
     private cdr: ChangeDetectorRef
 
   ) { }
 
-  // =========================
   // INIT
-  // =========================
-
   ngOnInit(): void {
 
     // Email connecté
@@ -110,7 +84,6 @@ export class DashboardEnseignant
               this.formateur
             );
 
-            // Charger données
             this.loadReunions();
 
             this.loadEmplois();
@@ -129,9 +102,7 @@ export class DashboardEnseignant
     }
   }
 
-  // =========================
   // CHARGER RÉUNIONS
-  // =========================
 isReunionActive(
   reunion: any
 ): boolean {
@@ -180,6 +151,7 @@ isReunionVisible(
 
   return false;
 }
+
 loadReunions() {
 
   this.reunionService
@@ -208,10 +180,7 @@ loadReunions() {
     });
 }
 
-  // =========================
   // CHARGER EMPLOIS
-  // =========================
-
   loadEmplois() {
     this.emploiService.getEmplois().subscribe({
       next: (data: any[]) => {
@@ -224,10 +193,8 @@ loadReunions() {
       error: (error: any) => { console.log(error); }
     });
   }
-  // =========================
-  // CHARGER NOTIFICATIONS
-  // =========================
 
+  // CHARGER NOTIFICATIONS
   loadNotifications() {
 
     this.notificationService
@@ -274,10 +241,8 @@ loadReunions() {
         }
       });
   }
-  // =========================
-  // LOGOUT
-  // =========================
 
+  // LOGOUT
   logout() {
 
     localStorage.removeItem(

@@ -127,6 +127,16 @@ loadInsertions() {
   }
 
   addInsertion() {
+           if (
+    !this.insertion.etudiant?.trim() ||
+    !this.insertion.entreprise?.trim() ||
+    !this.insertion.typeInsertion?.trim() ||
+    !this.insertion.poste?.trim() ||
+    !this.insertion.dateInsertion.trim()
+  ) {
+    alert('Veuillez remplir tous les champs obligatoires.');
+    return;
+  }
 
     this.insertionService
       .addInsertion(

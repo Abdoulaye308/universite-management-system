@@ -15,28 +15,19 @@ public class StageService {
 
     private final StageRepository repository;
 
-    // =========================
     // AJOUT
-    // =========================
-
     public Stage save(Stage stage) {
 
         return repository.save(stage);
     }
 
-    // =========================
     // LISTE
-    // =========================
-
     public List<Stage> getAll() {
 
         return repository.findAll();
     }
 
-    // =========================
     // PAR ID
-    // =========================
-
     public Stage getById(Long id) {
 
         return repository.findById(id)
@@ -46,10 +37,7 @@ public class StageService {
                         ));
     }
 
-    // =========================
     // UPDATE
-    // =========================
-
     public Stage update(
             Long id,
             Stage details
@@ -96,10 +84,7 @@ public class StageService {
         return repository.save(stage);
     }
 
-    // =========================
     // DELETE
-    // =========================
-
     public void delete(Long id) {
 
         repository.deleteById(id);

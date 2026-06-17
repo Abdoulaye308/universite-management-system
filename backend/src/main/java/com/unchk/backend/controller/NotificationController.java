@@ -42,9 +42,7 @@ public class NotificationController {
         return service.getByRole(role);
     }
 
-
 // UPDATE
-
     @PutMapping("/{id}")
     public Notification update(
             @PathVariable Long id,

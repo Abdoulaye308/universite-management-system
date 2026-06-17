@@ -28,4 +28,20 @@ export class Dashboard {
   getReunions(): Observable<any> {
     return this.http.get('http://localhost:8080/api/reunions');
   }
+  //inscription
+  getInscriptions(): Observable<any> {
+  return this.http.get('http://localhost:8080/api/inscriptions');
+}
+//stages
+getStages(): Observable<any> {
+  return this.http.get('http://localhost:8080/api/stages');
+}
+//insertions
+getInsertions(): Observable<any> {
+  return this.http.get('http://localhost:8080/api/insertions');
+}
+//partenaires
+getPartenaires(): Observable<any> {
+  return this.http.get('http://localhost:8080/api/partenaires');
+}
 }

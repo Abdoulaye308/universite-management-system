@@ -19,18 +19,13 @@ export class FormationService {
 
   }
   
-
-  // =========================
   // LISTE FORMATIONS
-  // =========================
   getFormations(): Observable<any> {
 
     return this.http.get(this.apiUrl);
   }
 
-  // =========================
   // AJOUTER FORMATION
-  // =========================
   addFormation(
     formation: any
   ): Observable<any> {
@@ -41,9 +36,7 @@ export class FormationService {
     );
   }
 
-  // =========================
   // MODIFIER FORMATION
-  // =========================
   updateFormation(
     id: number,
     formation: any
@@ -55,9 +48,7 @@ export class FormationService {
     );
   }
 
-  // =========================
   // SUPPRIMER FORMATION
-  // =========================
   deleteFormation(
     id: number
   ): Observable<any> {

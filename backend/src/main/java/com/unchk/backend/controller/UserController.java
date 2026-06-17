@@ -27,9 +27,7 @@ public class UserController {
     // Encodeur password
     private final PasswordEncoder passwordEncoder;
 
-    // =========================
     // LISTE UTILISATEURS
-    // =========================
     @GetMapping
     public List<User> getAllUsers() {
 
@@ -52,9 +50,7 @@ public class UserController {
         return userRepository.save(user);
     }
 
-    // =========================
     // MODIFIER UTILISATEUR
-    // =========================
     @PutMapping("/{id}")
     public User updateUser(
 
@@ -92,9 +88,7 @@ public class UserController {
         return userRepository.save(user);
     }
 
-    // =========================
     // SUPPRIMER UTILISATEUR
-    // =========================
     @DeleteMapping("/{id}")
     public String deleteUser(
             @PathVariable Long id
@@ -105,10 +99,7 @@ public class UserController {
         return "Utilisateur supprimé";
     }
 
-    // =========================
     // RECHERCHE EMAIL
-    // =========================
-
     @GetMapping("/email/{email}")
     public User getByEmail(
             @PathVariable String email

@@ -23,9 +23,7 @@ public class NotificationService {
         return repository.save(notification);
     }
 
-    // =========================
 // RECHERCHE PAR ID
-// =========================
     public Notification getById(Long id) {
 
         return repository.findById(id)
@@ -41,7 +39,7 @@ public class NotificationService {
         return repository.findAll();
     }
 
-    // Par rôle
+    // Par role
     public List<Notification> getByRole(
             String role
     ) {
@@ -50,9 +48,6 @@ public class NotificationService {
     }
 
     // Modifier notification
-    // =========================
-// UPDATE
-// =========================
     public Notification update(
             Long id,
             Notification details

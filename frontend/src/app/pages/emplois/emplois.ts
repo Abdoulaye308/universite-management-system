@@ -80,9 +80,7 @@ export class Emplois implements OnInit {
     this.getFormateurs();
   }
 
-  // =========================
   // CHARGER EMPLOIS
-  // =========================
   getEmplois() {
 
     this.emploiService.getEmplois()
@@ -102,9 +100,7 @@ export class Emplois implements OnInit {
       });
   }
 
-  // =========================
 // LISTE FORMATIONS
-// =========================
 getFormations() {
 
   this.formationService
@@ -123,9 +119,7 @@ getFormations() {
     });
 }
 
-// =========================
 // LISTE FORMATEURS
-// =========================
 getFormateurs() {
 
   this.formateurService
@@ -144,10 +138,17 @@ getFormateurs() {
     });
 }
 
-  // =========================
   // AJOUTER EMPLOI
-  // =========================
   addEmploi() {
+      if (
+    !this.emploi.formation?.trim() ||
+    !this.emploi.heureDebut?.trim() ||
+    !this.emploi.heureFin?.trim() ||
+    !this.emploi.enseignant?.trim()
+  ) {
+    alert('Veuillez remplir tous les champs obligatoires.');
+    return;
+  }
 
     this.emploiService.addEmploi(this.emploi)
       .subscribe({
@@ -168,9 +169,7 @@ getFormateurs() {
       });
   }
 
-  // =========================
   // CHARGER ÉDITION
-  // =========================
   editEmploi(emploi: any) {
 
     this.editMode = true;
@@ -195,9 +194,7 @@ getFormateurs() {
     };
   }
 
-  // =========================
   // UPDATE
-  // =========================
   updateEmploi() {
 
     this.emploiService.updateEmploi(
@@ -223,9 +220,7 @@ getFormateurs() {
     });
   }
 
-  // =========================
   // DELETE
-  // =========================
   deleteEmploi(id: number) {
 
     this.emploiService.deleteEmploi(id)
@@ -245,9 +240,8 @@ getFormateurs() {
       });
   }
 
-  // =========================
+
   // RESET
-  // =========================
   resetForm() {
 
     this.emploi = {

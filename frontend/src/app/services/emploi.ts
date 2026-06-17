@@ -20,17 +20,13 @@ export class Emploi {
 
   }
 
-  // =========================
   // LISTE EMPLOIS
-  // =========================
   getEmplois(): Observable<any> {
 
     return this.http.get(this.apiUrl);
   }
 
-  // =========================
   // AJOUTER
-  // =========================
   addEmploi(
     emploi: any
   ): Observable<any> {
@@ -41,9 +37,7 @@ export class Emploi {
     );
   }
 
-  // =========================
   // MODIFIER
-  // =========================
   updateEmploi(
     id: number,
     emploi: any
@@ -55,9 +49,7 @@ export class Emploi {
     );
   }
 
-  // =========================
   // DELETE
-  // =========================
   deleteEmploi(
     id: number
   ): Observable<any> {

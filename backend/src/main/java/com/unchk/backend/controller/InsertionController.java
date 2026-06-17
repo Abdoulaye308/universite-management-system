@@ -17,10 +17,7 @@ public class InsertionController {
 
     private final InsertionService service;
 
-    // =========================
     // AJOUT
-    // =========================
-
     @PostMapping
     public Insertion save(
             @RequestBody Insertion insertion
@@ -31,20 +28,14 @@ public class InsertionController {
         );
     }
 
-    // =========================
     // LISTE
-    // =========================
-
     @GetMapping
     public List<Insertion> getAll() {
 
         return service.getAll();
     }
 
-    // =========================
-    // PAR ID
-    // =========================
-
+    // insertion par ID
     @GetMapping("/{id}")
     public Insertion getById(
             @PathVariable Long id
@@ -53,10 +44,7 @@ public class InsertionController {
         return service.getById(id);
     }
 
-    // =========================
     // UPDATE
-    // =========================
-
     @PutMapping("/{id}")
     public Insertion update(
             @PathVariable Long id,
@@ -69,10 +57,7 @@ public class InsertionController {
         );
     }
 
-    // =========================
-    // DELETE
-    // =========================
-
+    // Supprimer
     @DeleteMapping("/{id}")
     public void delete(
             @PathVariable Long id

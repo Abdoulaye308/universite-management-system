@@ -53,7 +53,7 @@ public class DocumentService {
         return repository.findAll();
     }
 
-    // Documents par rôle
+    // Documents par role
     public List<Document> getByRole(
             String role
     ) {
@@ -79,9 +79,7 @@ public class DocumentService {
         repository.deleteById(id);
     }
 
-    // =========================
 // UPDATE
-// =========================
     public Document update(
             Long id,
             Document details

@@ -19,10 +19,8 @@ import { Auth } from '../../services/auth';
 })
 export class Login {
 
-  // Email utilisateur
   email = '';
 
-  // Mot de passe utilisateur
   password = '';
 
   // Constructor
@@ -53,7 +51,6 @@ export class Login {
 
         next: (response: any) => {
 
-          // Vérification navigateur
           if (typeof window !== 'undefined') {
 
             // Sauvegarder JWT
@@ -63,10 +60,10 @@ export class Login {
             );
 
             // Sauvegarder email
-localStorage.setItem(
-  'email',
-  this.email
-);
+            localStorage.setItem(
+              'email',
+              this.email
+            );
 
 
             // Sauvegarder rôle
@@ -78,10 +75,8 @@ localStorage.setItem(
 
           console.log(response);
 
-          // =========================
           // REDIRECTION SELON ROLE
-          // =========================
-
+        
           // ADMIN
           if (response.role === 'ADMIN') {
 
@@ -116,7 +111,9 @@ localStorage.setItem(
         },
         error: (err) => {
           console.error('Erreur de connexion:', err);
-          // Ajoutez ici la gestion d'erreur (message à l'utilisateur, etc.)
+          alert(
+            'Identifiants incorrects'
+          );
         },
         complete: () => {
           console.log('Requête de connexion terminée');

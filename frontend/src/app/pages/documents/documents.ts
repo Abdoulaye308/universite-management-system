@@ -1,6 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
-
 import { CommonModule }
   from '@angular/common';
 
@@ -83,9 +82,7 @@ editDocument(
     this.getDocuments();
   }
 
-  // =====================
   // LISTE
-  // =====================
   getDocuments() {
 
     this.documentService
@@ -101,10 +98,18 @@ editDocument(
       });
   }
 
-  // =====================
   // AJOUT
-  // =====================
   addDocument() {
+       if (
+    !this.document.titre?.trim() ||
+    !this.document.type?.trim() ||
+    !this.document.roleCible?.trim() ||
+    !this.document.dateCreation?.trim()||
+    !this.document.description?.trim()
+  ) {
+    alert('Veuillez remplir tous les champs obligatoires.');
+    return;
+  }
 
     this.documentService
       .addDocument(
@@ -125,9 +130,7 @@ editDocument(
       });
   }
 
-  // =====================
   // DELETE
-  // =====================
   deleteDocument(
     id: number
   ) {
@@ -198,9 +201,7 @@ getRoleClass(role: string): string {
   };
   return map[role] || '';
 }
-  // =====================
   // RESET
-  // =====================
   resetForm() {
 
     this.document = {

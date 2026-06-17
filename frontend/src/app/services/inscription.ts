@@ -19,17 +19,13 @@ export class Inscription {
 
   }
 
-  // =========================
   // LISTE
-  // =========================
   getInscriptions(): Observable<any> {
 
     return this.http.get(this.apiUrl);
   }
 
-  // =========================
   // INSCRIPTIONS ÉTUDIANT
-  // =========================
   getByStudent(
     studentId: number
   ): Observable<any> {
@@ -39,9 +35,7 @@ export class Inscription {
     );
   }
 
-  // =========================
   // AJOUT
-  // =========================
   addInscription(
     inscription: any
   ): Observable<any> {
@@ -52,9 +46,7 @@ export class Inscription {
     );
   }
 
-  // =========================
   // MODIFIER
-  // =========================
   updateInscription(
     id: number,
     inscription: any
@@ -66,9 +58,7 @@ export class Inscription {
     );
   }
 
-  // =========================
   // DELETE
-  // =========================
   deleteInscription(
     id: number
   ): Observable<any> {

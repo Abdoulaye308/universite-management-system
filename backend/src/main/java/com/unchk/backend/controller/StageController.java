@@ -18,10 +18,7 @@ public class StageController {
 
     private final StageService service;
 
-    // =========================
     // AJOUT
-    // =========================
-
     @PostMapping
     public Stage save(
             @RequestBody Stage stage
@@ -30,20 +27,14 @@ public class StageController {
         return service.save(stage);
     }
 
-    // =========================
     // LISTE
-    // =========================
-
     @GetMapping
     public List<Stage> getAll() {
 
         return service.getAll();
     }
 
-    // =========================
     // PAR ID
-    // =========================
-
     @GetMapping("/{id}")
     public Stage getById(
             @PathVariable Long id
@@ -52,10 +43,7 @@ public class StageController {
         return service.getById(id);
     }
 
-    // =========================
     // UPDATE
-    // =========================
-
     @PutMapping("/{id}")
     public Stage update(
             @PathVariable Long id,
@@ -68,10 +56,7 @@ public class StageController {
         );
     }
 
-    // =========================
     // DELETE
-    // =========================
-
     @DeleteMapping("/{id}")
     public void delete(
             @PathVariable Long id

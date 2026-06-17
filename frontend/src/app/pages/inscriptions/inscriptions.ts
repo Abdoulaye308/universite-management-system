@@ -159,7 +159,6 @@ export class Inscriptions
   }
 
   // AJOUT
-
   addInscription() {
 
     if (

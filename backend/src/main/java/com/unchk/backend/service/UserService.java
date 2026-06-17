@@ -15,25 +15,19 @@ public class UserService {
 
     private final UserRepository repository;
 
-    // =========================
     // AJOUT
-    // =========================
     public User save(User user) {
 
         return repository.save(user);
     }
 
-    // =========================
     // LISTE
-    // =========================
     public List<User> getAll() {
 
         return repository.findAll();
     }
 
-    // =========================
     // RECHERCHE PAR ID
-    // =========================
     public User getById(Long id) {
 
         return repository.findById(id)
@@ -43,9 +37,7 @@ public class UserService {
                         ));
     }
 
-    // =========================
     // RECHERCHE EMAIL
-    // =========================
     public User getByEmail(String email) {
 
         return repository.findByEmail(email)
@@ -55,9 +47,7 @@ public class UserService {
                         ));
     }
 
-    // =========================
     // UPDATE
-    // =========================
     public User update(
             Long id,
             User details
@@ -78,15 +68,12 @@ public class UserService {
 
         user.setRole(details.getRole());
 
-        // IMPORTANT
         user.setService(details.getService());
 
         return repository.save(user);
     }
 
-    // =========================
     // DELETE
-    // =========================
     public void delete(Long id) {
 
         repository.deleteById(id);

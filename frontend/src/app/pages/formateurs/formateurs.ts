@@ -23,30 +23,19 @@ import { Formateur } from '../../services/formateur';
 })
 export class Formateurs implements OnInit {
 
-  // Liste formateurs
   formateurs: any[] = [];
  formations: any[] = [];
-  // Formulaire
   formateur = {
-
     nom: '',
-
     prenom: '',
-
     email: '',
-
     grade: '',
-
     type: '',
-
     specialite: '',
     formationId: null
   };
 
-  // Mode édition
   editMode = false;
-
-  // ID édition
   editFormateurId = 0;
 
   // Constructor
@@ -59,12 +48,12 @@ export class Formateurs implements OnInit {
 
   }
 
-  // Chargement page
   ngOnInit(): void {
 
     this.getFormateurs();
     this.getFormations();
   }
+
  getFormations() {
     this.formationService.getFormations().subscribe({
       next: (data: any) => {
@@ -74,9 +63,8 @@ export class Formateurs implements OnInit {
       error: (error: any) => { console.log(error); }
     });
   }
-  // =========================
+  
   // LISTE
-  // =========================
   getFormateurs() {
 
     this.formateurService.getFormateurs()
@@ -96,10 +84,17 @@ export class Formateurs implements OnInit {
       });
   }
 
-  // =========================
   // AJOUT
-  // =========================
   addFormateur() {
+    if (
+    !this.formateur.nom?.trim() ||
+    !this.formateur.prenom?.trim() ||
+    !this.formateur.email?.trim() ||
+    !this.formateur.type?.trim()
+  ) {
+    alert('Veuillez remplir tous les champs obligatoires.');
+    return;
+  }
 
     this.formateurService.addFormateur(
       this.formateur
@@ -121,9 +116,7 @@ export class Formateurs implements OnInit {
     });
   }
 
-  // =========================
   // CHARGER ÉDITION
-  // =========================
   editFormateur(formateur: any) {
 
     this.editMode = true;
@@ -147,9 +140,7 @@ export class Formateurs implements OnInit {
     };
   }
 
-  // =========================
   // UPDATE
-  // =========================
   updateFormateur() {
 
     this.formateurService.updateFormateur(
@@ -175,9 +166,7 @@ export class Formateurs implements OnInit {
     });
   }
 
-  // =========================
   // DELETE
-  // =========================
   deleteFormateur(id: number) {
 
     this.formateurService.deleteFormateur(id)
@@ -201,9 +190,7 @@ export class Formateurs implements OnInit {
   return f ? f.nom : '—';
 }
 
-  // =========================
   // RESET
-  // =========================
   resetForm() {
 
     this.formateur = {

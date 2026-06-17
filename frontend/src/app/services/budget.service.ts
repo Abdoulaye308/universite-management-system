@@ -18,15 +18,15 @@ export class BudgetService {
 
   constructor(
     private http: HttpClient
-  ) {}
-
+  ) { }
+  //liste
   getBudgets(): Observable<any> {
 
     return this.http.get(
       this.apiUrl
     );
   }
-
+  //ajouter
   addBudget(
     budget: any
   ): Observable<any> {
@@ -36,7 +36,7 @@ export class BudgetService {
       budget
     );
   }
-
+  //modifier
   updateBudget(
     id: number,
     budget: any
@@ -47,7 +47,7 @@ export class BudgetService {
       budget
     );
   }
-
+  //supprimer
   deleteBudget(
     id: number
   ): Observable<any> {

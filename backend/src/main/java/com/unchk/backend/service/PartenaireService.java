@@ -14,13 +14,13 @@ import java.util.List;
 public class PartenaireService {
 
     private final PartenaireRepository repository;
-
+    //ajout
     public Partenaire save(
             Partenaire partenaire
     ) {
         return repository.save(partenaire);
     }
-
+    // liste
     public List<Partenaire> getAll() {
         return repository.findAll();
     }
@@ -33,7 +33,7 @@ public class PartenaireService {
                                 "Partenaire introuvable"
                         ));
     }
-
+    // modifier
     public Partenaire update(
             Long id,
             Partenaire details
@@ -66,7 +66,7 @@ public class PartenaireService {
                 partenaire
         );
     }
-
+    //supprimer
     public void delete(Long id) {
 
         repository.deleteById(id);

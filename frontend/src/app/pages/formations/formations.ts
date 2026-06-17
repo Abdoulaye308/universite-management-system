@@ -63,15 +63,13 @@ export class Formations implements OnInit {
     this.getFormations();
   }
 
-  // =========================
   // LISTE FORMATIONS
-  // =========================
  getFormations() {
   this.formationService.getFormations()
     .subscribe({
       next: (data: any) => {
-        this.formations = [...data];   // spread force un nouveau référentiel
-        this.cdr.detectChanges();      // force la mise à jour de la vue
+        this.formations = [...data];   
+        this.cdr.detectChanges();      
       },
       error: (error: any) => {
         console.log('Erreur API :', error);
@@ -79,34 +77,35 @@ export class Formations implements OnInit {
     });
 }
 
-
-  // =========================
   // AJOUTER FORMATION
-  // =========================
-  addFormation() {
-
-    this.formationService.addFormation(this.formation)
-      .subscribe({
-
-        next: () => {
-
-          this.getFormations();
-
-          this.resetForm();
-
-          alert('Formation ajoutée');
-        },
-
-        error: (error: any) => {
-
-          console.log(error);
-        }
-      });
+ addFormation() {
+  // Validation manuelle
+  if (
+    !this.formation.nom?.trim() ||
+    !this.formation.typeFormation?.trim() ||
+    !this.formation.niveau?.trim() ||
+    !this.formation.dateDebut ||
+    !this.formation.dateFin ||
+    !this.formation.financement?.trim()
+  ) {
+    alert('Veuillez remplir tous les champs obligatoires.');
+    return;
   }
 
-  // =========================
+  this.formationService.addFormation(this.formation)
+    .subscribe({
+      next: () => {
+        this.getFormations();
+        this.resetForm();
+        alert('Formation ajoutée');
+      },
+      error: (error: any) => {
+        console.log(error);
+      }
+    });
+}
+
   // MODIFIER FORMATION
-  // =========================
   updateFormation() {
 
     this.formationService.updateFormation(
@@ -132,9 +131,7 @@ export class Formations implements OnInit {
     });
   }
 
-  // =========================
   // SUPPRIMER FORMATION
-  // =========================
   deleteFormation(id: number) {
 
     this.formationService.deleteFormation(id)
@@ -154,9 +151,7 @@ export class Formations implements OnInit {
       });
   }
 
-  // =========================
   // CHARGER FORMATION
-  // =========================
   editFormation(formation: any) {
 
     this.editMode = true;
@@ -183,9 +178,7 @@ export class Formations implements OnInit {
     };
   }
 
-  // =========================
   // RESET FORMULAIRE
-  // =========================
   resetForm() {
 
     this.formation = {

@@ -3,14 +3,14 @@ package com.unchk.backend.controller;
 import com.unchk.backend.entity.Student;
 
 import com.unchk.backend.service.StudentService;
-
+import com.unchk.backend.service.StudentPdfService;
 import lombok.RequiredArgsConstructor;
-
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController // API REST
+@RestController
 @RequestMapping("/api/students")
 @RequiredArgsConstructor
 @CrossOrigin("*")
@@ -18,7 +18,8 @@ public class StudentController {
 
     // Injection service
     private final StudentService studentService;
-
+    //pdf
+    private final StudentPdfService pdfService;
     // Ajouter étudiant
     @PostMapping
     public Student createStudent(@RequestBody Student student) {
@@ -67,5 +68,25 @@ public class StudentController {
         studentService.deleteStudent(id);
 
         return "Etudiant supprimé avec succès";
+    }
+    //pdf
+    @GetMapping("/export/pdf")
+    public void exportPdf(
+            HttpServletResponse response
+    ) throws Exception {
+
+        response.setContentType(
+                "application/pdf"
+        );
+
+        response.setHeader(
+                "Content-Disposition",
+                "attachment; filename=etudiants.pdf"
+        );
+
+        pdfService.export(
+                studentService.getAllStudents(),
+                response
+        );
     }
 }

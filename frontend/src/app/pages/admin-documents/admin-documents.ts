@@ -52,9 +52,6 @@ selectedDocument: any = null;
     dateCreation: ''
   };
 
-
-
-
   constructor(
 
     private service:
@@ -69,7 +66,7 @@ selectedDocument: any = null;
 
     this.getDocuments();
   }
-
+//obtenir le document
   getDocuments() {
 
     this.service
@@ -84,9 +81,17 @@ selectedDocument: any = null;
         }
       });
   }
-
+//ajouter
   addDocument() {
-
+    if (
+    !this.document.titre?.trim() ||
+    !this.document.type?.trim() ||
+    !this.document.dateCreation?.trim()||
+    !this.document.contenu?.trim()
+  ) {
+    alert('Veuillez remplir tous les champs obligatoires.');
+    return;
+  }
     this.service
       .addDocument(
         this.document
@@ -105,7 +110,7 @@ selectedDocument: any = null;
         }
       });
   }
-
+//charger in document pour l'éditer
   editDocument(doc: any) {
 
     this.editMode = true;
@@ -124,7 +129,7 @@ selectedDocument: any = null;
         doc.dateCreation
     };
   }
-
+//modifier
   updateDocument() {
 
     this.service
@@ -148,7 +153,7 @@ selectedDocument: any = null;
         }
       });
   }
-
+//supprimer un document
   deleteDocument(id: number) {
 
     this.service
@@ -166,19 +171,18 @@ selectedDocument: any = null;
       });
   }
 
-  
-
+//voir document
 voirDocument(doc: any) {
   this.selectedDocument = doc;
 }
-
+//fermer le modal
 fermerModal(event: MouseEvent) {
   // Ferme uniquement si clic sur l'overlay (pas sur la box)
   if ((event.target as HTMLElement).classList.contains('modal-overlay')) {
     this.selectedDocument = null;
   }
 }
-
+//charger le type
 getTypeLabel(type: string): string {
   const map: any = {
     'COURRIER_ARRIVEE':    'Courrier arrivé',
@@ -189,7 +193,7 @@ getTypeLabel(type: string): string {
   };
   return map[type] || type;
 }
-
+//charger le type
 getTypeClass(type: string): string {
   const map: any = {
     'COURRIER_ARRIVEE':    'type-arrivee',
@@ -201,10 +205,20 @@ getTypeClass(type: string): string {
   return map[type] || '';
 }
 
+exportPdf() {
+
+   window.open(
+    'http://localhost:8080/api/admin-documents/export/pdf',
+    '_blank'
+  );
+   alert(
+            'Document téléchargé'
+          );
+
+}
+
 resetForm() {
   this.document = { type: '', titre: '', contenu: '', dateCreation: '' };
   this.editMode = false;
 }
-
-  
 }

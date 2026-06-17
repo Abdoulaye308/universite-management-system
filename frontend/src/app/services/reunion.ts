@@ -20,17 +20,13 @@ export class Reunion {
 
   }
 
-  // =========================
   // LISTE
-  // =========================
   getReunions(): Observable<any> {
 
     return this.http.get(this.apiUrl);
   }
 
-  // =========================
   // AJOUT
-  // =========================
   addReunion(
     reunion: any
   ): Observable<any> {
@@ -41,9 +37,7 @@ export class Reunion {
     );
   }
 
-  // =========================
   // UPDATE
-  // =========================
   updateReunion(
     id: number,
     reunion: any
@@ -55,9 +49,7 @@ export class Reunion {
     );
   }
 
-  // =========================
   // DELETE
-  // =========================
   deleteReunion(
     id: number
   ): Observable<any> {

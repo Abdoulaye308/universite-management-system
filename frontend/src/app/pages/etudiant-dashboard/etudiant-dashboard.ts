@@ -29,14 +29,9 @@ import { Document }
 })
 export class DashboardEtudiant
   implements OnInit {
-
-  // Étudiant connecté
   student: any = null;
-  // Formations étudiant
   formations: any[] = [];
-  // Emplois du temps étudiant
   emplois: any[] = [];
-
   documents: any[] = [];
   notifications: any[] = [];
 
@@ -58,28 +53,16 @@ export class DashboardEtudiant
 
   }
 
-  // =========================
   // AU CHARGEMENT
-  // =========================
   ngOnInit(): void {
-
-    // Email connecté
     const email =
       localStorage.getItem('email');
-
-    // Vérification email
     if (email) {
-
       this.studentService
         .getStudentByEmail(email)
         .subscribe({
-
           next: (data: any) => {
-
-            // Étudiant connecté
             this.student = data;
-
-            // Charger ses inscriptions
             this.loadStudentFormations();
             this.loadDocuments();
             this.loadNotifications();
@@ -96,52 +79,37 @@ export class DashboardEtudiant
     }
   }
 
-  // =========================
   // FORMATIONS ÉTUDIANT
-  // =========================
   loadStudentFormations() {
     if (!this.student) return;
-
     this.inscriptionService.getByStudent(this.student.id).subscribe({
       next: (inscriptions: any[]) => {
-
-        // Collecter tous les observables de formation
         const requests = inscriptions.map((inscription: any) =>
           this.formationService.getFormationById(inscription.formationId)
         );
-
-        // Si aucune inscription
         if (requests.length === 0) {
           this.formations = [];
           this.cdr.detectChanges();
           return;
         }
-
-        // Attendre TOUTES les formations en parallèle
         forkJoin(requests).subscribe({
           next: (formations: any) => {
-            this.formations = [...formations];  // nouveau référentiel
-            // Charger emplois du temps
+            this.formations = [...formations]; 
             this.loadEmplois();
-
-            this.cdr.detectChanges();           // force la vue
+            this.cdr.detectChanges();           
           },
           error: (error: any) => {
             console.log(error);
           }
         });
       },
-
-
       error: (error: any) => {
         console.log(error);
       }
     });
   }
 
-  // =========================
   // EMPLOIS DU TEMPS
-  // =========================
   loadEmplois() {
     this.emploiService.getEmplois().subscribe({
       next: (data: any[]) => {
@@ -176,10 +144,8 @@ export class DashboardEtudiant
         }
       });
   }
-  // =========================
+  
   // CHARGER NOTIFICATIONS
-  // =========================
-
   loadNotifications() {
 
     this.notificationService
@@ -211,21 +177,12 @@ export class DashboardEtudiant
         }
       });
   }
-  // =========================
+
   // DÉCONNEXION
-  // =========================
   logout() {
-
-    // Supprimer token
     localStorage.removeItem('token');
-
-    // Supprimer rôle
     localStorage.removeItem('role');
-
-    // Supprimer email
     localStorage.removeItem('email');
-
-    // Redirection login
     this.router.navigate(['/login']);
   }
 }

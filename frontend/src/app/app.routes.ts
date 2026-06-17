@@ -63,12 +63,12 @@ export const routes: Routes = [
     ]
   },
 
-  // ← Ces routes doivent être AVANT le wildcard
+  
   { path: 'etudiant/dashboard', component: DashboardEtudiant, canActivate: [authGuard], data: { roles: ['ETUDIANT'] } },
   { path: 'enseignant/dashboard', component: DashboardEnseignant, canActivate: [authGuard], data: { roles: ['ENSEIGNANT'] } },
   { path: 'administratif/dashboard', component: DashboardAdministratif, canActivate: [authGuard], data: { roles: ['ADMINISTRATIF'] } },
 
-  // ← Toujours en dernier
+  
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', redirectTo: 'login' }
 ];

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service // Service métier
+@Service
 @RequiredArgsConstructor
 public class StudentService {
 
@@ -53,7 +53,9 @@ public class StudentService {
         student.setAnneeSortie(studentDetails.getAnneeSortie());
         student.setDiplome(studentDetails.getDiplome());
         student.setAutresFormations(studentDetails.getAutresFormations());
-
+        student.setFormationId(
+                studentDetails.getFormationId()
+        );
         return studentRepository.save(student);
     }
 

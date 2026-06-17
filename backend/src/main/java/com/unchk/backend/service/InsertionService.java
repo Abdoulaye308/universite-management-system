@@ -15,10 +15,7 @@ public class InsertionService {
 
     private final InsertionRepository repository;
 
-    // =========================
     // AJOUT
-    // =========================
-
     public Insertion save(
             Insertion insertion
     ) {
@@ -28,19 +25,13 @@ public class InsertionService {
         );
     }
 
-    // =========================
     // LISTE
-    // =========================
-
     public List<Insertion> getAll() {
 
         return repository.findAll();
     }
 
-    // =========================
     // PAR ID
-    // =========================
-
     public Insertion getById(
             Long id
     ) {
@@ -52,10 +43,7 @@ public class InsertionService {
                         ));
     }
 
-    // =========================
     // UPDATE
-    // =========================
-
     public Insertion update(
             Long id,
             Insertion details
@@ -100,10 +88,7 @@ public class InsertionService {
         );
     }
 
-    // =========================
     // DELETE
-    // =========================
-
     public void delete(
             Long id
     ) {

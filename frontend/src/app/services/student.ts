@@ -63,4 +63,17 @@ updateStudent(
       `${this.apiUrl}/email/${email}`
     );
   }
+
+  //export pdf
+  exportPdf() {
+
+  return this.http.get(
+
+    `${this.apiUrl}/export/pdf`,
+
+    {
+      responseType: 'blob'
+    }
+  );
+}
 }

@@ -46,6 +46,15 @@ export class Notifications implements OnInit {
 
   // AJOUT
   add() {
+      if (
+    !this.notification.titre?.trim() ||
+    !this.notification.message?.trim() ||
+    !this.notification.roleCible?.trim() ||
+    !this.notification.dateCreation?.trim()
+  ) {
+    alert('Veuillez remplir tous les champs obligatoires.');
+    return;
+  }
     this.notificationService.addNotification(this.notification)
       .subscribe(() => {
         this.getNotifications();

@@ -18,17 +18,13 @@ export class Document {
 
   }
 
-  // =====================
   // LISTE
-  // =====================
   getDocuments(): Observable<any> {
 
     return this.http.get(this.apiUrl);
   }
 
-  // =====================
   // PAR ROLE
-  // =====================
   getDocumentsByRole(
     role: string
   ): Observable<any> {
@@ -38,9 +34,7 @@ export class Document {
     );
   }
 
-  // =====================
   // AJOUT
-  // =====================
   addDocument(
     document: any
   ): Observable<any> {
@@ -51,9 +45,7 @@ export class Document {
     );
   }
 
-  // =====================
   // DELETE
-  // =====================
   deleteDocument(
     id: number
   ): Observable<any> {
@@ -63,9 +55,7 @@ export class Document {
     );
   }
 
-  // =====================
 // UPDATE
-// =====================
 updateDocument(
   id: number,
   document: any

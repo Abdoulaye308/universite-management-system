@@ -128,10 +128,8 @@ export class Stages implements OnInit {
         }
       });
   }
-  // =========================
-  // CHOIX ETUDIANT
-  // =========================
 
+  // CHOIX ETUDIANT
   onStudentChange() {
 
     const etudiant = this.students.find(
@@ -155,10 +153,7 @@ export class Stages implements OnInit {
     }
   }
 
-  // =========================
   // CHOIX PARTENAIRE
-  // =========================
-
   onPartenaireChange() {
 
   const partenaire =
@@ -177,6 +172,17 @@ export class Stages implements OnInit {
 }
 
   addStage() {
+         if (
+    !this.stage.organisme?.trim() ||
+    !this.stage.etudiant?.trim() ||
+    !this.stage.dateDebut?.trim() ||
+    !this.stage.statut?.trim() ||
+    !this.stage.bilan?.trim() ||
+    !this.stage.dateFin?.trim()
+  ) {
+    alert('Veuillez remplir tous les champs obligatoires.');
+    return;
+  }
 
     this.stageService
       .addStage(this.stage)

@@ -31,19 +31,14 @@ import { Formateur } from '../../services/formateur';
 export class Reunions
   implements OnInit {
 
-  // =========================
   // LISTES
-  // =========================
-
   reunions: any[] = [];
 
   formations: any[] = [];
 
   formateurs: any[] = [];
 
-  // =========================
   // FORMULAIRE
-  // =========================
 
   reunion = {
 
@@ -70,18 +65,13 @@ export class Reunions
     serviceConcerne: ''
   };
 
-  // =========================
   // MODE ÉDITION
-  // =========================
 
   editMode = false;
 
   editReunionId = 0;
 
-  // =========================
   // CONSTRUCTOR
-  // =========================
-
   constructor(
 
     private reunionService: Reunion,
@@ -96,10 +86,7 @@ export class Reunions
 
   }
 
-  // =========================
   // INIT
-  // =========================
-
   ngOnInit(): void {
 
     this.getReunions();
@@ -109,10 +96,7 @@ export class Reunions
     this.getFormateurs();
   }
 
-  // =========================
   // LISTE RÉUNIONS
-  // =========================
-
   getReunions() {
 
     this.reunionService
@@ -133,10 +117,7 @@ export class Reunions
       });
   }
 
-  // =========================
   // LISTE FORMATIONS
-  // =========================
-
   getFormations() {
 
     this.formationService
@@ -155,10 +136,7 @@ export class Reunions
       });
   }
 
-  // =========================
   // LISTE FORMATEURS
-  // =========================
-
   getFormateurs() {
 
     this.formateurService
@@ -177,10 +155,7 @@ export class Reunions
       });
   }
 
-  // =========================
   // CHANGEMENT FORMATION
-  // =========================
-
   onFormationChange() {
 
     const formation = this.formations.find(
@@ -196,86 +171,75 @@ export class Reunions
     }
   }
 
-  // =========================
-  // CHANGEMENT FORMATEUR
-  // =========================
 
-  
-
-  // =========================
   // AJOUT
-  // =========================
-
   addReunion() {
 
-  // Vérification destinataire
-  if (!this.reunion.cible) {
+    // Vérification destinataire
+    if (!this.reunion.cible) {
 
-    alert(
-      'Veuillez choisir un destinataire.'
-    );
+      alert(
+        'Veuillez choisir un destinataire.'
+      );
 
-    return;
+      return;
+    }
+
+    // Si réunion destinée à une formation
+    if (
+      this.reunion.cible === 'FORMATION'
+      &&
+      !this.reunion.formationId
+    ) {
+
+      alert(
+        'Veuillez choisir une formation.'
+      );
+
+      return;
+    }
+
+    // Si réunion destinée à un service
+    if (
+      this.reunion.cible === 'SERVICE'
+      &&
+      !this.reunion.serviceConcerne
+    ) {
+
+      alert(
+        'Veuillez choisir un service.'
+      );
+
+      return;
+    }
+
+    this.reunionService
+      .addReunion(this.reunion)
+      .subscribe({
+
+        next: () => {
+
+          this.getReunions();
+
+          this.resetForm();
+
+          alert(
+            'Réunion ajoutée avec succès.'
+          );
+        },
+
+        error: (error: any) => {
+
+          console.error(error);
+
+          alert(
+            'Erreur lors de l\'ajout de la réunion.'
+          );
+        }
+      });
   }
 
-  // Si réunion destinée à une formation
-  if (
-    this.reunion.cible === 'FORMATION'
-    &&
-    !this.reunion.formationId
-  ) {
-
-    alert(
-      'Veuillez choisir une formation.'
-    );
-
-    return;
-  }
-
-  // Si réunion destinée à un service
-  if (
-    this.reunion.cible === 'SERVICE'
-    &&
-    !this.reunion.serviceConcerne
-  ) {
-
-    alert(
-      'Veuillez choisir un service.'
-    );
-
-    return;
-  }
-
-  this.reunionService
-    .addReunion(this.reunion)
-    .subscribe({
-
-      next: () => {
-
-        this.getReunions();
-
-        this.resetForm();
-
-        alert(
-          'Réunion ajoutée avec succès.'
-        );
-      },
-
-      error: (error: any) => {
-
-        console.error(error);
-
-        alert(
-          'Erreur lors de l\'ajout de la réunion.'
-        );
-      }
-    });
-}
-
-  // =========================
   // ÉDITION
-  // =========================
-
   editReunion(reunion: any) {
 
     this.editMode = true;
@@ -303,22 +267,17 @@ export class Reunions
       formationNom:
         reunion.formationNom,
 
-     
-
       cible: reunion.cible,
 
       compteRendu:
         reunion.compteRendu,
 
-        serviceConcerne:
+      serviceConcerne:
         reunion.serviceConcerne
     };
   }
 
-  // =========================
   // UPDATE
-  // =========================
-
   updateReunion() {
 
     this.reunionService
@@ -346,10 +305,7 @@ export class Reunions
       });
   }
 
-  // =========================
   // DELETE
-  // =========================
-
   deleteReunion(id: number) {
 
     this.reunionService
@@ -373,20 +329,17 @@ export class Reunions
   }
 
   getCibleClass(cible: string): string {
-  const map: any = {
-    'TOUS':           'cible-tous',
-    'FORMATEURS':     'cible-formateurs',
-    'ADMINISTRATIFS': 'cible-admin',
-    'FORMATION':      'cible-formation',
-    'SERVICE':        'cible-service'
-  };
-  return map[cible] || '';
-}
+    const map: any = {
+      'TOUS': 'cible-tous',
+      'FORMATEURS': 'cible-formateurs',
+      'ADMINISTRATIFS': 'cible-admin',
+      'FORMATION': 'cible-formation',
+      'SERVICE': 'cible-service'
+    };
+    return map[cible] || '';
+  }
 
-  // =========================
   // RESET
-  // =========================
-
   resetForm() {
 
     this.reunion = {
@@ -407,9 +360,7 @@ export class Reunions
 
       formationNom: '',
 
-      
-cible: '',
-      
+      cible: '',
 
       compteRendu: '',
 

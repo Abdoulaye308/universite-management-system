@@ -34,7 +34,7 @@ public class InscriptionController {
         return service.getAll();
     }
 
-    // Étudiant
+    // Étudiant par id
     @GetMapping("/student/{studentId}")
     public List<Inscription> getByStudent(
             @PathVariable Long studentId
@@ -42,7 +42,7 @@ public class InscriptionController {
 
         return service.getByStudent(studentId);
     }
-
+    // inscription par id
     @GetMapping("/{id}")
     public Inscription getById(
             @PathVariable Long id
@@ -50,7 +50,7 @@ public class InscriptionController {
 
         return service.getById(id);
     }
-
+    //modifier
     @PutMapping("/{id}")
     public Inscription update(
             @PathVariable Long id,

@@ -27,7 +27,7 @@ public class Document {
     @Column(length = 3000)
     private String description;
 
-    // Rôle concerné
+    // Role concerné
     private String roleCible;
 
     // Date création

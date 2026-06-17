@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity // Table SQL
+@Entity
 @Table(name = "emplois_du_temps")
 @Getter
 @Setter

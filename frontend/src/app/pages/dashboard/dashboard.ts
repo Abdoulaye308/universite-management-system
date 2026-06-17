@@ -16,11 +16,13 @@ export class Dashboard implements OnInit {
   formationsCount = 0;
   formateursCount = 0;
   reunionsCount = 0;
+  inscriptionsCount = 0;
+  stagesCount = 0;
+  insertionsCount = 0;
+  partenairesCount = 0;
 
-  // Données réelles pour les barres
   formations: any[] = [];
   students: any[] = [];
-
   loading = true;
 
   constructor(
@@ -37,14 +39,13 @@ export class Dashboard implements OnInit {
     this.dashboardService.getStudents().subscribe((data: any) => {
       this.studentsCount = data.length;
       this.students = [...data];
-      this.checkLoading();
+      this.loading = false;
       this.cdr.detectChanges();
     });
 
     this.dashboardService.getFormations().subscribe((data: any) => {
       this.formationsCount = data.length;
       this.formations = [...data];
-      this.checkLoading();
       this.cdr.detectChanges();
     });
 
@@ -57,15 +58,29 @@ export class Dashboard implements OnInit {
       this.reunionsCount = data.length;
       this.cdr.detectChanges();
     });
+
+    // Nouveaux endpoints à ajouter dans DashboardService
+    this.dashboardService.getInscriptions().subscribe((data: any) => {
+      this.inscriptionsCount = data.length;
+      this.cdr.detectChanges();
+    });
+
+    this.dashboardService.getStages().subscribe((data: any) => {
+      this.stagesCount = data.length;
+      this.cdr.detectChanges();
+    });
+
+    this.dashboardService.getInsertions().subscribe((data: any) => {
+      this.insertionsCount = data.length;
+      this.cdr.detectChanges();
+    });
+
+    this.dashboardService.getPartenaires().subscribe((data: any) => {
+      this.partenairesCount = data.length;
+      this.cdr.detectChanges();
+    });
   }
 
-  checkLoading() {
-    if (this.studentsCount > 0 || this.formationsCount > 0) {
-      this.loading = false;
-    }
-  }
-
-  // Ratio hommes/femmes pour une formation
   getRatioHommes(f: any): number {
     const total = (f.nombreHommes || 0) + (f.nombreFemmes || 0);
     return total > 0 ? Math.round((f.nombreHommes / total) * 100) : 0;

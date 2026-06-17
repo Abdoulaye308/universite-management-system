@@ -1,114 +1,155 @@
-<div class="shell">
+<main class="main">
 
- 
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <h1 class="page-title">Tableau de bord</h1>
+      <span class="page-sub">Vue d'ensemble — UNCHK</span>
+    </div>
+    <div class="topbar-right">
+      <div class="avatar">AD</div>
+    </div>
+  </header>
 
-  <!-- MAIN -->
-  <main class="main">
+  <!-- KPI LIGNE 1 -->
+  <div class="kpi-grid">
 
-    <!-- TOPBAR -->
-    <header class="topbar">
-      <div class="topbar-left">
-        <h1 class="page-title">Tableau de bord</h1>
-        <span class="page-sub">Vue d'ensemble — UNCHK</span>
+    <div class="kpi-card kpi-blue">
+      <div class="kpi-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
       </div>
-      <div class="topbar-right">
-        <div class="avatar">AD</div>
+      <div class="kpi-body">
+        <span class="kpi-label">Étudiants</span>
+        <span class="kpi-value">{{ studentsCount }}</span>
       </div>
-    </header>
-
-    <!-- KPI CARDS -->
-    <div class="kpi-grid">
-
-      <div class="kpi-card kpi-blue">
-        <div class="kpi-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        </div>
-        <div class="kpi-body">
-          <span class="kpi-label">Étudiants</span>
-          <span class="kpi-value">{{ studentsCount }}</span>
-        </div>
-        <div class="kpi-bar"></div>
-      </div>
-
-      <div class="kpi-card kpi-emerald">
-        <div class="kpi-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-        </div>
-        <div class="kpi-body">
-          <span class="kpi-label">Formations</span>
-          <span class="kpi-value">{{ formationsCount }}</span>
-        </div>
-        <div class="kpi-bar"></div>
-      </div>
-
-      <div class="kpi-card kpi-violet">
-        <div class="kpi-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-        </div>
-        <div class="kpi-body">
-          <span class="kpi-label">Formateurs</span>
-          <span class="kpi-value">{{ formateursCount }}</span>
-        </div>
-        <div class="kpi-bar"></div>
-      </div>
-
-      <div class="kpi-card kpi-amber">
-        <div class="kpi-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        </div>
-        <div class="kpi-body">
-          <span class="kpi-label">Réunions</span>
-          <span class="kpi-value">{{ reunionsCount }}</span>
-        </div>
-        <div class="kpi-bar"></div>
-      </div>
-
+      <div class="kpi-bar"></div>
     </div>
 
-    <!-- CONTENT GRID -->
-    <div class="content-grid">
-
-      <!-- FORMATIONS TABLE -->
-      <div class="panel panel-wide">
-        <div class="panel-header">
-          <h2 class="panel-title">Formations actives</h2>
-          <a routerLink="/admin/formations" class="panel-link">Voir tout →</a>
-        </div>
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Nom</th>
-              <th>Type</th>
-              <th>Niveau</th>
-              <th>Participants</th>
-              <th>Ratio H/F</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (f of formations; track f.id) {
-            <tr>
-              <td class="td-primary">{{ f.nom }}</td>
-              <td><span class="badge badge-type">{{ f.typeFormation }}</span></td>
-              <td>{{ f.niveau }}</td>
-              <td class="td-num">{{ getTotalParticipants(f) }}</td>
-              <td>
-                <div class="ratio-bar">
-                  <div class="ratio-h" [style.width.%]="getRatioHommes(f)"></div>
-                  <div class="ratio-f" [style.width.%]="100 - getRatioHommes(f)"></div>
-                </div>
-                <span class="ratio-label">{{ getRatioHommes(f) }}% H</span>
-              </td>
-            </tr>
-            }
-            @if (formations.length === 0) {
-            <tr><td colspan="5" class="td-empty">Chargement…</td></tr>
-            }
-          </tbody>
-        </table>
+    <div class="kpi-card kpi-emerald">
+      <div class="kpi-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
       </div>
+      <div class="kpi-body">
+        <span class="kpi-label">Formations</span>
+        <span class="kpi-value">{{ formationsCount }}</span>
+      </div>
+      <div class="kpi-bar"></div>
+    </div>
 
-      <!-- RECAP PANEL -->
-      <div class="panel panel-side">
+    <div class="kpi-card kpi-violet">
+      <div class="kpi-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      </div>
+      <div class="kpi-body">
+        <span class="kpi-label">Formateurs</span>
+        <span class="kpi-value">{{ formateursCount }}</span>
+      </div>
+      <div class="kpi-bar"></div>
+    </div>
+
+    <div class="kpi-card kpi-amber">
+      <div class="kpi-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <div class="kpi-body">
+        <span class="kpi-label">Réunions</span>
+        <span class="kpi-value">{{ reunionsCount }}</span>
+      </div>
+      <div class="kpi-bar"></div>
+    </div>
+
+  </div>
+
+  <!-- KPI LIGNE 2 -->
+  <div class="kpi-grid kpi-grid-sm">
+
+    <div class="kpi-card-sm kpi-teal">
+      <div class="kpi-icon-sm">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+      </div>
+      <div class="kpi-body">
+        <span class="kpi-label">Inscriptions</span>
+        <span class="kpi-value-sm">{{ inscriptionsCount }}</span>
+      </div>
+    </div>
+
+    <div class="kpi-card-sm kpi-orange">
+      <div class="kpi-icon-sm">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+      </div>
+      <div class="kpi-body">
+        <span class="kpi-label">Stages</span>
+        <span class="kpi-value-sm">{{ stagesCount }}</span>
+      </div>
+    </div>
+
+    <div class="kpi-card-sm kpi-green">
+      <div class="kpi-icon-sm">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+      </div>
+      <div class="kpi-body">
+        <span class="kpi-label">Insertions</span>
+        <span class="kpi-value-sm">{{ insertionsCount }}</span>
+      </div>
+    </div>
+
+    <div class="kpi-card-sm kpi-pink">
+      <div class="kpi-icon-sm">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 11l-4 4-2-2"/></svg>
+      </div>
+      <div class="kpi-body">
+        <span class="kpi-label">Partenaires</span>
+        <span class="kpi-value-sm">{{ partenairesCount }}</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CONTENT GRID -->
+  <div class="content-grid">
+
+    <!-- FORMATIONS TABLE -->
+    <div class="panel panel-wide">
+      <div class="panel-header">
+        <h2 class="panel-title">Formations actives</h2>
+        <a routerLink="/admin/formations" class="panel-link">Voir tout →</a>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Type</th>
+            <th>Niveau</th>
+            <th>Participants</th>
+            <th>Ratio H/F</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let f of formations">
+            <td class="td-primary">{{ f.nom }}</td>
+            <td><span class="badge badge-type">{{ f.typeFormation }}</span></td>
+            <td>{{ f.niveau }}</td>
+            <td class="td-num">{{ getTotalParticipants(f) }}</td>
+            <td>
+              <div class="ratio-bar">
+                <div class="ratio-h" [style.width.%]="getRatioHommes(f)"></div>
+                <div class="ratio-f" [style.width.%]="100 - getRatioHommes(f)"></div>
+              </div>
+              <span class="ratio-label">{{ getRatioHommes(f) }}% H</span>
+            </td>
+          </tr>
+          <tr *ngIf="formations.length === 0">
+            <td colspan="5" class="td-empty">Chargement…</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- PANNEAU DROIT -->
+    <div class="side-stack">
+
+      <!-- RECAP -->
+      <div class="panel">
         <div class="panel-header">
           <h2 class="panel-title">Répartition</h2>
         </div>
@@ -133,10 +174,31 @@
             <span class="recap-label">Réunions</span>
             <span class="recap-val">{{ reunionsCount }}</span>
           </div>
+          <div class="recap-item">
+            <span class="recap-dot dot-teal"></span>
+            <span class="recap-label">Inscriptions</span>
+            <span class="recap-val">{{ inscriptionsCount }}</span>
+          </div>
+          <div class="recap-item">
+            <span class="recap-dot dot-orange"></span>
+            <span class="recap-label">Stages</span>
+            <span class="recap-val">{{ stagesCount }}</span>
+          </div>
+          <div class="recap-item">
+            <span class="recap-dot dot-green"></span>
+            <span class="recap-label">Insertions pro.</span>
+            <span class="recap-val">{{ insertionsCount }}</span>
+          </div>
+          <div class="recap-item">
+            <span class="recap-dot dot-pink"></span>
+            <span class="recap-label">Partenaires</span>
+            <span class="recap-val">{{ partenairesCount }}</span>
+          </div>
         </div>
+      </div>
 
-        <div class="panel-divider"></div>
-
+      <!-- ENCADREMENT -->
+      <div class="panel">
         <div class="panel-header">
           <h2 class="panel-title">Taux d'encadrement</h2>
         </div>
@@ -146,20 +208,27 @@
           </div>
           <div class="enc-label">étudiants par formateur</div>
         </div>
+      </div>
 
-        <div class="panel-divider"></div>
-
+      <!-- ACCÈS RAPIDES -->
+      <div class="panel">
         <div class="panel-header">
           <h2 class="panel-title">Accès rapides</h2>
         </div>
         <div class="quick-links">
-          <a routerLink="/admin/students" class="quick-link ql-blue">+ Étudiant</a>
-          <a routerLink="/admin/formations" class="quick-link ql-emerald">+ Formation</a>
-          <a routerLink="/admin/reunions" class="quick-link ql-amber">+ Réunion</a>
-          <a routerLink="/admin/formateurs" class="quick-link ql-violet">+ Formateur</a>
+          <a routerLink="/admin/students"     class="quick-link ql-blue">+ Étudiant</a>
+          <a routerLink="/admin/formations"   class="quick-link ql-emerald">+ Formation</a>
+          <a routerLink="/admin/reunions"     class="quick-link ql-amber">+ Réunion</a>
+          <a routerLink="/admin/formateurs"   class="quick-link ql-violet">+ Formateur</a>
+          <a routerLink="/admin/stages"       class="quick-link ql-orange">+ Stage</a>
+          <a routerLink="/admin/insertions"   class="quick-link ql-green">+ Insertion</a>
+          <a routerLink="/admin/partenaires"  class="quick-link ql-pink">+ Partenaire</a>
+          <a routerLink="/admin/inscriptions" class="quick-link ql-teal">+ Inscription</a>
         </div>
       </div>
 
     </div>
-  </main>
-</div>
+
+  </div>
+
+</main>

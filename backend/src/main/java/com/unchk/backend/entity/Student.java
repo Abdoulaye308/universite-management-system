@@ -57,4 +57,5 @@ public class Student {
 
     // Autres formations
     private String autresFormations;
+    private Long formationId;
 }

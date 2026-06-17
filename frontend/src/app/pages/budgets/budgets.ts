@@ -80,6 +80,15 @@ export class Budgets
   }
 
   addBudget() {
+        if (
+    !this.budget.titre?.trim() ||
+    !this.budget.type?.trim() ||
+    !this.budget.dateCreation?.trim()||
+    !this.budget.description?.trim()
+  ) {
+    alert('Veuillez remplir tous les champs obligatoires.');
+    return;
+  }
 
     this.budgetService
       .addBudget(this.budget)
@@ -200,5 +209,4 @@ resetForm() {
   this.editMode = false;
 }
 
- 
 }

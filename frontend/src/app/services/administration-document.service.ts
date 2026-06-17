@@ -54,4 +54,13 @@ export class AdministrationDocumentService {
       `${this.apiUrl}/${id}`
     );
   }
+
+  exportPdf() {
+
+  window.open(
+    'http://localhost:8080/api/administration-documents/export/pdf',
+    '_blank'
+  );
+
+}
 }
