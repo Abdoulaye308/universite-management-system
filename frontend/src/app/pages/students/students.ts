@@ -143,12 +143,9 @@ formations: any[] = [];
     alert('Veuillez remplir tous les champs obligatoires.');
     return;
   }
-
     this.studentService.addStudent(this.student)
       .subscribe({
-
         next: () => {
-
           // Rafraîchir tableau
           this.getStudents();
 
